@@ -800,6 +800,12 @@ input{font-family:inherit}
   font-size:0.85rem;
 }
 .auth-switch button:hover{color:var(--rose-dark)}
+.remember-me{
+  display:flex;align-items:center;gap:8px;margin-top:2px;cursor:pointer;font-size:0.85rem;color:var(--text-light);
+}
+.remember-me input[type="checkbox"]{
+  width:16px;height:16px;accent-color:var(--rose);cursor:pointer;margin:0;
+}
 .auth-forgot{
   text-align:right;margin-top:-6px;
 }
@@ -1088,6 +1094,10 @@ input{font-family:inherit}
       <form class="auth-form" id="loginFormEl" autocomplete="on">
         <input class="auth-input" type="email" name="email" data-i18n-placeholder="email_placeholder" placeholder="Email address" required autocomplete="email">
         <input class="auth-input" type="password" name="password" data-i18n-placeholder="password_placeholder" placeholder="Password" required autocomplete="current-password">
+        <label class="remember-me">
+          <input type="checkbox" id="rememberMe">
+          <span data-i18n="remember_me">Remember me</span>
+        </label>
         <div class="auth-forgot">
           <button type="button" data-i18n="forgot_password">Forgot password?</button>
         </div>
@@ -1128,6 +1138,28 @@ input{font-family:inherit}
       <div class="auth-switch">
         <span data-i18n="have_account">Already have an account?</span>
         <button type="button" id="switchToLogin" data-i18n="login">Log In</button>
+      </div>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div id="forgotForm" class="hidden">
+      <div class="auth-header">
+        <h2 data-i18n="forgot_title">Reset Password</h2>
+        <p data-i18n="forgot_sub">Enter your email to receive a reset link</p>
+      </div>
+      <form class="auth-form" id="forgotFormEl">
+        <input class="auth-input" type="email" name="email" data-i18n-placeholder="email_placeholder" placeholder="Email address" required autocomplete="email">
+        <button type="submit" class="auth-submit">
+          <span data-i18n="send_reset_link">Send Reset Link</span>
+        </button>
+      </form>
+      <div style="margin-top:16px;padding:12px 16px;background:#FFF9FA;border:1px solid #D4A0A7;border-radius:10px;font-size:13px;color:#5a3d3d;line-height:1.5;text-align:center">
+        <i class="fa-solid fa-circle-info" style="color:#B76E79;margin-right:4px"></i>
+        <span data-i18n="reset_mail_info">The reset email will be sent from noreply@mail.app.supabase.io. Please check your inbox and spam folder.</span>
+      </div>
+      <div class="auth-switch" style="margin-top:20px">
+        <span data-i18n="remember_password">Remember your password?</span>
+        <button type="button" id="switchToLoginFromForgot" data-i18n="login">Log In</button>
       </div>
     </div>
   </div>
@@ -1172,10 +1204,10 @@ const T = {
     login_title:"Welcome Back",login_sub:"Log in to your account",
     register_title:"Create Account",register_sub:"Join LipSync Studio",
     email_placeholder:"Email address",password_placeholder:"Password",name_placeholder:"Full name",
-    forgot_password:"Forgot password?",or:"or",
+    remember_me:"Remember me",forgot_password:"Forgot password?",or:"or",
     google_login:"Continue with Google",google_register:"Sign up with Google",
     no_account:"Don't have an account?",have_account:"Already have an account?",
-    logout:"Log Out",
+    logout:"Log Out",check_email:"Check your email to confirm your account!",login_required:"Please sign up or log in to continue",forgot_title:"Reset Password",forgot_sub:"Enter your email to receive a reset link",send_reset_link:"Send Reset Link",reset_email_sent:"Password reset link sent to your email!",reset_mail_info:'The reset email will be sent from noreply@mail.app.supabase.io. Please check your inbox and spam folder.',remember_password:"Remember your password?",
     red:"Red",pink:"Pink",nude:"Nude",coral:"Coral",dark:"Dark",
     red_shades:"Red Shades",pink_shades:"Pink Shades",nude_shades:"Nude Shades",coral_shades:"Coral Shades",dark_shades:"Dark Shades"
   },
@@ -1207,10 +1239,10 @@ const T = {
     login_title:"Bon Retour",login_sub:"Connectez-vous \u00e0 votre compte",
     register_title:"Cr\u00e9er un Compte",register_sub:"Rejoignez LipSync Studio",
     email_placeholder:"Adresse e-mail",password_placeholder:"Mot de passe",name_placeholder:"Nom complet",
-    forgot_password:"Mot de passe oubli\u00e9 ?",or:"ou",
+    remember_me:"Se souvenir de moi",forgot_password:"Mot de passe oubli\u00e9 ?",or:"ou",
     google_login:"Continuer avec Google",google_register:"S'inscrire avec Google",
     no_account:"Pas encore de compte ?",have_account:"D\u00e9j\u00e0 un compte ?",
-    logout:"D\u00e9connexion",
+    logout:"D\u00e9connexion",check_email:"V\u00e9rifiez votre e-mail pour confirmer votre compte !",login_required:"Veuillez vous inscrire ou vous connecter pour continuer",forgot_title:"R\u00e9initialiser le mot de passe",forgot_sub:"Entrez votre e-mail pour recevoir un lien",send_reset_link:"Envoyer le lien",reset_email_sent:"Lien de r\u00e9initialisation envoy\u00e9 !",reset_mail_info:'L\'e-mail de r\u00e9initialisation sera envoy\u00e9 depuis noreply@mail.app.supabase.io. Veuillez v\u00e9rifier votre bo\u00eete de r\u00e9ception et vos spams.',remember_password:"Vous souvenez-vous de votre mot de passe ?",
     red:"Rouge",pink:"Rose",nude:"Nude",coral:"Corail",dark:"Fonc\u00e9",
     red_shades:"Teintes Rouges",pink_shades:"Teintes Roses",nude_shades:"Teintes Nudes",coral_shades:"Teintes Corail",dark_shades:"Teintes Fonc\u00e9es"
   },
@@ -1242,10 +1274,10 @@ const T = {
     login_title:"Willkommen Zur\u00fcck",login_sub:"Melden Sie sich an",
     register_title:"Konto Erstellen",register_sub:"Treten Sie LipSync Studio bei",
     email_placeholder:"E-Mail-Adresse",password_placeholder:"Passwort",name_placeholder:"Vollst\u00e4ndiger Name",
-    forgot_password:"Passwort vergessen?",or:"oder",
+    remember_me:"Angemeldet bleiben",forgot_password:"Passwort vergessen?",or:"oder",
     google_login:"Weiter mit Google",google_register:"Mit Google registrieren",
     no_account:"Noch kein Konto?",have_account:"Bereits ein Konto?",
-    logout:"Abmelden",
+    logout:"Abmelden",check_email:"Pr\u00fcfen Sie Ihre E-Mail, um Ihr Konto zu best\u00e4tigen!",login_required:"Bitte registrieren Sie sich oder melden Sie sich an",forgot_title:"Passwort zur\u00fccksetzen",forgot_sub:"Geben Sie Ihre E-Mail ein",send_reset_link:"Link senden",reset_email_sent:"Link zum Zur\u00fccksetzen gesendet!",reset_mail_info:'Die E-Mail wird von noreply@mail.app.supabase.io gesendet. Bitte pr\u00fcfen Sie Ihren Posteingang und Spam-Ordner.',remember_password:"Erinnern Sie sich an Ihr Passwort?",
     red:"Rot",pink:"Rosa",nude:"Nude",coral:"Koralle",dark:"Dunkel",
     red_shades:"Rote Farbt\u00f6ne",pink_shades:"Rosa Farbt\u00f6ne",nude_shades:"Nude Farbt\u00f6ne",coral_shades:"Koralle Farbt\u00f6ne",dark_shades:"Dunkle Farbt\u00f6ne"
   },
@@ -1277,10 +1309,10 @@ const T = {
     login_title:"Bienvenido de Nuevo",login_sub:"Inicia sesi\u00f3n en tu cuenta",
     register_title:"Crear Cuenta",register_sub:"\u00danete a LipSync Studio",
     email_placeholder:"Correo electr\u00f3nico",password_placeholder:"Contrase\u00f1a",name_placeholder:"Nombre completo",
-    forgot_password:"\u00bfOlvidaste tu contrase\u00f1a?",or:"o",
+    remember_me:"Recordarme",forgot_password:"\u00bfOlvidaste tu contrase\u00f1a?",or:"o",
     google_login:"Continuar con Google",google_register:"Registrarse con Google",
     no_account:"\u00bfNo tienes una cuenta?",have_account:"\u00bfYa tienes una cuenta?",
-    logout:"Cerrar Sesi\u00f3n",
+    logout:"Cerrar Sesi\u00f3n",check_email:"\u00a1Revisa tu correo para confirmar tu cuenta!",login_required:"Reg\u00edstrate o inicia sesi\u00f3n para continuar",forgot_title:"Restablecer contrase\u00f1a",forgot_sub:"Ingresa tu correo para recibir un enlace",send_reset_link:"Enviar enlace",reset_email_sent:"\u00a1Enlace de restablecimiento enviado!",reset_mail_info:'El correo se enviar\u00e1 desde noreply@mail.app.supabase.io. Revisa tu bandeja de entrada y la carpeta de spam.',remember_password:"\u00bfRecuerdas tu contrase\u00f1a?",
     red:"Rojo",pink:"Rosa",nude:"Nude",coral:"Coral",dark:"Oscuro",
     red_shades:"Tonos Rojos",pink_shades:"Tonos Rosas",nude_shades:"Tonos Nudes",coral_shades:"Tonos Coral",dark_shades:"Tonos Oscuros"
   },
@@ -1312,10 +1344,12 @@ const T = {
     login_title:"Bentornato",login_sub:"Accedi al tuo account",
     register_title:"Crea Account",register_sub:"Unisciti a LipSync Studio",
     email_placeholder:"Indirizzo e-mail",password_placeholder:"Password",name_placeholder:"Nome completo",
-    forgot_password:"Password dimenticata?",or:"oppure",
+    remember_me:"Ricordami",forgot_password:"Password dimenticata?",or:"oppure",
     google_login:"Continua con Google",google_register:"Registrati con Google",
     no_account:"Non hai un account?",have_account:"Hai gi\u00e0 un account?",
-    logout:"Esci",
+    logout:"Esci",check_email:"Controlla la tua email per confermare il tuo account!",login_required:"Registrati o accedi per continuare",
+    forgot_title:"Reimposta Password",forgot_sub:"Inserisci la tua email per ricevere un link di reimpostazione",
+    send_reset_link:"Invia Link di Reimpostazione",reset_email_sent:"Email di reimpostazione inviata! Controlla la tua casella di posta.",reset_mail_info:'L\'email verr\u00e0 inviata da noreply@mail.app.supabase.io. Controlla la posta in arrivo e la cartella spam.',remember_password:"Ricordi la tua password?",
     red:"Rosso",pink:"Rosa",nude:"Nude",coral:"Corallo",dark:"Scuro",
     red_shades:"Tonalit\u00e0 Rosse",pink_shades:"Tonalit\u00e0 Rosa",nude_shades:"Tonalit\u00e0 Nude",coral_shades:"Tonalit\u00e0 Corallo",dark_shades:"Tonalit\u00e0 Scure"
   },
@@ -1347,10 +1381,12 @@ const T = {
     login_title:"Tekrar Hosgeldiniz",login_sub:"Hesabiniza giris yapin",
     register_title:"Hesap Olustur",register_sub:"LipSync Studio'ya katil",
     email_placeholder:"E-posta adresi",password_placeholder:"Sifre",name_placeholder:"Ad soyad",
-    forgot_password:"Sifremi unuttum?",or:"veya",
+    remember_me:"Beni hatirla",forgot_password:"Sifremi unuttum?",or:"veya",
     google_login:"Google ile devam et",google_register:"Google ile kayit ol",
     no_account:"Hesabiniz yok mu?",have_account:"Zaten hesabiniz var mi?",
-    logout:"Cikis Yap",
+    logout:"Cikis Yap",check_email:"Hesabinizi onaylamak icin e-postanizi kontrol edin!",login_required:"Devam etmek icin kayit olun veya giris yapin",
+    forgot_title:"Sifreyi Sifirla",forgot_sub:"Sifirlama baglantisi almak icin e-postanizi girin",
+    send_reset_link:"Sifirlama Baglantisi Gonder",reset_email_sent:"Sifirlama e-postasi gonderildi! Gelen kutunuzu kontrol edin.",reset_mail_info:'Sifirlama e-postasi noreply@mail.app.supabase.io adresinden gonderilecektir. Gelen kutunuzu ve spam klasorunuzu kontrol edin.',remember_password:"Sifrenizi hatirliyorsunuz?",
     red:"Kirmizi",pink:"Pembe",nude:"Nude",coral:"Mercan",dark:"Koyu",
     red_shades:"Kirmizi Tonlar",pink_shades:"Pembe Tonlar",nude_shades:"Nude Tonlar",coral_shades:"Mercan Tonlar",dark_shades:"Koyu Tonlar"
   }
@@ -1438,6 +1474,75 @@ const categoryMeta = {
   nude: {count:60, samples:["#F5DEB3","#C19A6B","#8D5524"]},
   coral:{count:45, samples:["#FF7F50","#FF6F61","#FF4500"]},
   dark: {count:60, samples:["#800020","#4B0082","#301934"]}
+};
+
+// ==========================================
+// MODULE 2.5: SUPABASE CLIENT
+// ==========================================
+const SUPABASE_URL = 'https://uwnrlolzkncvjgrjpfci.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3bnJsb2x6a25jdmpncmpwZmNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNTQwMjYsImV4cCI6MjA4ODgzMDAyNn0.4oBMRu7l0T8ruyesZn51J1KjutunpuCMTXXNFNLkI3I';
+
+// Supabase Auth via REST API (no SDK needed)
+const sbAuth = {
+  _token: null,
+  _headers() {
+    const h = { 'Content-Type':'application/json', 'apikey': SUPABASE_ANON_KEY };
+    if (this._token) h['Authorization'] = 'Bearer ' + this._token;
+    return h;
+  },
+  async signUp(email, password, fullName) {
+    const res = await fetch(SUPABASE_URL + '/auth/v1/signup', {
+      method:'POST', headers: this._headers(),
+      body: JSON.stringify({ email, password, data: { full_name: fullName } })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error_description || data.msg || data.message || 'Sign up failed');
+    return data;
+  },
+  async signIn(email, password) {
+    const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+      method:'POST', headers: this._headers(),
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error_description || data.msg || data.message || 'Login failed');
+    this._token = data.access_token;
+    if (data.access_token) localStorage.setItem('lipsync-token', data.access_token);
+    if (data.refresh_token) localStorage.setItem('lipsync-refresh', data.refresh_token);
+    return data;
+  },
+  async getUser() {
+    const token = localStorage.getItem('lipsync-token');
+    if (!token) return null;
+    this._token = token;
+    const res = await fetch(SUPABASE_URL + '/auth/v1/user', { headers: this._headers() });
+    if (!res.ok) { this.clearSession(); return null; }
+    return await res.json();
+  },
+  async signOut() {
+    try {
+      await fetch(SUPABASE_URL + '/auth/v1/logout', { method:'POST', headers: this._headers() });
+    } catch(e) {}
+    this.clearSession();
+  },
+  clearSession() {
+    this._token = null;
+    localStorage.removeItem('lipsync-token');
+    localStorage.removeItem('lipsync-refresh');
+  },
+  getGoogleOAuthUrl() {
+    const redirect = encodeURIComponent(window.location.href.split('?')[0]);
+    return SUPABASE_URL + '/auth/v1/authorize?provider=google&redirect_to=' + redirect;
+  },
+  async resetPassword(email) {
+    const res = await fetch(SUPABASE_URL + '/auth/v1/recover', {
+      method:'POST', headers: this._headers(),
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error_description || data.msg || data.message || 'Reset failed');
+    return data;
+  }
 };
 
 // ==========================================
@@ -1858,57 +1963,127 @@ function showToast(msg) {
 // ==========================================
 function openAuth(mode) {
   $('authModal').classList.add('open');
-  if (mode === 'register') {
-    $('loginForm').classList.add('hidden');
-    $('registerForm').classList.remove('hidden');
-  } else {
-    $('loginForm').classList.remove('hidden');
-    $('registerForm').classList.add('hidden');
-  }
+  $('loginForm').classList.add('hidden');
+  $('registerForm').classList.add('hidden');
+  $('forgotForm').classList.add('hidden');
+  if (mode === 'register') $('registerForm').classList.remove('hidden');
+  else if (mode === 'forgot') $('forgotForm').classList.remove('hidden');
+  else { $('loginForm').classList.remove('hidden'); loadRememberedCredentials(); }
 }
 
 function closeAuth() {
   $('authModal').classList.remove('open');
 }
 
-function handleLogin(e) {
+function loadRememberedCredentials() {
+  const saved = localStorage.getItem('ls_remember');
+  if (saved) {
+    try {
+      const {email, password} = JSON.parse(saved);
+      const form = $('loginFormEl');
+      form.email.value = email || '';
+      form.password.value = password || '';
+      $('rememberMe').checked = true;
+    } catch(e) {}
+  }
+}
+
+async function handleLogin(e) {
   e.preventDefault();
   const form = e.target;
   const email = form.email.value;
-  const name = email.split('@')[0];
-  // TODO: Real auth integration
-  setLoggedIn(name, email);
-  closeAuth();
-  showToast(t('login_title') + '!');
+  const password = form.password.value;
+  const submitBtn = form.querySelector('.auth-submit');
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.6';
+
+  if ($('rememberMe').checked) {
+    localStorage.setItem('ls_remember', JSON.stringify({email, password}));
+  } else {
+    localStorage.removeItem('ls_remember');
+  }
+
+  try {
+    const data = await sbAuth.signIn(email, password);
+    const user = data.user || data;
+    setLoggedIn(user);
+    closeAuth();
+    form.reset();
+    showToast(t('login_title') + '!');
+  } catch(err) {
+    showToast(err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+  }
 }
 
-function handleRegister(e) {
+async function handleRegister(e) {
   e.preventDefault();
   const form = e.target;
   const name = form.name.value;
   const email = form.email.value;
-  // TODO: Real auth integration
-  setLoggedIn(name, email);
-  closeAuth();
-  showToast(t('register_title') + '!');
+  const password = form.password.value;
+  const submitBtn = form.querySelector('.auth-submit');
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.6';
+
+  try {
+    const data = await sbAuth.signUp(email, password, name);
+    // If no access_token, email confirmation is required
+    if (!data.access_token) {
+      closeAuth();
+      form.reset();
+      showToast(t('check_email'));
+    } else {
+      setLoggedIn(data.user || data);
+      closeAuth();
+      form.reset();
+      showToast(t('register_title') + '!');
+    }
+  } catch(err) {
+    showToast(err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+  }
 }
 
 function handleGoogleAuth() {
-  // TODO: Real Google OAuth integration
-  setLoggedIn('Google User', 'user@gmail.com');
-  closeAuth();
-  showToast(t('login_title') + '!');
+  window.location.href = sbAuth.getGoogleOAuthUrl();
 }
 
-function setLoggedIn(name, email) {
-  state.user = { name, email };
-  localStorage.setItem('lipsync-user', JSON.stringify(state.user));
+async function handleForgotPassword(e) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const submitBtn = form.querySelector('.auth-submit');
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.6';
+
+  try {
+    await sbAuth.resetPassword(email);
+    closeAuth();
+    form.reset();
+    showToast(t('reset_email_sent'));
+  } catch(err) {
+    showToast(err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+  }
+}
+
+function setLoggedIn(user) {
+  const meta = user.user_metadata || {};
+  const name = meta.full_name || user.email?.split('@')[0] || 'User';
+  state.user = { name, email: user.email, id: user.id };
   updateAuthUI();
 }
 
-function logout() {
+async function logout() {
+  await sbAuth.signOut();
   state.user = null;
-  localStorage.removeItem('lipsync-user');
   updateAuthUI();
 }
 
@@ -1953,15 +2128,21 @@ function init() {
   const lang = savedLang || (['en','fr','de','es','it','tr'].includes(browserLang) ? browserLang : 'en');
   setLang(lang);
 
-  // Upload
-  $('uploadBtn').addEventListener('click', () => $('photoInput').click());
+  // Upload (requires login)
+  $('uploadBtn').addEventListener('click', () => {
+    if (!state.user) { showToast(t('login_required')); openAuth('register'); return; }
+    $('photoInput').click();
+  });
   $('photoInput').addEventListener('change', e => {
     if (e.target.files[0]) handlePhotoUpload(e.target.files[0]);
     e.target.value = '';
   });
 
-  // Selfie
-  $('selfieBtn').addEventListener('click', openCamera);
+  // Selfie (requires login)
+  $('selfieBtn').addEventListener('click', () => {
+    if (!state.user) { showToast(t('login_required')); openAuth('register'); return; }
+    openCamera();
+  });
   $('cameraClose').addEventListener('click', closeCamera);
   $('cameraCapture').addEventListener('click', capturePhoto);
   $('cameraFlip').addEventListener('click', flipCamera);
@@ -2009,23 +2190,30 @@ function init() {
   });
   $('switchToRegister').addEventListener('click', () => openAuth('register'));
   $('switchToLogin').addEventListener('click', () => openAuth('login'));
+  $('switchToLoginFromForgot').addEventListener('click', () => openAuth('login'));
+  document.querySelector('.auth-forgot button').addEventListener('click', () => openAuth('forgot'));
   $('loginFormEl').addEventListener('submit', handleLogin);
   $('registerFormEl').addEventListener('submit', handleRegister);
+  $('forgotFormEl').addEventListener('submit', handleForgotPassword);
   $('googleLoginBtn').addEventListener('click', handleGoogleAuth);
   $('googleRegisterBtn').addEventListener('click', handleGoogleAuth);
 
-  // Restore logged-in user
-  const savedUser = localStorage.getItem('lipsync-user');
-  if (savedUser) {
-    try { state.user = JSON.parse(savedUser); } catch(e) {}
-  }
   updateAuthUI();
 
   // Initial nav state
   updateNav();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  // Restore session from Supabase
+  sbAuth.getUser().then(user => {
+    if (user && user.email) {
+      setLoggedIn(user);
+    }
+    updateAuthUI();
+  }).catch(() => {});
+});
 </script>
 </body>
 </html>
