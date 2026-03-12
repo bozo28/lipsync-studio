@@ -698,6 +698,149 @@ input{font-family:inherit}
   box-shadow:var(--shadow-sm);
 }
 
+/* ====== Nav Right ====== */
+.nav-right{
+  display:flex;align-items:center;gap:4px;
+}
+.nav-menu-btn{
+  width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--radius-full);
+  transition:all 0.2s var(--ease);
+}
+.nav-menu-btn:hover{background:var(--rose-pale)}
+.nav-menu-btn svg{width:20px;height:20px;stroke:var(--text);stroke-width:2;fill:none}
+
+/* ====== Policy Modal ====== */
+.policy-modal{
+  position:fixed;inset:0;
+  background:rgba(42,32,37,0.4);
+  backdrop-filter:blur(6px);
+  z-index:270;
+  display:none;align-items:flex-end;justify-content:center;
+}
+.policy-modal.open{display:flex}
+.policy-panel{
+  background:var(--bg-card);
+  border-radius:24px 24px 0 0;
+  width:100%;max-width:520px;
+  height:85dvh;
+  display:flex;flex-direction:column;
+  animation:slideUp 0.4s var(--ease);
+  box-shadow:0 -8px 40px rgba(42,32,37,0.15);
+}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.policy-handle{
+  width:40px;height:4px;background:var(--rose-lighter);
+  border-radius:4px;margin:12px auto 0;flex-shrink:0;
+}
+.policy-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px 0;flex-shrink:0;
+}
+.policy-header h2{
+  font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--text);
+}
+.policy-close{
+  width:36px;height:36px;border-radius:var(--radius-full);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.policy-close:hover{background:var(--rose-pale)}
+.policy-close svg{width:18px;height:18px;stroke:var(--text-light);stroke-width:2;fill:none}
+.policy-tabs{
+  display:flex;gap:0;padding:16px 16px 0;flex-shrink:0;
+}
+.policy-tab{
+  flex:1;min-width:0;
+  padding:10px 6px;
+  font-size:0.72rem;font-weight:500;
+  text-align:center;
+  color:var(--text-light);
+  border-bottom:2px solid transparent;
+  transition:all 0.3s var(--ease);
+  line-height:1.3;
+}
+.policy-tab.active{
+  color:var(--rose);
+  border-bottom-color:var(--rose);
+}
+.policy-tab:hover{color:var(--rose-dark)}
+.policy-content{
+  flex:1;overflow-y:auto;padding:20px 24px 32px;
+  -webkit-overflow-scrolling:touch;
+}
+.policy-content::-webkit-scrollbar{width:4px}
+.policy-content::-webkit-scrollbar-thumb{background:var(--rose-lighter);border-radius:4px}
+.policy-section{display:none}
+.policy-section.active{display:block}
+.policy-section h3{
+  font-family:var(--font-display);font-size:1.15rem;font-weight:500;
+  color:var(--text);margin:20px 0 10px;
+}
+.policy-section h3:first-child{margin-top:0}
+.policy-section p{
+  font-size:0.85rem;line-height:1.7;color:var(--text-secondary);margin-bottom:10px;
+}
+.policy-section ul{
+  list-style:none;padding:0;margin-bottom:14px;
+}
+.policy-section ul li{
+  font-size:0.85rem;line-height:1.7;color:var(--text-secondary);
+  padding-left:18px;position:relative;margin-bottom:4px;
+}
+.policy-section ul li::before{
+  content:'';position:absolute;left:0;top:10px;
+  width:6px;height:6px;border-radius:50%;background:var(--rose-light);
+}
+.policy-section .policy-date{
+  font-size:0.75rem;color:var(--text-light);margin-bottom:14px;
+}
+.policy-section .policy-email{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;background:var(--rose-pale);
+  border:1px solid var(--rose-lighter);border-radius:10px;
+  font-size:0.85rem;color:var(--rose-dark);font-weight:500;
+  margin-top:4px;
+}
+.policy-section .faq-item{margin-bottom:16px}
+.policy-section .faq-q{
+  font-size:0.88rem;font-weight:500;color:var(--text);margin-bottom:4px;
+  display:flex;align-items:flex-start;gap:8px;
+}
+.policy-section .faq-q::before{
+  content:'S';display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:6px;flex-shrink:0;
+  background:var(--rose);color:#fff;font-size:0.7rem;font-weight:600;
+}
+.policy-section .faq-a{
+  font-size:0.83rem;line-height:1.7;color:var(--text-secondary);
+  padding-left:30px;
+}
+.profile-info-card{
+  background:var(--rose-pale);border:1px solid var(--rose-lighter);
+  border-radius:14px;padding:18px;margin-bottom:16px;
+}
+.profile-info-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;font-size:0.85rem;
+}
+.profile-info-row:not(:last-child){border-bottom:1px solid var(--rose-lighter)}
+.profile-info-label{color:var(--text-light);font-weight:400}
+.profile-info-value{color:var(--text);font-weight:500}
+.profile-actions{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.profile-action-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;background:var(--bg-card);
+  border:1px solid var(--rose-lighter);border-radius:12px;
+  font-size:0.85rem;color:var(--text);font-weight:400;
+  transition:all 0.2s;
+}
+.profile-action-btn:hover{border-color:var(--rose-light);box-shadow:var(--shadow-sm)}
+.profile-action-btn svg{width:20px;height:20px;stroke:var(--rose);stroke-width:1.8;fill:none;flex-shrink:0}
+.profile-action-btn.danger{color:#c0392b}
+.profile-action-btn.danger svg{stroke:#c0392b}
+
 /* ====== Auth Modal ====== */
 .auth-modal{
   position:fixed;inset:0;
@@ -883,7 +1026,12 @@ input{font-family:inherit}
       <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
     <span class="nav-title" id="navTitle"></span>
-    <button class="lang-btn" id="langBtn">EN</button>
+    <div class="nav-right">
+      <button class="lang-btn" id="langBtn">EN</button>
+      <button class="nav-menu-btn" id="navMenuBtn" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
   </nav>
 
   <!-- Hidden file input -->
@@ -1165,6 +1313,169 @@ input{font-family:inherit}
   </div>
 </div>
 
+<!-- Policy Modal -->
+<div class="policy-modal" id="policyModal">
+  <div class="policy-panel">
+    <div class="policy-handle"></div>
+    <div class="policy-header">
+      <h2 data-i18n="menu_title">Menu</h2>
+      <button class="policy-close" id="policyClose">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="policy-tabs">
+      <button class="policy-tab active" data-tab="profile" data-i18n="tab_profile">Profile</button>
+      <button class="policy-tab" data-tab="faq" data-i18n="tab_faq">FAQ</button>
+      <button class="policy-tab" data-tab="credits" data-i18n="tab_credits">Credits & Payment</button>
+      <button class="policy-tab" data-tab="support" data-i18n="tab_support">Contact</button>
+    </div>
+    <div class="policy-content">
+
+      <!-- Tab 1: Profile -->
+      <div class="policy-section active" id="tabProfile">
+        <div id="profileLoggedIn" class="hidden">
+          <div class="profile-info-card">
+            <div class="profile-info-row">
+              <span class="profile-info-label" data-i18n="profile_name">Name</span>
+              <span class="profile-info-value" id="profileName">-</span>
+            </div>
+            <div class="profile-info-row">
+              <span class="profile-info-label" data-i18n="profile_email">Email</span>
+              <span class="profile-info-value" id="profileEmail">-</span>
+            </div>
+          </div>
+          <div class="profile-actions">
+            <button class="profile-action-btn" id="profileLogoutBtn">
+              <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+              <span data-i18n="logout">Log Out</span>
+            </button>
+          </div>
+        </div>
+        <div id="profileLoggedOut">
+          <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:20px" data-i18n="profile_login_msg">Log in to manage your profile</p>
+          <div style="display:flex;gap:10px;justify-content:center">
+            <button class="auth-submit" style="max-width:140px;padding:12px" id="profileLoginBtn">
+              <span data-i18n="login">Log In</span>
+            </button>
+            <button class="auth-submit" style="max-width:140px;padding:12px;background:linear-gradient(135deg,var(--rose-light),var(--rose))" id="profileRegisterBtn">
+              <span data-i18n="register">Sign Up</span>
+            </button>
+          </div>
+        </div>
+        <h3 style="margin-top:24px" data-i18n="terms_title">Terms of Use</h3>
+        <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
+        <p data-i18n="terms_desc">By using this application, you agree to the following terms.</p>
+        <h3 data-i18n="terms_service">Service Description</h3>
+        <p data-i18n="terms_service_desc">Our application provides an image processing service that allows users to apply virtual makeup effects (e.g. lipstick colors) to their photos using artificial intelligence technology.</p>
+        <h3 data-i18n="terms_responsibilities">User Responsibilities</h3>
+        <ul>
+          <li data-i18n="terms_r1">Only upload photos you have the right to use</li>
+          <li data-i18n="terms_r2">Do not upload illegal, harmful or inappropriate content</li>
+          <li data-i18n="terms_r3">Do not misuse the service</li>
+          <li data-i18n="terms_r4">Do not attempt to manipulate the system or bypass technical limitations</li>
+        </ul>
+        <h3 data-i18n="terms_account">Account Usage</h3>
+        <p data-i18n="terms_account_desc">Users are responsible for the confidentiality of their account information.</p>
+        <h3 data-i18n="terms_guarantee">Service Guarantee</h3>
+        <p data-i18n="terms_guarantee_desc">The service is provided "as is". No guarantee of uninterrupted or error-free operation is given.</p>
+        <h3 data-i18n="terms_suspension">Account Suspension</h3>
+        <p data-i18n="terms_suspension_desc">Accounts of users who violate the terms of use may be suspended or closed.</p>
+        <h3 data-i18n="terms_liability">Limitation of Liability</h3>
+        <p data-i18n="terms_liability_desc">The user is responsible for the content they upload. The application owner is not responsible for any consequences arising from this content.</p>
+
+        <h3 style="margin-top:28px" data-i18n="privacy_title">Privacy Policy</h3>
+        <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
+        <p data-i18n="privacy_desc">This policy explains how our application collects and uses user data.</p>
+        <h3 data-i18n="privacy_collected">Information Collected</h3>
+        <ul>
+          <li data-i18n="privacy_c1">Email address</li>
+          <li data-i18n="privacy_c2">Photos uploaded by the user</li>
+          <li data-i18n="privacy_c3">Application usage data</li>
+        </ul>
+        <h3 data-i18n="privacy_photos">Photo Processing</h3>
+        <p data-i18n="privacy_photos_desc">Uploaded photos are used only for AI processing and are not permanently stored.</p>
+        <h3 data-i18n="privacy_usage">Data Usage</h3>
+        <ul>
+          <li data-i18n="privacy_u1">To provide the service</li>
+          <li data-i18n="privacy_u2">To improve the application</li>
+          <li data-i18n="privacy_u3">To ensure security</li>
+        </ul>
+        <h3 data-i18n="privacy_third">Third Party Services</h3>
+        <ul>
+          <li data-i18n="privacy_t1">Cloud infrastructure</li>
+          <li data-i18n="privacy_t2">AI API services</li>
+          <li data-i18n="privacy_t3">Payment systems</li>
+        </ul>
+        <h3 data-i18n="privacy_security">Data Security</h3>
+        <p data-i18n="privacy_security_desc">User data is securely stored and protected.</p>
+        <h3 data-i18n="privacy_rights">User Rights</h3>
+        <p data-i18n="privacy_rights_desc">Users may request deletion of their accounts and data.</p>
+      </div>
+
+      <!-- Tab 2: FAQ -->
+      <div class="policy-section" id="tabFaq">
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq_q1">How does the virtual lipstick try-on work?</div>
+          <div class="faq-a" data-i18n="faq_a1">Upload a photo or take a selfie, choose a lipstick shade, and our AI technology applies the color to your lips realistically.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq_q2">Are my photos stored?</div>
+          <div class="faq-a" data-i18n="faq_a2">No. Your photos are processed temporarily for the AI effect and are not permanently stored on our servers.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq_q3">Do I need an account to use the app?</div>
+          <div class="faq-a" data-i18n="faq_a3">Yes, you need to sign up and log in to upload photos or take selfies. Registration is free.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq_q4">What is the credit system?</div>
+          <div class="faq-a" data-i18n="faq_a4">Some features use a credit-based system. Each image generation consumes a certain number of credits. Credits can be purchased in-app.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq_q5">Can I get a refund for purchased credits?</div>
+          <div class="faq-a" data-i18n="faq_a5">Purchased digital credits are generally non-refundable. If credits cannot be used due to a technical error, please contact our support team.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" data-i18n="faq_q6">How can I delete my account?</div>
+          <div class="faq-a" data-i18n="faq_a6">You can request account and data deletion by contacting our support team at support@yourapp.com.</div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Credits & Payment -->
+      <div class="policy-section" id="tabCredits">
+        <h3 data-i18n="credits_title">Credit Policy</h3>
+        <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
+        <p data-i18n="credits_desc">Some features in the application operate with a credit system.</p>
+        <ul>
+          <li data-i18n="credits_r1">Each image generation uses a certain amount of credits</li>
+          <li data-i18n="credits_r2">Credits can be purchased in-app</li>
+          <li data-i18n="credits_r3">Free trial credits may be limited</li>
+          <li data-i18n="credits_r4">Credits can only be used within the app and cannot be transferred to another account</li>
+        </ul>
+        <h3 data-i18n="refund_title">Refund Policy</h3>
+        <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
+        <p data-i18n="refund_desc">Digital credits and services purchased in the app are subject to the following conditions.</p>
+        <ul>
+          <li data-i18n="refund_r1">Purchased credits are generally non-refundable</li>
+          <li data-i18n="refund_r2">If credits cannot be used due to a technical error, you may contact the support team</li>
+          <li data-i18n="refund_r3">Payments made through Google Play or App Store are subject to the refund policies of those platforms</li>
+        </ul>
+      </div>
+
+      <!-- Tab 4: Contact / Support -->
+      <div class="policy-section" id="tabSupport">
+        <h3 data-i18n="support_title">Contact / Support</h3>
+        <p data-i18n="support_desc">If you have any questions, issues or feedback, please reach out to us.</p>
+        <div class="policy-email">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--rose);stroke-width:2;fill:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          support@yourapp.com
+        </div>
+        <p style="margin-top:20px" data-i18n="support_hours">We aim to respond within 24-48 hours.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
@@ -1209,7 +1520,34 @@ const T = {
     no_account:"Don't have an account?",have_account:"Already have an account?",
     logout:"Log Out",check_email:"Check your email to confirm your account!",login_required:"Please sign up or log in to continue",forgot_title:"Reset Password",forgot_sub:"Enter your email to receive a reset link",send_reset_link:"Send Reset Link",reset_email_sent:"Password reset link sent to your email!",reset_mail_info:'The reset email will be sent from noreply@mail.app.supabase.io. Please check your inbox and spam folder.',remember_password:"Remember your password?",
     red:"Red",pink:"Pink",nude:"Nude",coral:"Coral",dark:"Dark",
-    red_shades:"Red Shades",pink_shades:"Pink Shades",nude_shades:"Nude Shades",coral_shades:"Coral Shades",dark_shades:"Dark Shades"
+    red_shades:"Red Shades",pink_shades:"Pink Shades",nude_shades:"Nude Shades",coral_shades:"Coral Shades",dark_shades:"Dark Shades",
+    menu_title:"Menu",tab_profile:"Profile",tab_faq:"FAQ",tab_credits:"Credits & Payment",tab_support:"Contact",
+    profile_name:"Name",profile_email:"Email",profile_login_msg:"Log in to manage your profile",
+    terms_title:"Terms of Use",policy_date:"Last updated: March 2026",terms_desc:"By using this application, you agree to the following terms.",
+    terms_service:"Service Description",terms_service_desc:"Our application provides an image processing service that allows users to apply virtual makeup effects (e.g. lipstick colors) to their photos using artificial intelligence technology.",
+    terms_responsibilities:"User Responsibilities",terms_r1:"Only upload photos you have the right to use",terms_r2:"Do not upload illegal, harmful or inappropriate content",terms_r3:"Do not misuse the service",terms_r4:"Do not attempt to manipulate the system or bypass technical limitations",
+    terms_account:"Account Usage",terms_account_desc:"Users are responsible for the confidentiality of their account information.",
+    terms_guarantee:"Service Guarantee",terms_guarantee_desc:'The service is provided "as is". No guarantee of uninterrupted or error-free operation is given.',
+    terms_suspension:"Account Suspension",terms_suspension_desc:"Accounts of users who violate the terms of use may be suspended or closed.",
+    terms_liability:"Limitation of Liability",terms_liability_desc:"The user is responsible for the content they upload. The application owner is not responsible for any consequences arising from this content.",
+    privacy_title:"Privacy Policy",privacy_desc:"This policy explains how our application collects and uses user data.",
+    privacy_collected:"Information Collected",privacy_c1:"Email address",privacy_c2:"Photos uploaded by the user",privacy_c3:"Application usage data",
+    privacy_photos:"Photo Processing",privacy_photos_desc:"Uploaded photos are used only for AI processing and are not permanently stored.",
+    privacy_usage:"Data Usage",privacy_u1:"To provide the service",privacy_u2:"To improve the application",privacy_u3:"To ensure security",
+    privacy_third:"Third Party Services",privacy_t1:"Cloud infrastructure",privacy_t2:"AI API services",privacy_t3:"Payment systems",
+    privacy_security:"Data Security",privacy_security_desc:"User data is securely stored and protected.",
+    privacy_rights:"User Rights",privacy_rights_desc:"Users may request deletion of their accounts and data.",
+    faq_q1:"How does the virtual lipstick try-on work?",faq_a1:"Upload a photo or take a selfie, choose a lipstick shade, and our AI technology applies the color to your lips realistically.",
+    faq_q2:"Are my photos stored?",faq_a2:"No. Your photos are processed temporarily for the AI effect and are not permanently stored on our servers.",
+    faq_q3:"Do I need an account to use the app?",faq_a3:"Yes, you need to sign up and log in to upload photos or take selfies. Registration is free.",
+    faq_q4:"What is the credit system?",faq_a4:"Some features use a credit-based system. Each image generation consumes a certain number of credits. Credits can be purchased in-app.",
+    faq_q5:"Can I get a refund for purchased credits?",faq_a5:"Purchased digital credits are generally non-refundable. If credits cannot be used due to a technical error, please contact our support team.",
+    faq_q6:"How can I delete my account?",faq_a6:"You can request account and data deletion by contacting our support team at support@yourapp.com.",
+    credits_title:"Credit Policy",credits_desc:"Some features in the application operate with a credit system.",
+    credits_r1:"Each image generation uses a certain amount of credits",credits_r2:"Credits can be purchased in-app",credits_r3:"Free trial credits may be limited",credits_r4:"Credits can only be used within the app and cannot be transferred to another account",
+    refund_title:"Refund Policy",refund_desc:"Digital credits and services purchased in the app are subject to the following conditions.",
+    refund_r1:"Purchased credits are generally non-refundable",refund_r2:"If credits cannot be used due to a technical error, you may contact the support team",refund_r3:"Payments made through Google Play or App Store are subject to the refund policies of those platforms",
+    support_title:"Contact / Support",support_desc:"If you have any questions, issues or feedback, please reach out to us.",support_hours:"We aim to respond within 24-48 hours."
   },
   fr: {
     tagline:"Trouvez Votre Teinte Parfaite",
@@ -1244,7 +1582,34 @@ const T = {
     no_account:"Pas encore de compte ?",have_account:"D\u00e9j\u00e0 un compte ?",
     logout:"D\u00e9connexion",check_email:"V\u00e9rifiez votre e-mail pour confirmer votre compte !",login_required:"Veuillez vous inscrire ou vous connecter pour continuer",forgot_title:"R\u00e9initialiser le mot de passe",forgot_sub:"Entrez votre e-mail pour recevoir un lien",send_reset_link:"Envoyer le lien",reset_email_sent:"Lien de r\u00e9initialisation envoy\u00e9 !",reset_mail_info:'L\'e-mail de r\u00e9initialisation sera envoy\u00e9 depuis noreply@mail.app.supabase.io. Veuillez v\u00e9rifier votre bo\u00eete de r\u00e9ception et vos spams.',remember_password:"Vous souvenez-vous de votre mot de passe ?",
     red:"Rouge",pink:"Rose",nude:"Nude",coral:"Corail",dark:"Fonc\u00e9",
-    red_shades:"Teintes Rouges",pink_shades:"Teintes Roses",nude_shades:"Teintes Nudes",coral_shades:"Teintes Corail",dark_shades:"Teintes Fonc\u00e9es"
+    red_shades:"Teintes Rouges",pink_shades:"Teintes Roses",nude_shades:"Teintes Nudes",coral_shades:"Teintes Corail",dark_shades:"Teintes Fonc\u00e9es",
+    menu_title:"Menu",tab_profile:"Profil",tab_faq:"FAQ",tab_credits:"Cr\u00e9dits et Paiement",tab_support:"Contact",
+    profile_name:"Nom",profile_email:"E-mail",profile_login_msg:"Connectez-vous pour g\u00e9rer votre profil",
+    terms_title:"Conditions d'utilisation",policy_date:"Derni\u00e8re mise \u00e0 jour : Mars 2026",terms_desc:"En utilisant cette application, vous acceptez les conditions suivantes.",
+    terms_service:"Description du service",terms_service_desc:"Notre application fournit un service de traitement d'images permettant aux utilisateurs d'appliquer des effets de maquillage virtuel (\u00e0 l'aide de la technologie IA) sur leurs photos.",
+    terms_responsibilities:"Responsabilit\u00e9s de l'utilisateur",terms_r1:"Ne t\u00e9l\u00e9charger que des photos dont vous avez le droit d'utilisation",terms_r2:"Ne pas t\u00e9l\u00e9charger de contenu ill\u00e9gal, nuisible ou inappropri\u00e9",terms_r3:"Ne pas utiliser le service de mani\u00e8re abusive",terms_r4:"Ne pas tenter de manipuler le syst\u00e8me ou de contourner les limitations techniques",
+    terms_account:"Utilisation du compte",terms_account_desc:"Les utilisateurs sont responsables de la confidentialit\u00e9 de leurs informations de compte.",
+    terms_guarantee:"Garantie de service",terms_guarantee_desc:'Le service est fourni "tel quel". Aucune garantie de fonctionnement ininterrompu ou sans erreur n\'est donn\u00e9e.',
+    terms_suspension:"Suspension de compte",terms_suspension_desc:"Les comptes des utilisateurs qui enfreignent les conditions d'utilisation peuvent \u00eatre suspendus ou ferm\u00e9s.",
+    terms_liability:"Limitation de responsabilit\u00e9",terms_liability_desc:"L'utilisateur est responsable du contenu qu'il t\u00e9l\u00e9charge. Le propri\u00e9taire de l'application n'est pas responsable des cons\u00e9quences d\u00e9coulant de ce contenu.",
+    privacy_title:"Politique de confidentialit\u00e9",privacy_desc:"Cette politique explique comment notre application collecte et utilise les donn\u00e9es des utilisateurs.",
+    privacy_collected:"Informations collect\u00e9es",privacy_c1:"Adresse e-mail",privacy_c2:"Photos t\u00e9l\u00e9charg\u00e9es par l'utilisateur",privacy_c3:"Donn\u00e9es d'utilisation de l'application",
+    privacy_photos:"Traitement des photos",privacy_photos_desc:"Les photos t\u00e9l\u00e9charg\u00e9es sont utilis\u00e9es uniquement pour le traitement IA et ne sont pas stock\u00e9es de mani\u00e8re permanente.",
+    privacy_usage:"Utilisation des donn\u00e9es",privacy_u1:"Fournir le service",privacy_u2:"Am\u00e9liorer l'application",privacy_u3:"Assurer la s\u00e9curit\u00e9",
+    privacy_third:"Services tiers",privacy_t1:"Infrastructure cloud",privacy_t2:"Services API IA",privacy_t3:"Syst\u00e8mes de paiement",
+    privacy_security:"S\u00e9curit\u00e9 des donn\u00e9es",privacy_security_desc:"Les donn\u00e9es des utilisateurs sont stock\u00e9es et prot\u00e9g\u00e9es de mani\u00e8re s\u00e9curis\u00e9e.",
+    privacy_rights:"Droits de l'utilisateur",privacy_rights_desc:"Les utilisateurs peuvent demander la suppression de leur compte et de leurs donn\u00e9es.",
+    faq_q1:"Comment fonctionne l'essai virtuel de rouge \u00e0 l\u00e8vres ?",faq_a1:"T\u00e9l\u00e9chargez une photo ou prenez un selfie, choisissez une teinte et notre technologie IA applique la couleur sur vos l\u00e8vres de mani\u00e8re r\u00e9aliste.",
+    faq_q2:"Mes photos sont-elles conserv\u00e9es ?",faq_a2:"Non. Vos photos sont trait\u00e9es temporairement et ne sont pas stock\u00e9es de mani\u00e8re permanente.",
+    faq_q3:"Ai-je besoin d'un compte ?",faq_a3:"Oui, vous devez vous inscrire et vous connecter pour utiliser l'application. L'inscription est gratuite.",
+    faq_q4:"Qu'est-ce que le syst\u00e8me de cr\u00e9dits ?",faq_a4:"Certaines fonctionnalit\u00e9s utilisent un syst\u00e8me de cr\u00e9dits. Chaque g\u00e9n\u00e9ration d'image consomme un certain nombre de cr\u00e9dits.",
+    faq_q5:"Puis-je obtenir un remboursement ?",faq_a5:"Les cr\u00e9dits num\u00e9riques achet\u00e9s ne sont g\u00e9n\u00e9ralement pas remboursables. En cas d'erreur technique, contactez notre \u00e9quipe de support.",
+    faq_q6:"Comment supprimer mon compte ?",faq_a6:"Vous pouvez demander la suppression de votre compte en contactant support@yourapp.com.",
+    credits_title:"Politique de cr\u00e9dits",credits_desc:"Certaines fonctionnalit\u00e9s de l'application fonctionnent avec un syst\u00e8me de cr\u00e9dits.",
+    credits_r1:"Chaque g\u00e9n\u00e9ration d'image utilise un certain nombre de cr\u00e9dits",credits_r2:"Les cr\u00e9dits peuvent \u00eatre achet\u00e9s dans l'application",credits_r3:"Les cr\u00e9dits d'essai gratuits peuvent \u00eatre limit\u00e9s",credits_r4:"Les cr\u00e9dits ne peuvent \u00eatre utilis\u00e9s que dans l'application et ne sont pas transf\u00e9rables",
+    refund_title:"Politique de remboursement",refund_desc:"Les cr\u00e9dits et services num\u00e9riques achet\u00e9s sont soumis aux conditions suivantes.",
+    refund_r1:"Les cr\u00e9dits achet\u00e9s ne sont g\u00e9n\u00e9ralement pas remboursables",refund_r2:"En cas d'erreur technique, vous pouvez contacter l'\u00e9quipe de support",refund_r3:"Les paiements via Google Play ou App Store sont soumis aux politiques de ces plateformes",
+    support_title:"Contact / Support",support_desc:"Pour toute question, probl\u00e8me ou commentaire, n'h\u00e9sitez pas \u00e0 nous contacter.",support_hours:"Nous visons \u00e0 r\u00e9pondre sous 24-48 heures."
   },
   de: {
     tagline:"Finden Sie Ihren Perfekten Farbton",
@@ -1279,7 +1644,34 @@ const T = {
     no_account:"Noch kein Konto?",have_account:"Bereits ein Konto?",
     logout:"Abmelden",check_email:"Pr\u00fcfen Sie Ihre E-Mail, um Ihr Konto zu best\u00e4tigen!",login_required:"Bitte registrieren Sie sich oder melden Sie sich an",forgot_title:"Passwort zur\u00fccksetzen",forgot_sub:"Geben Sie Ihre E-Mail ein",send_reset_link:"Link senden",reset_email_sent:"Link zum Zur\u00fccksetzen gesendet!",reset_mail_info:'Die E-Mail wird von noreply@mail.app.supabase.io gesendet. Bitte pr\u00fcfen Sie Ihren Posteingang und Spam-Ordner.',remember_password:"Erinnern Sie sich an Ihr Passwort?",
     red:"Rot",pink:"Rosa",nude:"Nude",coral:"Koralle",dark:"Dunkel",
-    red_shades:"Rote Farbt\u00f6ne",pink_shades:"Rosa Farbt\u00f6ne",nude_shades:"Nude Farbt\u00f6ne",coral_shades:"Koralle Farbt\u00f6ne",dark_shades:"Dunkle Farbt\u00f6ne"
+    red_shades:"Rote Farbt\u00f6ne",pink_shades:"Rosa Farbt\u00f6ne",nude_shades:"Nude Farbt\u00f6ne",coral_shades:"Koralle Farbt\u00f6ne",dark_shades:"Dunkle Farbt\u00f6ne",
+    menu_title:"Men\u00fc",tab_profile:"Profil",tab_faq:"FAQ",tab_credits:"Kredite & Zahlung",tab_support:"Kontakt",
+    profile_name:"Name",profile_email:"E-Mail",profile_login_msg:"Melden Sie sich an, um Ihr Profil zu verwalten",
+    terms_title:"Nutzungsbedingungen",policy_date:"Letzte Aktualisierung: M\u00e4rz 2026",terms_desc:"Durch die Nutzung dieser Anwendung stimmen Sie den folgenden Bedingungen zu.",
+    terms_service:"Dienstbeschreibung",terms_service_desc:"Unsere Anwendung bietet einen Bildverarbeitungsdienst, der es Benutzern erm\u00f6glicht, mithilfe von KI-Technologie virtuelle Make-up-Effekte auf ihre Fotos anzuwenden.",
+    terms_responsibilities:"Benutzerverantwortung",terms_r1:"Nur Fotos hochladen, f\u00fcr die Sie Nutzungsrechte haben",terms_r2:"Keine illegalen, sch\u00e4dlichen oder unangemessenen Inhalte hochladen",terms_r3:"Den Dienst nicht missbrauchen",terms_r4:"Nicht versuchen, das System zu manipulieren oder technische Einschr\u00e4nkungen zu umgehen",
+    terms_account:"Kontonutzung",terms_account_desc:"Benutzer sind f\u00fcr die Vertraulichkeit ihrer Kontoinformationen verantwortlich.",
+    terms_guarantee:"Servicegarantie",terms_guarantee_desc:'Der Dienst wird "wie besehen" bereitgestellt. Es wird keine Garantie f\u00fcr unterbrechungsfreien oder fehlerfreien Betrieb gegeben.',
+    terms_suspension:"Kontosperrung",terms_suspension_desc:"Konten von Benutzern, die gegen die Nutzungsbedingungen versto\u00dfen, k\u00f6nnen gesperrt oder geschlossen werden.",
+    terms_liability:"Haftungsbeschr\u00e4nkung",terms_liability_desc:"Der Benutzer ist f\u00fcr die von ihm hochgeladenen Inhalte verantwortlich. Der Anwendungseigent\u00fcmer ist nicht f\u00fcr daraus entstehende Folgen verantwortlich.",
+    privacy_title:"Datenschutzrichtlinie",privacy_desc:"Diese Richtlinie erl\u00e4utert, wie unsere Anwendung Benutzerdaten sammelt und verwendet.",
+    privacy_collected:"Gesammelte Informationen",privacy_c1:"E-Mail-Adresse",privacy_c2:"Vom Benutzer hochgeladene Fotos",privacy_c3:"App-Nutzungsdaten",
+    privacy_photos:"Fotoverarbeitung",privacy_photos_desc:"Hochgeladene Fotos werden nur f\u00fcr die KI-Verarbeitung verwendet und nicht dauerhaft gespeichert.",
+    privacy_usage:"Datenverwendung",privacy_u1:"Bereitstellung des Dienstes",privacy_u2:"Verbesserung der Anwendung",privacy_u3:"Gew\u00e4hrleistung der Sicherheit",
+    privacy_third:"Drittanbieterdienste",privacy_t1:"Cloud-Infrastruktur",privacy_t2:"KI-API-Dienste",privacy_t3:"Zahlungssysteme",
+    privacy_security:"Datensicherheit",privacy_security_desc:"Benutzerdaten werden sicher gespeichert und gesch\u00fctzt.",
+    privacy_rights:"Benutzerrechte",privacy_rights_desc:"Benutzer k\u00f6nnen die L\u00f6schung ihres Kontos und ihrer Daten beantragen.",
+    faq_q1:"Wie funktioniert die virtuelle Lippenstift-Anprobe?",faq_a1:"Laden Sie ein Foto hoch oder machen Sie ein Selfie, w\u00e4hlen Sie einen Farbton und unsere KI wendet die Farbe realistisch auf Ihre Lippen an.",
+    faq_q2:"Werden meine Fotos gespeichert?",faq_a2:"Nein. Ihre Fotos werden nur tempor\u00e4r verarbeitet und nicht dauerhaft gespeichert.",
+    faq_q3:"Brauche ich ein Konto?",faq_a3:"Ja, Sie m\u00fcssen sich registrieren und anmelden. Die Registrierung ist kostenlos.",
+    faq_q4:"Was ist das Kreditsystem?",faq_a4:"Einige Funktionen verwenden ein Kreditsystem. Jede Bilderzeugung verbraucht eine bestimmte Anzahl von Krediten.",
+    faq_q5:"Kann ich Kredite erstatten lassen?",faq_a5:"Gekaufte digitale Kredite sind in der Regel nicht erstattungsf\u00e4hig. Bei technischen Fehlern kontaktieren Sie bitte unser Support-Team.",
+    faq_q6:"Wie kann ich mein Konto l\u00f6schen?",faq_a6:"Sie k\u00f6nnen die L\u00f6schung bei support@yourapp.com beantragen.",
+    credits_title:"Kreditrichtlinie",credits_desc:"Einige Funktionen der Anwendung arbeiten mit einem Kreditsystem.",
+    credits_r1:"Jede Bilderzeugung verbraucht eine bestimmte Anzahl von Krediten",credits_r2:"Kredite k\u00f6nnen in der App gekauft werden",credits_r3:"Kostenlose Testkredite k\u00f6nnen begrenzt sein",credits_r4:"Kredite k\u00f6nnen nur in der App verwendet und nicht auf ein anderes Konto \u00fcbertragen werden",
+    refund_title:"R\u00fcckerstattungsrichtlinie",refund_desc:"Digitale Kredite und Dienste unterliegen den folgenden Bedingungen.",
+    refund_r1:"Gekaufte Kredite sind in der Regel nicht erstattungsf\u00e4hig",refund_r2:"Bei technischen Fehlern k\u00f6nnen Sie das Support-Team kontaktieren",refund_r3:"Zahlungen \u00fcber Google Play oder App Store unterliegen den R\u00fcckerstattungsrichtlinien dieser Plattformen",
+    support_title:"Kontakt / Support",support_desc:"Bei Fragen, Problemen oder Feedback kontaktieren Sie uns bitte.",support_hours:"Wir antworten in der Regel innerhalb von 24-48 Stunden."
   },
   es: {
     tagline:"Encuentra Tu Tono Perfecto",
@@ -1314,7 +1706,34 @@ const T = {
     no_account:"\u00bfNo tienes una cuenta?",have_account:"\u00bfYa tienes una cuenta?",
     logout:"Cerrar Sesi\u00f3n",check_email:"\u00a1Revisa tu correo para confirmar tu cuenta!",login_required:"Reg\u00edstrate o inicia sesi\u00f3n para continuar",forgot_title:"Restablecer contrase\u00f1a",forgot_sub:"Ingresa tu correo para recibir un enlace",send_reset_link:"Enviar enlace",reset_email_sent:"\u00a1Enlace de restablecimiento enviado!",reset_mail_info:'El correo se enviar\u00e1 desde noreply@mail.app.supabase.io. Revisa tu bandeja de entrada y la carpeta de spam.',remember_password:"\u00bfRecuerdas tu contrase\u00f1a?",
     red:"Rojo",pink:"Rosa",nude:"Nude",coral:"Coral",dark:"Oscuro",
-    red_shades:"Tonos Rojos",pink_shades:"Tonos Rosas",nude_shades:"Tonos Nudes",coral_shades:"Tonos Coral",dark_shades:"Tonos Oscuros"
+    red_shades:"Tonos Rojos",pink_shades:"Tonos Rosas",nude_shades:"Tonos Nudes",coral_shades:"Tonos Coral",dark_shades:"Tonos Oscuros",
+    menu_title:"Men\u00fa",tab_profile:"Perfil",tab_faq:"Preguntas Frecuentes",tab_credits:"Cr\u00e9ditos y Pago",tab_support:"Contacto",
+    profile_name:"Nombre",profile_email:"Correo",profile_login_msg:"Inicia sesi\u00f3n para gestionar tu perfil",
+    terms_title:"T\u00e9rminos de Uso",policy_date:"\u00daltima actualizaci\u00f3n: Marzo 2026",terms_desc:"Al usar esta aplicaci\u00f3n, aceptas los siguientes t\u00e9rminos.",
+    terms_service:"Descripci\u00f3n del servicio",terms_service_desc:"Nuestra aplicaci\u00f3n ofrece un servicio de procesamiento de im\u00e1genes que permite a los usuarios aplicar efectos de maquillaje virtual mediante tecnolog\u00eda de inteligencia artificial.",
+    terms_responsibilities:"Responsabilidades del usuario",terms_r1:"Solo subir fotos sobre las que tengas derechos de uso",terms_r2:"No subir contenido ilegal, da\u00f1ino o inapropiado",terms_r3:"No hacer un uso indebido del servicio",terms_r4:"No intentar manipular el sistema o eludir las limitaciones t\u00e9cnicas",
+    terms_account:"Uso de la cuenta",terms_account_desc:"Los usuarios son responsables de la confidencialidad de la informaci\u00f3n de su cuenta.",
+    terms_guarantee:"Garant\u00eda del servicio",terms_guarantee_desc:'El servicio se proporciona "tal cual". No se garantiza un funcionamiento ininterrumpido o libre de errores.',
+    terms_suspension:"Suspensi\u00f3n de cuenta",terms_suspension_desc:"Las cuentas de los usuarios que infrinjan los t\u00e9rminos de uso pueden ser suspendidas o cerradas.",
+    terms_liability:"Limitaci\u00f3n de responsabilidad",terms_liability_desc:"El usuario es responsable del contenido que sube. El propietario de la aplicaci\u00f3n no es responsable de las consecuencias derivadas de dicho contenido.",
+    privacy_title:"Pol\u00edtica de Privacidad",privacy_desc:"Esta pol\u00edtica explica c\u00f3mo nuestra aplicaci\u00f3n recopila y utiliza los datos de los usuarios.",
+    privacy_collected:"Informaci\u00f3n recopilada",privacy_c1:"Direcci\u00f3n de correo electr\u00f3nico",privacy_c2:"Fotos subidas por el usuario",privacy_c3:"Datos de uso de la aplicaci\u00f3n",
+    privacy_photos:"Procesamiento de fotos",privacy_photos_desc:"Las fotos subidas se utilizan \u00fanicamente para el procesamiento de IA y no se almacenan de forma permanente.",
+    privacy_usage:"Uso de datos",privacy_u1:"Proporcionar el servicio",privacy_u2:"Mejorar la aplicaci\u00f3n",privacy_u3:"Garantizar la seguridad",
+    privacy_third:"Servicios de terceros",privacy_t1:"Infraestructura en la nube",privacy_t2:"Servicios de API de IA",privacy_t3:"Sistemas de pago",
+    privacy_security:"Seguridad de datos",privacy_security_desc:"Los datos de los usuarios se almacenan y protegen de forma segura.",
+    privacy_rights:"Derechos del usuario",privacy_rights_desc:"Los usuarios pueden solicitar la eliminaci\u00f3n de su cuenta y datos.",
+    faq_q1:"\u00bfC\u00f3mo funciona la prueba virtual de labial?",faq_a1:"Sube una foto o toma un selfie, elige un tono y nuestra IA aplica el color en tus labios de forma realista.",
+    faq_q2:"\u00bfSe guardan mis fotos?",faq_a2:"No. Tus fotos se procesan temporalmente y no se almacenan de forma permanente.",
+    faq_q3:"\u00bfNecesito una cuenta?",faq_a3:"S\u00ed, necesitas registrarte e iniciar sesi\u00f3n. El registro es gratuito.",
+    faq_q4:"\u00bfQu\u00e9 es el sistema de cr\u00e9ditos?",faq_a4:"Algunas funciones usan un sistema de cr\u00e9ditos. Cada generaci\u00f3n de imagen consume cierta cantidad de cr\u00e9ditos.",
+    faq_q5:"\u00bfPuedo obtener un reembolso?",faq_a5:"Los cr\u00e9ditos digitales comprados generalmente no son reembolsables. En caso de error t\u00e9cnico, contacta con nuestro equipo de soporte.",
+    faq_q6:"\u00bfC\u00f3mo puedo eliminar mi cuenta?",faq_a6:"Puedes solicitar la eliminaci\u00f3n contactando a support@yourapp.com.",
+    credits_title:"Pol\u00edtica de Cr\u00e9ditos",credits_desc:"Algunas funciones de la aplicaci\u00f3n funcionan con un sistema de cr\u00e9ditos.",
+    credits_r1:"Cada generaci\u00f3n de imagen usa cierta cantidad de cr\u00e9ditos",credits_r2:"Los cr\u00e9ditos se pueden comprar en la app",credits_r3:"Los cr\u00e9ditos de prueba gratuitos pueden ser limitados",credits_r4:"Los cr\u00e9ditos solo se pueden usar en la app y no son transferibles",
+    refund_title:"Pol\u00edtica de Reembolso",refund_desc:"Los cr\u00e9ditos y servicios digitales comprados est\u00e1n sujetos a las siguientes condiciones.",
+    refund_r1:"Los cr\u00e9ditos comprados generalmente no son reembolsables",refund_r2:"En caso de error t\u00e9cnico, puedes contactar al equipo de soporte",refund_r3:"Los pagos realizados a trav\u00e9s de Google Play o App Store est\u00e1n sujetos a las pol\u00edticas de esas plataformas",
+    support_title:"Contacto / Soporte",support_desc:"Si tienes preguntas, problemas o comentarios, no dudes en contactarnos.",support_hours:"Intentamos responder en un plazo de 24-48 horas."
   },
   it: {
     tagline:"Trova la Tua Tonalit\u00e0 Perfetta",
@@ -1351,7 +1770,34 @@ const T = {
     forgot_title:"Reimposta Password",forgot_sub:"Inserisci la tua email per ricevere un link di reimpostazione",
     send_reset_link:"Invia Link di Reimpostazione",reset_email_sent:"Email di reimpostazione inviata! Controlla la tua casella di posta.",reset_mail_info:'L\'email verr\u00e0 inviata da noreply@mail.app.supabase.io. Controlla la posta in arrivo e la cartella spam.',remember_password:"Ricordi la tua password?",
     red:"Rosso",pink:"Rosa",nude:"Nude",coral:"Corallo",dark:"Scuro",
-    red_shades:"Tonalit\u00e0 Rosse",pink_shades:"Tonalit\u00e0 Rosa",nude_shades:"Tonalit\u00e0 Nude",coral_shades:"Tonalit\u00e0 Corallo",dark_shades:"Tonalit\u00e0 Scure"
+    red_shades:"Tonalit\u00e0 Rosse",pink_shades:"Tonalit\u00e0 Rosa",nude_shades:"Tonalit\u00e0 Nude",coral_shades:"Tonalit\u00e0 Corallo",dark_shades:"Tonalit\u00e0 Scure",
+    menu_title:"Menu",tab_profile:"Profilo",tab_faq:"FAQ",tab_credits:"Crediti e Pagamento",tab_support:"Contatto",
+    profile_name:"Nome",profile_email:"Email",profile_login_msg:"Accedi per gestire il tuo profilo",
+    terms_title:"Termini di Utilizzo",policy_date:"Ultimo aggiornamento: Marzo 2026",terms_desc:"Utilizzando questa applicazione, accetti i seguenti termini.",
+    terms_service:"Descrizione del servizio",terms_service_desc:"La nostra applicazione fornisce un servizio di elaborazione immagini che consente agli utenti di applicare effetti di trucco virtuale utilizzando la tecnologia AI.",
+    terms_responsibilities:"Responsabilit\u00e0 dell'utente",terms_r1:"Caricare solo foto di cui si ha il diritto di utilizzo",terms_r2:"Non caricare contenuti illegali, dannosi o inappropriati",terms_r3:"Non abusare del servizio",terms_r4:"Non tentare di manipolare il sistema o aggirare le limitazioni tecniche",
+    terms_account:"Utilizzo dell'account",terms_account_desc:"Gli utenti sono responsabili della riservatezza delle informazioni del proprio account.",
+    terms_guarantee:"Garanzia del servizio",terms_guarantee_desc:'Il servizio \u00e8 fornito "cos\u00ec com\'\u00e8". Non si garantisce un funzionamento ininterrotto o privo di errori.',
+    terms_suspension:"Sospensione dell'account",terms_suspension_desc:"Gli account degli utenti che violano i termini di utilizzo possono essere sospesi o chiusi.",
+    terms_liability:"Limitazione di responsabilit\u00e0",terms_liability_desc:"L'utente \u00e8 responsabile del contenuto caricato. Il proprietario dell'applicazione non \u00e8 responsabile delle conseguenze derivanti da tale contenuto.",
+    privacy_title:"Informativa sulla Privacy",privacy_desc:"Questa informativa spiega come la nostra applicazione raccoglie e utilizza i dati degli utenti.",
+    privacy_collected:"Informazioni raccolte",privacy_c1:"Indirizzo email",privacy_c2:"Foto caricate dall'utente",privacy_c3:"Dati di utilizzo dell'app",
+    privacy_photos:"Elaborazione foto",privacy_photos_desc:"Le foto caricate vengono utilizzate solo per l'elaborazione AI e non vengono memorizzate in modo permanente.",
+    privacy_usage:"Utilizzo dei dati",privacy_u1:"Fornire il servizio",privacy_u2:"Migliorare l'applicazione",privacy_u3:"Garantire la sicurezza",
+    privacy_third:"Servizi di terze parti",privacy_t1:"Infrastruttura cloud",privacy_t2:"Servizi API AI",privacy_t3:"Sistemi di pagamento",
+    privacy_security:"Sicurezza dei dati",privacy_security_desc:"I dati degli utenti sono archiviati e protetti in modo sicuro.",
+    privacy_rights:"Diritti dell'utente",privacy_rights_desc:"Gli utenti possono richiedere la cancellazione del proprio account e dei propri dati.",
+    faq_q1:"Come funziona la prova virtuale del rossetto?",faq_a1:"Carica una foto o scatta un selfie, scegli una tonalit\u00e0 e la nostra IA applica il colore sulle tue labbra in modo realistico.",
+    faq_q2:"Le mie foto vengono conservate?",faq_a2:"No. Le tue foto vengono elaborate temporaneamente e non vengono memorizzate in modo permanente.",
+    faq_q3:"Ho bisogno di un account?",faq_a3:"S\u00ec, devi registrarti e accedere. La registrazione \u00e8 gratuita.",
+    faq_q4:"Cos'\u00e8 il sistema di crediti?",faq_a4:"Alcune funzionalit\u00e0 utilizzano un sistema di crediti. Ogni generazione di immagine consuma un certo numero di crediti.",
+    faq_q5:"Posso ottenere un rimborso?",faq_a5:"I crediti digitali acquistati generalmente non sono rimborsabili. In caso di errore tecnico, contatta il nostro team di supporto.",
+    faq_q6:"Come posso eliminare il mio account?",faq_a6:"Puoi richiedere l'eliminazione contattando support@yourapp.com.",
+    credits_title:"Politica dei Crediti",credits_desc:"Alcune funzionalit\u00e0 dell'applicazione funzionano con un sistema di crediti.",
+    credits_r1:"Ogni generazione di immagine utilizza un certo numero di crediti",credits_r2:"I crediti possono essere acquistati nell'app",credits_r3:"I crediti di prova gratuiti possono essere limitati",credits_r4:"I crediti possono essere utilizzati solo nell'app e non sono trasferibili",
+    refund_title:"Politica di Rimborso",refund_desc:"I crediti e i servizi digitali acquistati sono soggetti alle seguenti condizioni.",
+    refund_r1:"I crediti acquistati generalmente non sono rimborsabili",refund_r2:"In caso di errore tecnico, \u00e8 possibile contattare il team di supporto",refund_r3:"I pagamenti effettuati tramite Google Play o App Store sono soggetti alle politiche di rimborso di tali piattaforme",
+    support_title:"Contatto / Supporto",support_desc:"Per domande, problemi o feedback, non esitare a contattarci.",support_hours:"Cerchiamo di rispondere entro 24-48 ore."
   },
   tr: {
     tagline:"Mukemmel Tonunuzu Bulun",
@@ -1388,7 +1834,34 @@ const T = {
     forgot_title:"Sifreyi Sifirla",forgot_sub:"Sifirlama baglantisi almak icin e-postanizi girin",
     send_reset_link:"Sifirlama Baglantisi Gonder",reset_email_sent:"Sifirlama e-postasi gonderildi! Gelen kutunuzu kontrol edin.",reset_mail_info:'Sifirlama e-postasi noreply@mail.app.supabase.io adresinden gonderilecektir. Gelen kutunuzu ve spam klasorunuzu kontrol edin.',remember_password:"Sifrenizi hatirliyorsunuz?",
     red:"Kirmizi",pink:"Pembe",nude:"Nude",coral:"Mercan",dark:"Koyu",
-    red_shades:"Kirmizi Tonlar",pink_shades:"Pembe Tonlar",nude_shades:"Nude Tonlar",coral_shades:"Mercan Tonlar",dark_shades:"Koyu Tonlar"
+    red_shades:"Kirmizi Tonlar",pink_shades:"Pembe Tonlar",nude_shades:"Nude Tonlar",coral_shades:"Mercan Tonlar",dark_shades:"Koyu Tonlar",
+    menu_title:"Menu",tab_profile:"Profil Yonetimi",tab_faq:"Sikca Sorulan Sorular",tab_credits:"Kredi Sistemi ve Odeme",tab_support:"Iletisim / Destek",
+    profile_name:"Ad",profile_email:"E-posta",profile_login_msg:"Profilinizi yonetmek icin giris yapin",
+    terms_title:"Kullanim Sartlari",policy_date:"Son guncelleme: Mart 2026",terms_desc:"Bu uygulamayi kullanarak asagidaki sartlari kabul etmis sayilirsiniz.",
+    terms_service:"Hizmet Tanimi",terms_service_desc:"Uygulamamiz, kullanicilarin fotograflarina yapay zeka teknolojisi kullanarak sanal makyaj efektleri (ornegin ruj renkleri) uygulamasina olanak saglayan bir gorsel isleme hizmeti sunar.",
+    terms_responsibilities:"Kullanici Sorumluluklari",terms_r1:"Yalnizca kullanma hakkina sahip olduklari fotograflari yuklemek",terms_r2:"Yasa disi, zararli veya uygunsuz icerik yuklememek",terms_r3:"Hizmeti kotuye kullanmamak",terms_r4:"Sistemi manipule etmeye veya teknik sinirlamalari asmaya calismamak",
+    terms_account:"Hesap Kullanimi",terms_account_desc:"Kullanicilar hesap bilgilerinin gizliliginden sorumludur.",
+    terms_guarantee:"Hizmet Garantisi",terms_guarantee_desc:'Hizmet "oldugu gibi" sunulmaktadir. Kesintisiz veya hatasiz calisacagi garanti edilmez.',
+    terms_suspension:"Hesap Askiya Alma",terms_suspension_desc:"Kullanim sartlarini ihlal eden kullanicilarin hesaplari askiya alinabilir veya kapatilabilir.",
+    terms_liability:"Sorumluluk Siniri",terms_liability_desc:"Kullanici tarafindan yuklenen iceriklerden kullanici sorumludur. Uygulama sahibi bu iceriklerden dogabilecek sonuclardan sorumlu degildir.",
+    privacy_title:"Gizlilik Politikasi",privacy_desc:"Bu politika, uygulamamizin kullanici verilerini nasil topladigini ve kullandigini aciklar.",
+    privacy_collected:"Toplanan Bilgiler",privacy_c1:"E-posta adresi",privacy_c2:"Kullanici tarafindan yuklenen fotograflar",privacy_c3:"Uygulama kullanim verileri",
+    privacy_photos:"Fotograf Isleme",privacy_photos_desc:"Yuklenen fotograflar yalnizca yapay zeka islemesi icin kullanilir ve kalici olarak saklanmaz.",
+    privacy_usage:"Veri Kullanimi",privacy_u1:"Hizmet saglamak",privacy_u2:"Uygulamayi gelistirmek",privacy_u3:"Guvenligi saglamak",
+    privacy_third:"Ucuncu Taraf Hizmetler",privacy_t1:"Bulut altyapisi",privacy_t2:"AI API servisleri",privacy_t3:"Odeme sistemleri",
+    privacy_security:"Veri Guvenligi",privacy_security_desc:"Kullanici verileri guvenli sekilde saklanir ve korunur.",
+    privacy_rights:"Kullanici Haklari",privacy_rights_desc:"Kullanicilar hesaplarini ve verilerini silme talebinde bulunabilir.",
+    faq_q1:"Sanal ruj deneme nasil calisiyor?",faq_a1:"Bir fotograf yukleyin veya selfie cekin, bir ruj tonu secin ve yapay zeka teknolojimiz rengi dudaklariniza gercekci sekilde uygular.",
+    faq_q2:"Fotograflarim saklanir mi?",faq_a2:"Hayir. Fotograflariniz yapay zeka efekti icin gecici olarak islenir ve sunucularimizda kalici olarak saklanmaz.",
+    faq_q3:"Uygulamayi kullanmak icin hesap gerekli mi?",faq_a3:"Evet, fotograf yuklemek veya selfie cekmek icin kayit olup giris yapmaniz gerekir. Kayit ucretsizdir.",
+    faq_q4:"Kredi sistemi nedir?",faq_a4:"Bazi ozellikler kredi sistemi ile calisir. Her gorsel olusturma islemi belirli miktarda kredi kullanir. Krediler uygulama icinde satin alinabilir.",
+    faq_q5:"Satin alinan krediler iade edilebilir mi?",faq_a5:"Satin alinan dijital krediler genellikle iade edilmez. Teknik bir hata nedeniyle kredi kullanilamazsa destek ekibiyle iletisime gecilebilir.",
+    faq_q6:"Hesabimi nasil silebilirim?",faq_a6:"Hesap ve veri silme talebi icin support@yourapp.com adresinden destek ekibimize ulasabilirsiniz.",
+    credits_title:"Kredi Politikasi",credits_desc:"Uygulamadaki bazi ozellikler kredi sistemi ile calismaktadir.",
+    credits_r1:"Her gorsel olusturma islemi belirli miktarda kredi kullanir",credits_r2:"Krediler uygulama icinde satin alinabilir",credits_r3:"Ucretsiz deneme kredileri sinirli olabilir",credits_r4:"Krediler yalnizca uygulama icinde kullanilabilir ve baska bir hesaba transfer edilemez",
+    refund_title:"Iade Politikasi",refund_desc:"Uygulama icinde satin alinan dijital krediler ve hizmetler asagidaki sartlara tabidir.",
+    refund_r1:"Satin alinan krediler genellikle iade edilmez",refund_r2:"Teknik bir hata nedeniyle kredi kullanilamazsa destek ekibiyle iletisime gecilebilir",refund_r3:"Google Play veya App Store uzerinden yapilan odemeler ilgili platformlarin iade politikalarina tabidir",
+    support_title:"Iletisim / Destek",support_desc:"Sorulariniz, sorunlariniz veya geri bildirimleriniz icin bize ulasin.",support_hours:"24-48 saat icinde yanit vermeyi hedefliyoruz."
   }
 };
 
@@ -2121,6 +2594,28 @@ function updateAuthUI() {
 // ==========================================
 // MODULE 18: INIT
 // ==========================================
+// ==========================================
+// MODULE: POLICY MODAL
+// ==========================================
+function openPolicyModal() {
+  updatePolicyProfile();
+  $('policyModal').classList.add('open');
+}
+function closePolicyModal() {
+  $('policyModal').classList.remove('open');
+}
+function updatePolicyProfile() {
+  if (state.user) {
+    $('profileLoggedIn').classList.remove('hidden');
+    $('profileLoggedOut').classList.add('hidden');
+    $('profileName').textContent = state.user.user_metadata?.full_name || state.user.email?.split('@')[0] || '-';
+    $('profileEmail').textContent = state.user.email || '-';
+  } else {
+    $('profileLoggedIn').classList.add('hidden');
+    $('profileLoggedOut').classList.remove('hidden');
+  }
+}
+
 function init() {
   // Language
   const savedLang = localStorage.getItem('lipsync-lang');
@@ -2199,6 +2694,31 @@ function init() {
   $('googleRegisterBtn').addEventListener('click', handleGoogleAuth);
 
   updateAuthUI();
+
+  // ====== Policy Modal ======
+  $('navMenuBtn').addEventListener('click', openPolicyModal);
+  $('policyClose').addEventListener('click', closePolicyModal);
+  $('policyModal').addEventListener('click', e => { if (e.target === $('policyModal')) closePolicyModal(); });
+  document.querySelectorAll('.policy-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.policy-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.tab;
+      const sectionMap = {profile:'tabProfile',faq:'tabFaq',credits:'tabCredits',support:'tabSupport'};
+      $(sectionMap[target]).classList.add('active');
+    });
+  });
+  $('profileLogoutBtn').addEventListener('click', () => {
+    sbAuth.signOut().catch(()=>{});
+    sbAuth.clearSession();
+    state.user = null;
+    updateAuthUI();
+    updatePolicyProfile();
+    showToast(t('logout'));
+  });
+  $('profileLoginBtn').addEventListener('click', () => { closePolicyModal(); openAuth('login'); });
+  $('profileRegisterBtn').addEventListener('click', () => { closePolicyModal(); openAuth('register'); });
 
   // Initial nav state
   updateNav();
