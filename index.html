@@ -119,6 +119,16 @@ input{font-family:inherit}
   letter-spacing:0.05em;
 }
 .lang-btn:hover{background:var(--rose-pale);color:var(--rose)}
+.credit-badge{
+  display:none;align-items:center;gap:4px;
+  padding:4px 10px;border-radius:var(--radius-full);
+  background:var(--rose-pale);
+  font-size:0.7rem;font-weight:600;
+  color:var(--rose-dark);letter-spacing:0.02em;
+  transition:all 0.3s var(--ease);
+}
+.credit-badge.visible{display:flex}
+.credit-badge svg{width:14px;height:14px;stroke:var(--rose);stroke-width:2;fill:none}
 
 /* Steps */
 .step{
@@ -1078,6 +1088,10 @@ input{font-family:inherit}
     </button>
     <span class="nav-title" id="navTitle"></span>
     <div class="nav-right">
+      <div class="credit-badge" id="creditBadge">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M6 12h12"/></svg>
+        <span id="creditCount">0</span>
+      </div>
       <button class="lang-btn" id="langBtn">EN</button>
       <button class="nav-menu-btn" id="navMenuBtn" aria-label="Menu">
         <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -2486,7 +2500,8 @@ async function startProcessing() {
 
     const task = await res.json();
     state.taskId = task.taskId;
-    state.creditsRemaining = task.creditsRemaining;
+    state.credits = task.creditsRemaining;
+    updateCreditBadge();
 
     // Step 2: Poll for result
     await pollTaskResult(task.taskId, token);
@@ -2784,12 +2799,44 @@ function setLoggedIn(user) {
   const name = meta.full_name || user.email?.split('@')[0] || 'User';
   state.user = { name, email: user.email, id: user.id };
   updateAuthUI();
+  fetchCredits();
 }
 
 async function logout() {
   await sbAuth.signOut();
   state.user = null;
+  state.credits = 0;
   updateAuthUI();
+  updateCreditBadge();
+}
+
+async function fetchCredits() {
+  if (!sbAuth._token) return;
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/user_credits?user_id=eq.' + state.user.id + '&select=credits', {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + sbAuth._token }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      state.credits = rows.length > 0 ? rows[0].credits : 0;
+    } else {
+      state.credits = 0;
+    }
+  } catch(e) {
+    state.credits = 0;
+  }
+  updateCreditBadge();
+}
+
+function updateCreditBadge() {
+  const badge = $('creditBadge');
+  const count = $('creditCount');
+  if (state.user) {
+    badge.classList.add('visible');
+    count.textContent = state.credits ?? 0;
+  } else {
+    badge.classList.remove('visible');
+  }
 }
 
 function updateAuthUI() {
