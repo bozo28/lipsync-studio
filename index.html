@@ -818,6 +818,23 @@ input{font-family:inherit}
   font-size:0.83rem;line-height:1.7;color:var(--text-secondary);
   padding-left:30px;
 }
+.pricing-table{
+  border:1px solid var(--rose-lighter);border-radius:12px;overflow:hidden;margin-top:10px;
+}
+.pricing-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  padding:12px 16px;font-size:0.84rem;color:var(--text);
+  border-bottom:1px solid var(--rose-lighter);
+}
+.pricing-row:last-child{border-bottom:none}
+.pricing-header-row{
+  background:var(--rose-pale);font-weight:600;font-size:0.78rem;
+  color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em;
+}
+.pricing-row.popular{
+  background:linear-gradient(135deg,rgba(183,110,121,0.08),rgba(183,110,121,0.04));
+  font-weight:500;
+}
 .profile-info-card{
   background:var(--rose-pale);border:1px solid var(--rose-lighter);
   border-radius:14px;padding:18px;margin-bottom:16px;
@@ -1325,45 +1342,16 @@ input{font-family:inherit}
       </button>
     </div>
     <div class="policy-tabs">
-      <button class="policy-tab active" data-tab="profile" data-i18n="tab_profile">Profile</button>
+      <button class="policy-tab active" data-tab="terms" data-i18n="tab_terms">Terms</button>
       <button class="policy-tab" data-tab="faq" data-i18n="tab_faq">FAQ</button>
       <button class="policy-tab" data-tab="credits" data-i18n="tab_credits">Credits & Payment</button>
       <button class="policy-tab" data-tab="support" data-i18n="tab_support">Contact</button>
     </div>
     <div class="policy-content">
 
-      <!-- Tab 1: Profile -->
-      <div class="policy-section active" id="tabProfile">
-        <div id="profileLoggedIn" class="hidden">
-          <div class="profile-info-card">
-            <div class="profile-info-row">
-              <span class="profile-info-label" data-i18n="profile_name">Name</span>
-              <span class="profile-info-value" id="profileName">-</span>
-            </div>
-            <div class="profile-info-row">
-              <span class="profile-info-label" data-i18n="profile_email">Email</span>
-              <span class="profile-info-value" id="profileEmail">-</span>
-            </div>
-          </div>
-          <div class="profile-actions">
-            <button class="profile-action-btn" id="profileLogoutBtn">
-              <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-              <span data-i18n="logout">Log Out</span>
-            </button>
-          </div>
-        </div>
-        <div id="profileLoggedOut">
-          <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:20px" data-i18n="profile_login_msg">Log in to manage your profile</p>
-          <div style="display:flex;gap:10px;justify-content:center">
-            <button class="auth-submit" style="max-width:140px;padding:12px" id="profileLoginBtn">
-              <span data-i18n="login">Log In</span>
-            </button>
-            <button class="auth-submit" style="max-width:140px;padding:12px;background:linear-gradient(135deg,var(--rose-light),var(--rose))" id="profileRegisterBtn">
-              <span data-i18n="register">Sign Up</span>
-            </button>
-          </div>
-        </div>
-        <h3 style="margin-top:24px" data-i18n="terms_title">Terms of Use</h3>
+      <!-- Tab 1: Terms of Use -->
+      <div class="policy-section active" id="tabTerms">
+        <h3 data-i18n="terms_title">Terms of Use</h3>
         <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
         <p data-i18n="terms_desc">By using this application, you agree to the following terms.</p>
         <h3 data-i18n="terms_service">Service Description</h3>
@@ -1377,12 +1365,19 @@ input{font-family:inherit}
         </ul>
         <h3 data-i18n="terms_account">Account Usage</h3>
         <p data-i18n="terms_account_desc">Users are responsible for the confidentiality of their account information.</p>
+        <h3 data-i18n="terms_credits">Credit System</h3>
+        <p data-i18n="terms_credits_desc">Some features of the application may operate with a credit system. Each operation may consume a certain amount of credits.</p>
         <h3 data-i18n="terms_guarantee">Service Guarantee</h3>
         <p data-i18n="terms_guarantee_desc">The service is provided "as is". No guarantee of uninterrupted or error-free operation is given.</p>
         <h3 data-i18n="terms_suspension">Account Suspension</h3>
         <p data-i18n="terms_suspension_desc">Accounts of users who violate the terms of use may be suspended or closed.</p>
         <h3 data-i18n="terms_liability">Limitation of Liability</h3>
         <p data-i18n="terms_liability_desc">The user is responsible for the content they upload. The application owner is not responsible for any consequences arising from this content.</p>
+        <h3 data-i18n="terms_contact">Contact</h3>
+        <div class="policy-email">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--rose);stroke-width:2;fill:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          digitalvisionary2@gmail.com
+        </div>
 
         <h3 style="margin-top:28px" data-i18n="privacy_title">Privacy Policy</h3>
         <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
@@ -1411,6 +1406,11 @@ input{font-family:inherit}
         <p data-i18n="privacy_security_desc">User data is securely stored and protected.</p>
         <h3 data-i18n="privacy_rights">User Rights</h3>
         <p data-i18n="privacy_rights_desc">Users may request deletion of their accounts and data.</p>
+        <h3 data-i18n="privacy_contact">Contact</h3>
+        <div class="policy-email">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--rose);stroke-width:2;fill:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          digitalvisionary2@gmail.com
+        </div>
       </div>
 
       <!-- Tab 2: FAQ -->
@@ -1437,28 +1437,50 @@ input{font-family:inherit}
         </div>
         <div class="faq-item">
           <div class="faq-q" data-i18n="faq_q6">How can I delete my account?</div>
-          <div class="faq-a" data-i18n="faq_a6">You can request account and data deletion by contacting our support team at support@yourapp.com.</div>
+          <div class="faq-a" data-i18n="faq_a6">You can request account and data deletion by contacting our support team at digitalvisionary2@gmail.com.</div>
         </div>
       </div>
 
       <!-- Tab 3: Credits & Payment -->
       <div class="policy-section" id="tabCredits">
-        <h3 data-i18n="credits_title">Credit Policy</h3>
-        <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
-        <p data-i18n="credits_desc">Some features in the application operate with a credit system.</p>
+        <h3 data-i18n="credits_how_title">How Does the Credit System Work?</h3>
+        <p data-i18n="credits_how_desc">Credits are used to try lipstick colors in this app.</p>
         <ul>
-          <li data-i18n="credits_r1">Each image generation uses a certain amount of credits</li>
-          <li data-i18n="credits_r2">Credits can be purchased in-app</li>
-          <li data-i18n="credits_r3">Free trial credits may be limited</li>
-          <li data-i18n="credits_r4">Credits can only be used within the app and cannot be transferred to another account</li>
+          <li data-i18n="credits_h1">Each lipstick try-on uses 1 credit</li>
+          <li data-i18n="credits_h2">You can try different colors on a single photo</li>
+          <li data-i18n="credits_h3">Credit packages are for monthly use</li>
+          <li data-i18n="credits_h4">Unused credits do not carry over to the next month</li>
+          <li data-i18n="credits_h5">Credits are renewed each billing cycle</li>
         </ul>
-        <h3 data-i18n="refund_title">Refund Policy</h3>
-        <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
-        <p data-i18n="refund_desc">Digital credits and services purchased in the app are subject to the following conditions.</p>
+        <p data-i18n="credits_balance">You can track your credit balance from your profile page.</p>
+
+        <h3 data-i18n="credits_packages">Credit Packages</h3>
+        <div class="pricing-table">
+          <div class="pricing-row pricing-header-row">
+            <span data-i18n="pkg_name">Package</span>
+            <span data-i18n="pkg_tries">Tries</span>
+            <span data-i18n="pkg_price">Price</span>
+          </div>
+          <div class="pricing-row">
+            <span>Starter</span><span data-i18n="pkg_starter_tries">20 Tries</span><span>$9.9</span>
+          </div>
+          <div class="pricing-row">
+            <span>Basic</span><span data-i18n="pkg_basic_tries">42 Tries</span><span>$19.9</span>
+          </div>
+          <div class="pricing-row popular">
+            <span>Pro</span><span data-i18n="pkg_pro_tries">66 Tries</span><span>$29.9</span>
+          </div>
+          <div class="pricing-row">
+            <span>Ultra</span><span data-i18n="pkg_ultra_tries">157 Tries</span><span>$59.9</span>
+          </div>
+        </div>
+        <p style="margin-top:10px;font-size:0.82rem;color:var(--text-secondary)" data-i18n="credits_bulk">Larger packages have a lower cost per try.</p>
+
+        <h3 data-i18n="credits_important">Important Information</h3>
         <ul>
-          <li data-i18n="refund_r1">Purchased credits are generally non-refundable</li>
-          <li data-i18n="refund_r2">If credits cannot be used due to a technical error, you may contact the support team</li>
-          <li data-i18n="refund_r3">Payments made through Google Play or App Store are subject to the refund policies of those platforms</li>
+          <li data-i18n="credits_i1">Each lipstick application consumes 1 credit</li>
+          <li data-i18n="credits_i2">Credits are automatically refunded for failed operations</li>
+          <li data-i18n="credits_i3">Credits are renewed monthly and unused credits are reset</li>
         </ul>
       </div>
 
@@ -1468,7 +1490,7 @@ input{font-family:inherit}
         <p data-i18n="support_desc">If you have any questions, issues or feedback, please reach out to us.</p>
         <div class="policy-email">
           <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--rose);stroke-width:2;fill:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          support@yourapp.com
+          digitalvisionary2@gmail.com
         </div>
         <p style="margin-top:20px" data-i18n="support_hours">We aim to respond within 24-48 hours.</p>
       </div>
@@ -1522,8 +1544,8 @@ const T = {
     logout:"Log Out",check_email:"Check your email to confirm your account!",login_required:"Please sign up or log in to continue",forgot_title:"Reset Password",forgot_sub:"Enter your email to receive a reset link",send_reset_link:"Send Reset Link",reset_email_sent:"Password reset link sent to your email!",reset_mail_info:'The reset email will be sent from noreply@mail.app.supabase.io. Please check your inbox and spam folder.',remember_password:"Remember your password?",
     red:"Red",pink:"Pink",nude:"Nude",coral:"Coral",dark:"Dark",
     red_shades:"Red Shades",pink_shades:"Pink Shades",nude_shades:"Nude Shades",coral_shades:"Coral Shades",dark_shades:"Dark Shades",
-    menu_title:"Menu",tab_profile:"Profile",tab_faq:"FAQ",tab_credits:"Credits & Payment",tab_support:"Contact",
-    profile_name:"Name",profile_email:"Email",profile_login_msg:"Log in to manage your profile",
+    menu_title:"Menu",tab_terms:"Terms",tab_faq:"FAQ",tab_credits:"Credits & Payment",tab_support:"Contact",
+    terms_credits:"Credit System",terms_credits_desc:"Some features of the application may operate with a credit system. Each operation may consume a certain amount of credits.",terms_contact:"Contact",privacy_contact:"Contact",
     terms_title:"Terms of Use",policy_date:"Last updated: March 2026",terms_desc:"By using this application, you agree to the following terms.",
     terms_service:"Service Description",terms_service_desc:"Our application provides an image processing service that allows users to apply virtual makeup effects (e.g. lipstick colors) to their photos using artificial intelligence technology.",
     terms_responsibilities:"User Responsibilities",terms_r1:"Only upload photos you have the right to use",terms_r2:"Do not upload illegal, harmful or inappropriate content",terms_r3:"Do not misuse the service",terms_r4:"Do not attempt to manipulate the system or bypass technical limitations",
@@ -1543,11 +1565,13 @@ const T = {
     faq_q3:"Do I need an account to use the app?",faq_a3:"Yes, you need to sign up and log in to upload photos or take selfies. Registration is free.",
     faq_q4:"What is the credit system?",faq_a4:"Some features use a credit-based system. Each image generation consumes a certain number of credits. Credits can be purchased in-app.",
     faq_q5:"Can I get a refund for purchased credits?",faq_a5:"Purchased digital credits are generally non-refundable. If credits cannot be used due to a technical error, please contact our support team.",
-    faq_q6:"How can I delete my account?",faq_a6:"You can request account and data deletion by contacting our support team at support@yourapp.com.",
-    credits_title:"Credit Policy",credits_desc:"Some features in the application operate with a credit system.",
-    credits_r1:"Each image generation uses a certain amount of credits",credits_r2:"Credits can be purchased in-app",credits_r3:"Free trial credits may be limited",credits_r4:"Credits can only be used within the app and cannot be transferred to another account",
-    refund_title:"Refund Policy",refund_desc:"Digital credits and services purchased in the app are subject to the following conditions.",
-    refund_r1:"Purchased credits are generally non-refundable",refund_r2:"If credits cannot be used due to a technical error, you may contact the support team",refund_r3:"Payments made through Google Play or App Store are subject to the refund policies of those platforms",
+    faq_q6:"How can I delete my account?",faq_a6:"You can request account and data deletion by contacting our support team at digitalvisionary2@gmail.com.",
+    credits_how_title:"How Does the Credit System Work?",credits_how_desc:"Credits are used to try lipstick colors in this app.",
+    credits_h1:"Each lipstick try-on uses 1 credit",credits_h2:"You can try different colors on a single photo",credits_h3:"Credit packages are for monthly use",credits_h4:"Unused credits do not carry over to the next month",credits_h5:"Credits are renewed each billing cycle",
+    credits_balance:"You can track your credit balance from your profile page.",credits_packages:"Credit Packages",
+    pkg_name:"Package",pkg_tries:"Tries",pkg_price:"Price",pkg_starter_tries:"20 Tries",pkg_basic_tries:"42 Tries",pkg_pro_tries:"66 Tries",pkg_ultra_tries:"157 Tries",
+    credits_bulk:"Larger packages have a lower cost per try.",credits_important:"Important Information",
+    credits_i1:"Each lipstick application consumes 1 credit",credits_i2:"Credits are automatically refunded for failed operations",credits_i3:"Credits are renewed monthly and unused credits are reset",
     support_title:"Contact / Support",support_desc:"If you have any questions, issues or feedback, please reach out to us.",support_hours:"We aim to respond within 24-48 hours."
   },
   fr: {
@@ -1584,8 +1608,8 @@ const T = {
     logout:"D\u00e9connexion",check_email:"V\u00e9rifiez votre e-mail pour confirmer votre compte !",login_required:"Veuillez vous inscrire ou vous connecter pour continuer",forgot_title:"R\u00e9initialiser le mot de passe",forgot_sub:"Entrez votre e-mail pour recevoir un lien",send_reset_link:"Envoyer le lien",reset_email_sent:"Lien de r\u00e9initialisation envoy\u00e9 !",reset_mail_info:'L\'e-mail de r\u00e9initialisation sera envoy\u00e9 depuis noreply@mail.app.supabase.io. Veuillez v\u00e9rifier votre bo\u00eete de r\u00e9ception et vos spams.',remember_password:"Vous souvenez-vous de votre mot de passe ?",
     red:"Rouge",pink:"Rose",nude:"Nude",coral:"Corail",dark:"Fonc\u00e9",
     red_shades:"Teintes Rouges",pink_shades:"Teintes Roses",nude_shades:"Teintes Nudes",coral_shades:"Teintes Corail",dark_shades:"Teintes Fonc\u00e9es",
-    menu_title:"Menu",tab_profile:"Profil",tab_faq:"FAQ",tab_credits:"Cr\u00e9dits et Paiement",tab_support:"Contact",
-    profile_name:"Nom",profile_email:"E-mail",profile_login_msg:"Connectez-vous pour g\u00e9rer votre profil",
+    menu_title:"Menu",tab_terms:"Conditions",tab_faq:"FAQ",tab_credits:"Cr\u00e9dits et Paiement",tab_support:"Contact",
+    terms_credits:"Syst\u00e8me de cr\u00e9dits",terms_credits_desc:"Certaines fonctionnalit\u00e9s de l'application peuvent fonctionner avec un syst\u00e8me de cr\u00e9dits. Chaque op\u00e9ration peut consommer un certain nombre de cr\u00e9dits.",terms_contact:"Contact",privacy_contact:"Contact",
     terms_title:"Conditions d'utilisation",policy_date:"Derni\u00e8re mise \u00e0 jour : Mars 2026",terms_desc:"En utilisant cette application, vous acceptez les conditions suivantes.",
     terms_service:"Description du service",terms_service_desc:"Notre application fournit un service de traitement d'images permettant aux utilisateurs d'appliquer des effets de maquillage virtuel (\u00e0 l'aide de la technologie IA) sur leurs photos.",
     terms_responsibilities:"Responsabilit\u00e9s de l'utilisateur",terms_r1:"Ne t\u00e9l\u00e9charger que des photos dont vous avez le droit d'utilisation",terms_r2:"Ne pas t\u00e9l\u00e9charger de contenu ill\u00e9gal, nuisible ou inappropri\u00e9",terms_r3:"Ne pas utiliser le service de mani\u00e8re abusive",terms_r4:"Ne pas tenter de manipuler le syst\u00e8me ou de contourner les limitations techniques",
@@ -1605,11 +1629,13 @@ const T = {
     faq_q3:"Ai-je besoin d'un compte ?",faq_a3:"Oui, vous devez vous inscrire et vous connecter pour utiliser l'application. L'inscription est gratuite.",
     faq_q4:"Qu'est-ce que le syst\u00e8me de cr\u00e9dits ?",faq_a4:"Certaines fonctionnalit\u00e9s utilisent un syst\u00e8me de cr\u00e9dits. Chaque g\u00e9n\u00e9ration d'image consomme un certain nombre de cr\u00e9dits.",
     faq_q5:"Puis-je obtenir un remboursement ?",faq_a5:"Les cr\u00e9dits num\u00e9riques achet\u00e9s ne sont g\u00e9n\u00e9ralement pas remboursables. En cas d'erreur technique, contactez notre \u00e9quipe de support.",
-    faq_q6:"Comment supprimer mon compte ?",faq_a6:"Vous pouvez demander la suppression de votre compte en contactant support@yourapp.com.",
-    credits_title:"Politique de cr\u00e9dits",credits_desc:"Certaines fonctionnalit\u00e9s de l'application fonctionnent avec un syst\u00e8me de cr\u00e9dits.",
-    credits_r1:"Chaque g\u00e9n\u00e9ration d'image utilise un certain nombre de cr\u00e9dits",credits_r2:"Les cr\u00e9dits peuvent \u00eatre achet\u00e9s dans l'application",credits_r3:"Les cr\u00e9dits d'essai gratuits peuvent \u00eatre limit\u00e9s",credits_r4:"Les cr\u00e9dits ne peuvent \u00eatre utilis\u00e9s que dans l'application et ne sont pas transf\u00e9rables",
-    refund_title:"Politique de remboursement",refund_desc:"Les cr\u00e9dits et services num\u00e9riques achet\u00e9s sont soumis aux conditions suivantes.",
-    refund_r1:"Les cr\u00e9dits achet\u00e9s ne sont g\u00e9n\u00e9ralement pas remboursables",refund_r2:"En cas d'erreur technique, vous pouvez contacter l'\u00e9quipe de support",refund_r3:"Les paiements via Google Play ou App Store sont soumis aux politiques de ces plateformes",
+    faq_q6:"Comment supprimer mon compte ?",faq_a6:"Vous pouvez demander la suppression de votre compte en contactant digitalvisionary2@gmail.com.",
+    credits_how_title:"Comment fonctionne le syst\u00e8me de cr\u00e9dits ?",credits_how_desc:"Des cr\u00e9dits sont utilis\u00e9s pour essayer des couleurs de rouge \u00e0 l\u00e8vres.",
+    credits_h1:"Chaque essai de rouge \u00e0 l\u00e8vres utilise 1 cr\u00e9dit",credits_h2:"Vous pouvez essayer diff\u00e9rentes couleurs sur une m\u00eame photo",credits_h3:"Les paquets de cr\u00e9dits sont pour un usage mensuel",credits_h4:"Les cr\u00e9dits non utilis\u00e9s ne sont pas report\u00e9s au mois suivant",credits_h5:"Les cr\u00e9dits sont renouvel\u00e9s \u00e0 chaque cycle de facturation",
+    credits_balance:"Vous pouvez suivre votre solde de cr\u00e9dits depuis votre profil.",credits_packages:"Paquets de cr\u00e9dits",
+    pkg_name:"Paquet",pkg_tries:"Essais",pkg_price:"Prix",pkg_starter_tries:"20 Essais",pkg_basic_tries:"42 Essais",pkg_pro_tries:"66 Essais",pkg_ultra_tries:"157 Essais",
+    credits_bulk:"Les grands paquets ont un co\u00fbt par essai plus bas.",credits_important:"Informations importantes",
+    credits_i1:"Chaque application de rouge \u00e0 l\u00e8vres consomme 1 cr\u00e9dit",credits_i2:"Les cr\u00e9dits sont automatiquement rembours\u00e9s en cas d'\u00e9chec",credits_i3:"Les cr\u00e9dits sont renouvel\u00e9s mensuellement et les cr\u00e9dits non utilis\u00e9s sont r\u00e9initialis\u00e9s",
     support_title:"Contact / Support",support_desc:"Pour toute question, probl\u00e8me ou commentaire, n'h\u00e9sitez pas \u00e0 nous contacter.",support_hours:"Nous visons \u00e0 r\u00e9pondre sous 24-48 heures."
   },
   de: {
@@ -1646,8 +1672,8 @@ const T = {
     logout:"Abmelden",check_email:"Pr\u00fcfen Sie Ihre E-Mail, um Ihr Konto zu best\u00e4tigen!",login_required:"Bitte registrieren Sie sich oder melden Sie sich an",forgot_title:"Passwort zur\u00fccksetzen",forgot_sub:"Geben Sie Ihre E-Mail ein",send_reset_link:"Link senden",reset_email_sent:"Link zum Zur\u00fccksetzen gesendet!",reset_mail_info:'Die E-Mail wird von noreply@mail.app.supabase.io gesendet. Bitte pr\u00fcfen Sie Ihren Posteingang und Spam-Ordner.',remember_password:"Erinnern Sie sich an Ihr Passwort?",
     red:"Rot",pink:"Rosa",nude:"Nude",coral:"Koralle",dark:"Dunkel",
     red_shades:"Rote Farbt\u00f6ne",pink_shades:"Rosa Farbt\u00f6ne",nude_shades:"Nude Farbt\u00f6ne",coral_shades:"Koralle Farbt\u00f6ne",dark_shades:"Dunkle Farbt\u00f6ne",
-    menu_title:"Men\u00fc",tab_profile:"Profil",tab_faq:"FAQ",tab_credits:"Kredite & Zahlung",tab_support:"Kontakt",
-    profile_name:"Name",profile_email:"E-Mail",profile_login_msg:"Melden Sie sich an, um Ihr Profil zu verwalten",
+    menu_title:"Men\u00fc",tab_terms:"Bedingungen",tab_faq:"FAQ",tab_credits:"Kredite & Zahlung",tab_support:"Kontakt",
+    terms_credits:"Kreditsystem",terms_credits_desc:"Einige Funktionen der Anwendung k\u00f6nnen mit einem Kreditsystem arbeiten. Jeder Vorgang kann eine bestimmte Anzahl von Krediten verbrauchen.",terms_contact:"Kontakt",privacy_contact:"Kontakt",
     terms_title:"Nutzungsbedingungen",policy_date:"Letzte Aktualisierung: M\u00e4rz 2026",terms_desc:"Durch die Nutzung dieser Anwendung stimmen Sie den folgenden Bedingungen zu.",
     terms_service:"Dienstbeschreibung",terms_service_desc:"Unsere Anwendung bietet einen Bildverarbeitungsdienst, der es Benutzern erm\u00f6glicht, mithilfe von KI-Technologie virtuelle Make-up-Effekte auf ihre Fotos anzuwenden.",
     terms_responsibilities:"Benutzerverantwortung",terms_r1:"Nur Fotos hochladen, f\u00fcr die Sie Nutzungsrechte haben",terms_r2:"Keine illegalen, sch\u00e4dlichen oder unangemessenen Inhalte hochladen",terms_r3:"Den Dienst nicht missbrauchen",terms_r4:"Nicht versuchen, das System zu manipulieren oder technische Einschr\u00e4nkungen zu umgehen",
@@ -1667,11 +1693,13 @@ const T = {
     faq_q3:"Brauche ich ein Konto?",faq_a3:"Ja, Sie m\u00fcssen sich registrieren und anmelden. Die Registrierung ist kostenlos.",
     faq_q4:"Was ist das Kreditsystem?",faq_a4:"Einige Funktionen verwenden ein Kreditsystem. Jede Bilderzeugung verbraucht eine bestimmte Anzahl von Krediten.",
     faq_q5:"Kann ich Kredite erstatten lassen?",faq_a5:"Gekaufte digitale Kredite sind in der Regel nicht erstattungsf\u00e4hig. Bei technischen Fehlern kontaktieren Sie bitte unser Support-Team.",
-    faq_q6:"Wie kann ich mein Konto l\u00f6schen?",faq_a6:"Sie k\u00f6nnen die L\u00f6schung bei support@yourapp.com beantragen.",
-    credits_title:"Kreditrichtlinie",credits_desc:"Einige Funktionen der Anwendung arbeiten mit einem Kreditsystem.",
-    credits_r1:"Jede Bilderzeugung verbraucht eine bestimmte Anzahl von Krediten",credits_r2:"Kredite k\u00f6nnen in der App gekauft werden",credits_r3:"Kostenlose Testkredite k\u00f6nnen begrenzt sein",credits_r4:"Kredite k\u00f6nnen nur in der App verwendet und nicht auf ein anderes Konto \u00fcbertragen werden",
-    refund_title:"R\u00fcckerstattungsrichtlinie",refund_desc:"Digitale Kredite und Dienste unterliegen den folgenden Bedingungen.",
-    refund_r1:"Gekaufte Kredite sind in der Regel nicht erstattungsf\u00e4hig",refund_r2:"Bei technischen Fehlern k\u00f6nnen Sie das Support-Team kontaktieren",refund_r3:"Zahlungen \u00fcber Google Play oder App Store unterliegen den R\u00fcckerstattungsrichtlinien dieser Plattformen",
+    faq_q6:"Wie kann ich mein Konto l\u00f6schen?",faq_a6:"Sie k\u00f6nnen die L\u00f6schung bei digitalvisionary2@gmail.com beantragen.",
+    credits_how_title:"Wie funktioniert das Kreditsystem?",credits_how_desc:"Kredite werden verwendet, um Lippenstiftfarben auszuprobieren.",
+    credits_h1:"Jede Lippenstift-Anprobe verbraucht 1 Kredit",credits_h2:"Sie k\u00f6nnen verschiedene Farben auf einem Foto ausprobieren",credits_h3:"Kreditpakete gelten f\u00fcr die monatliche Nutzung",credits_h4:"Nicht verwendete Kredite werden nicht auf den n\u00e4chsten Monat \u00fcbertragen",credits_h5:"Kredite werden in jedem Abrechnungszeitraum erneuert",
+    credits_balance:"Sie k\u00f6nnen Ihr Kreditguthaben auf Ihrer Profilseite verfolgen.",credits_packages:"Kreditpakete",
+    pkg_name:"Paket",pkg_tries:"Versuche",pkg_price:"Preis",pkg_starter_tries:"20 Versuche",pkg_basic_tries:"42 Versuche",pkg_pro_tries:"66 Versuche",pkg_ultra_tries:"157 Versuche",
+    credits_bulk:"Gr\u00f6\u00dfere Pakete haben niedrigere Kosten pro Versuch.",credits_important:"Wichtige Informationen",
+    credits_i1:"Jede Lippenstift-Anwendung verbraucht 1 Kredit",credits_i2:"Kredite werden bei fehlgeschlagenen Vorg\u00e4ngen automatisch erstattet",credits_i3:"Kredite werden monatlich erneuert und nicht verwendete Kredite werden zur\u00fcckgesetzt",
     support_title:"Kontakt / Support",support_desc:"Bei Fragen, Problemen oder Feedback kontaktieren Sie uns bitte.",support_hours:"Wir antworten in der Regel innerhalb von 24-48 Stunden."
   },
   es: {
@@ -1708,8 +1736,8 @@ const T = {
     logout:"Cerrar Sesi\u00f3n",check_email:"\u00a1Revisa tu correo para confirmar tu cuenta!",login_required:"Reg\u00edstrate o inicia sesi\u00f3n para continuar",forgot_title:"Restablecer contrase\u00f1a",forgot_sub:"Ingresa tu correo para recibir un enlace",send_reset_link:"Enviar enlace",reset_email_sent:"\u00a1Enlace de restablecimiento enviado!",reset_mail_info:'El correo se enviar\u00e1 desde noreply@mail.app.supabase.io. Revisa tu bandeja de entrada y la carpeta de spam.',remember_password:"\u00bfRecuerdas tu contrase\u00f1a?",
     red:"Rojo",pink:"Rosa",nude:"Nude",coral:"Coral",dark:"Oscuro",
     red_shades:"Tonos Rojos",pink_shades:"Tonos Rosas",nude_shades:"Tonos Nudes",coral_shades:"Tonos Coral",dark_shades:"Tonos Oscuros",
-    menu_title:"Men\u00fa",tab_profile:"Perfil",tab_faq:"Preguntas Frecuentes",tab_credits:"Cr\u00e9ditos y Pago",tab_support:"Contacto",
-    profile_name:"Nombre",profile_email:"Correo",profile_login_msg:"Inicia sesi\u00f3n para gestionar tu perfil",
+    menu_title:"Men\u00fa",tab_terms:"T\u00e9rminos",tab_faq:"Preguntas Frecuentes",tab_credits:"Cr\u00e9ditos y Pago",tab_support:"Contacto",
+    terms_credits:"Sistema de cr\u00e9ditos",terms_credits_desc:"Algunas funciones de la aplicaci\u00f3n pueden funcionar con un sistema de cr\u00e9ditos. Cada operaci\u00f3n puede consumir cierta cantidad de cr\u00e9ditos.",terms_contact:"Contacto",privacy_contact:"Contacto",
     terms_title:"T\u00e9rminos de Uso",policy_date:"\u00daltima actualizaci\u00f3n: Marzo 2026",terms_desc:"Al usar esta aplicaci\u00f3n, aceptas los siguientes t\u00e9rminos.",
     terms_service:"Descripci\u00f3n del servicio",terms_service_desc:"Nuestra aplicaci\u00f3n ofrece un servicio de procesamiento de im\u00e1genes que permite a los usuarios aplicar efectos de maquillaje virtual mediante tecnolog\u00eda de inteligencia artificial.",
     terms_responsibilities:"Responsabilidades del usuario",terms_r1:"Solo subir fotos sobre las que tengas derechos de uso",terms_r2:"No subir contenido ilegal, da\u00f1ino o inapropiado",terms_r3:"No hacer un uso indebido del servicio",terms_r4:"No intentar manipular el sistema o eludir las limitaciones t\u00e9cnicas",
@@ -1729,11 +1757,13 @@ const T = {
     faq_q3:"\u00bfNecesito una cuenta?",faq_a3:"S\u00ed, necesitas registrarte e iniciar sesi\u00f3n. El registro es gratuito.",
     faq_q4:"\u00bfQu\u00e9 es el sistema de cr\u00e9ditos?",faq_a4:"Algunas funciones usan un sistema de cr\u00e9ditos. Cada generaci\u00f3n de imagen consume cierta cantidad de cr\u00e9ditos.",
     faq_q5:"\u00bfPuedo obtener un reembolso?",faq_a5:"Los cr\u00e9ditos digitales comprados generalmente no son reembolsables. En caso de error t\u00e9cnico, contacta con nuestro equipo de soporte.",
-    faq_q6:"\u00bfC\u00f3mo puedo eliminar mi cuenta?",faq_a6:"Puedes solicitar la eliminaci\u00f3n contactando a support@yourapp.com.",
-    credits_title:"Pol\u00edtica de Cr\u00e9ditos",credits_desc:"Algunas funciones de la aplicaci\u00f3n funcionan con un sistema de cr\u00e9ditos.",
-    credits_r1:"Cada generaci\u00f3n de imagen usa cierta cantidad de cr\u00e9ditos",credits_r2:"Los cr\u00e9ditos se pueden comprar en la app",credits_r3:"Los cr\u00e9ditos de prueba gratuitos pueden ser limitados",credits_r4:"Los cr\u00e9ditos solo se pueden usar en la app y no son transferibles",
-    refund_title:"Pol\u00edtica de Reembolso",refund_desc:"Los cr\u00e9ditos y servicios digitales comprados est\u00e1n sujetos a las siguientes condiciones.",
-    refund_r1:"Los cr\u00e9ditos comprados generalmente no son reembolsables",refund_r2:"En caso de error t\u00e9cnico, puedes contactar al equipo de soporte",refund_r3:"Los pagos realizados a trav\u00e9s de Google Play o App Store est\u00e1n sujetos a las pol\u00edticas de esas plataformas",
+    faq_q6:"\u00bfC\u00f3mo puedo eliminar mi cuenta?",faq_a6:"Puedes solicitar la eliminaci\u00f3n contactando a digitalvisionary2@gmail.com.",
+    credits_how_title:"\u00bfC\u00f3mo funciona el sistema de cr\u00e9ditos?",credits_how_desc:"Se usan cr\u00e9ditos para probar colores de labial en esta app.",
+    credits_h1:"Cada prueba de labial usa 1 cr\u00e9dito",credits_h2:"Puedes probar diferentes colores en una misma foto",credits_h3:"Los paquetes de cr\u00e9ditos son de uso mensual",credits_h4:"Los cr\u00e9ditos no utilizados no se transfieren al mes siguiente",credits_h5:"Los cr\u00e9ditos se renuevan en cada ciclo de facturaci\u00f3n",
+    credits_balance:"Puedes consultar tu saldo de cr\u00e9ditos desde tu perfil.",credits_packages:"Paquetes de cr\u00e9ditos",
+    pkg_name:"Paquete",pkg_tries:"Pruebas",pkg_price:"Precio",pkg_starter_tries:"20 Pruebas",pkg_basic_tries:"42 Pruebas",pkg_pro_tries:"66 Pruebas",pkg_ultra_tries:"157 Pruebas",
+    credits_bulk:"Los paquetes grandes tienen un menor costo por prueba.",credits_important:"Informaci\u00f3n importante",
+    credits_i1:"Cada aplicaci\u00f3n de labial consume 1 cr\u00e9dito",credits_i2:"Los cr\u00e9ditos se reembolsan autom\u00e1ticamente en operaciones fallidas",credits_i3:"Los cr\u00e9ditos se renuevan mensualmente y los no utilizados se reinician",
     support_title:"Contacto / Soporte",support_desc:"Si tienes preguntas, problemas o comentarios, no dudes en contactarnos.",support_hours:"Intentamos responder en un plazo de 24-48 horas."
   },
   it: {
@@ -1772,8 +1802,8 @@ const T = {
     send_reset_link:"Invia Link di Reimpostazione",reset_email_sent:"Email di reimpostazione inviata! Controlla la tua casella di posta.",reset_mail_info:'L\'email verr\u00e0 inviata da noreply@mail.app.supabase.io. Controlla la posta in arrivo e la cartella spam.',remember_password:"Ricordi la tua password?",
     red:"Rosso",pink:"Rosa",nude:"Nude",coral:"Corallo",dark:"Scuro",
     red_shades:"Tonalit\u00e0 Rosse",pink_shades:"Tonalit\u00e0 Rosa",nude_shades:"Tonalit\u00e0 Nude",coral_shades:"Tonalit\u00e0 Corallo",dark_shades:"Tonalit\u00e0 Scure",
-    menu_title:"Menu",tab_profile:"Profilo",tab_faq:"FAQ",tab_credits:"Crediti e Pagamento",tab_support:"Contatto",
-    profile_name:"Nome",profile_email:"Email",profile_login_msg:"Accedi per gestire il tuo profilo",
+    menu_title:"Menu",tab_terms:"Termini",tab_faq:"FAQ",tab_credits:"Crediti e Pagamento",tab_support:"Contatto",
+    terms_credits:"Sistema di crediti",terms_credits_desc:"Alcune funzionalit\u00e0 dell'applicazione possono funzionare con un sistema di crediti. Ogni operazione pu\u00f2 consumare un certo numero di crediti.",terms_contact:"Contatto",privacy_contact:"Contatto",
     terms_title:"Termini di Utilizzo",policy_date:"Ultimo aggiornamento: Marzo 2026",terms_desc:"Utilizzando questa applicazione, accetti i seguenti termini.",
     terms_service:"Descrizione del servizio",terms_service_desc:"La nostra applicazione fornisce un servizio di elaborazione immagini che consente agli utenti di applicare effetti di trucco virtuale utilizzando la tecnologia AI.",
     terms_responsibilities:"Responsabilit\u00e0 dell'utente",terms_r1:"Caricare solo foto di cui si ha il diritto di utilizzo",terms_r2:"Non caricare contenuti illegali, dannosi o inappropriati",terms_r3:"Non abusare del servizio",terms_r4:"Non tentare di manipolare il sistema o aggirare le limitazioni tecniche",
@@ -1793,11 +1823,13 @@ const T = {
     faq_q3:"Ho bisogno di un account?",faq_a3:"S\u00ec, devi registrarti e accedere. La registrazione \u00e8 gratuita.",
     faq_q4:"Cos'\u00e8 il sistema di crediti?",faq_a4:"Alcune funzionalit\u00e0 utilizzano un sistema di crediti. Ogni generazione di immagine consuma un certo numero di crediti.",
     faq_q5:"Posso ottenere un rimborso?",faq_a5:"I crediti digitali acquistati generalmente non sono rimborsabili. In caso di errore tecnico, contatta il nostro team di supporto.",
-    faq_q6:"Come posso eliminare il mio account?",faq_a6:"Puoi richiedere l'eliminazione contattando support@yourapp.com.",
-    credits_title:"Politica dei Crediti",credits_desc:"Alcune funzionalit\u00e0 dell'applicazione funzionano con un sistema di crediti.",
-    credits_r1:"Ogni generazione di immagine utilizza un certo numero di crediti",credits_r2:"I crediti possono essere acquistati nell'app",credits_r3:"I crediti di prova gratuiti possono essere limitati",credits_r4:"I crediti possono essere utilizzati solo nell'app e non sono trasferibili",
-    refund_title:"Politica di Rimborso",refund_desc:"I crediti e i servizi digitali acquistati sono soggetti alle seguenti condizioni.",
-    refund_r1:"I crediti acquistati generalmente non sono rimborsabili",refund_r2:"In caso di errore tecnico, \u00e8 possibile contattare il team di supporto",refund_r3:"I pagamenti effettuati tramite Google Play o App Store sono soggetti alle politiche di rimborso di tali piattaforme",
+    faq_q6:"Come posso eliminare il mio account?",faq_a6:"Puoi richiedere l'eliminazione contattando digitalvisionary2@gmail.com.",
+    credits_how_title:"Come funziona il sistema di crediti?",credits_how_desc:"I crediti vengono utilizzati per provare i colori del rossetto.",
+    credits_h1:"Ogni prova di rossetto utilizza 1 credito",credits_h2:"Puoi provare diversi colori su una singola foto",credits_h3:"I pacchetti di crediti sono per uso mensile",credits_h4:"I crediti non utilizzati non vengono trasferiti al mese successivo",credits_h5:"I crediti vengono rinnovati ad ogni ciclo di fatturazione",
+    credits_balance:"Puoi monitorare il tuo saldo crediti dalla pagina del profilo.",credits_packages:"Pacchetti di crediti",
+    pkg_name:"Pacchetto",pkg_tries:"Prove",pkg_price:"Prezzo",pkg_starter_tries:"20 Prove",pkg_basic_tries:"42 Prove",pkg_pro_tries:"66 Prove",pkg_ultra_tries:"157 Prove",
+    credits_bulk:"I pacchetti pi\u00f9 grandi hanno un costo per prova inferiore.",credits_important:"Informazioni importanti",
+    credits_i1:"Ogni applicazione di rossetto consuma 1 credito",credits_i2:"I crediti vengono rimborsati automaticamente per operazioni fallite",credits_i3:"I crediti vengono rinnovati mensilmente e quelli non utilizzati vengono azzerati",
     support_title:"Contatto / Supporto",support_desc:"Per domande, problemi o feedback, non esitare a contattarci.",support_hours:"Cerchiamo di rispondere entro 24-48 ore."
   },
   tr: {
@@ -1836,8 +1868,8 @@ const T = {
     send_reset_link:"Sifirlama Baglantisi Gonder",reset_email_sent:"Sifirlama e-postasi gonderildi! Gelen kutunuzu kontrol edin.",reset_mail_info:'Sifirlama e-postasi noreply@mail.app.supabase.io adresinden gonderilecektir. Gelen kutunuzu ve spam klasorunuzu kontrol edin.',remember_password:"Sifrenizi hatirliyorsunuz?",
     red:"Kirmizi",pink:"Pembe",nude:"Nude",coral:"Mercan",dark:"Koyu",
     red_shades:"Kirmizi Tonlar",pink_shades:"Pembe Tonlar",nude_shades:"Nude Tonlar",coral_shades:"Mercan Tonlar",dark_shades:"Koyu Tonlar",
-    menu_title:"Menu",tab_profile:"Profil Yonetimi",tab_faq:"Sikca Sorulan Sorular",tab_credits:"Kredi Sistemi ve Odeme",tab_support:"Iletisim / Destek",
-    profile_name:"Ad",profile_email:"E-posta",profile_login_msg:"Profilinizi yonetmek icin giris yapin",
+    menu_title:"Menu",tab_terms:"Kullanim Sartlari",tab_faq:"Sikca Sorulan Sorular",tab_credits:"Kredi Sistemi ve Odeme",tab_support:"Iletisim / Destek",
+    terms_credits:"Kredi Sistemi",terms_credits_desc:"Uygulamanin bazi ozellikleri kredi sistemi ile calisabilir. Her islem belirli miktarda kredi tuketebilir.",terms_contact:"Iletisim",privacy_contact:"Iletisim",
     terms_title:"Kullanim Sartlari",policy_date:"Son guncelleme: Mart 2026",terms_desc:"Bu uygulamayi kullanarak asagidaki sartlari kabul etmis sayilirsiniz.",
     terms_service:"Hizmet Tanimi",terms_service_desc:"Uygulamamiz, kullanicilarin fotograflarina yapay zeka teknolojisi kullanarak sanal makyaj efektleri (ornegin ruj renkleri) uygulamasina olanak saglayan bir gorsel isleme hizmeti sunar.",
     terms_responsibilities:"Kullanici Sorumluluklari",terms_r1:"Yalnizca kullanma hakkina sahip olduklari fotograflari yuklemek",terms_r2:"Yasa disi, zararli veya uygunsuz icerik yuklememek",terms_r3:"Hizmeti kotuye kullanmamak",terms_r4:"Sistemi manipule etmeye veya teknik sinirlamalari asmaya calismamak",
@@ -1857,11 +1889,13 @@ const T = {
     faq_q3:"Uygulamayi kullanmak icin hesap gerekli mi?",faq_a3:"Evet, fotograf yuklemek veya selfie cekmek icin kayit olup giris yapmaniz gerekir. Kayit ucretsizdir.",
     faq_q4:"Kredi sistemi nedir?",faq_a4:"Bazi ozellikler kredi sistemi ile calisir. Her gorsel olusturma islemi belirli miktarda kredi kullanir. Krediler uygulama icinde satin alinabilir.",
     faq_q5:"Satin alinan krediler iade edilebilir mi?",faq_a5:"Satin alinan dijital krediler genellikle iade edilmez. Teknik bir hata nedeniyle kredi kullanilamazsa destek ekibiyle iletisime gecilebilir.",
-    faq_q6:"Hesabimi nasil silebilirim?",faq_a6:"Hesap ve veri silme talebi icin support@yourapp.com adresinden destek ekibimize ulasabilirsiniz.",
-    credits_title:"Kredi Politikasi",credits_desc:"Uygulamadaki bazi ozellikler kredi sistemi ile calismaktadir.",
-    credits_r1:"Her gorsel olusturma islemi belirli miktarda kredi kullanir",credits_r2:"Krediler uygulama icinde satin alinabilir",credits_r3:"Ucretsiz deneme kredileri sinirli olabilir",credits_r4:"Krediler yalnizca uygulama icinde kullanilabilir ve baska bir hesaba transfer edilemez",
-    refund_title:"Iade Politikasi",refund_desc:"Uygulama icinde satin alinan dijital krediler ve hizmetler asagidaki sartlara tabidir.",
-    refund_r1:"Satin alinan krediler genellikle iade edilmez",refund_r2:"Teknik bir hata nedeniyle kredi kullanilamazsa destek ekibiyle iletisime gecilebilir",refund_r3:"Google Play veya App Store uzerinden yapilan odemeler ilgili platformlarin iade politikalarina tabidir",
+    faq_q6:"Hesabimi nasil silebilirim?",faq_a6:"Hesap ve veri silme talebi icin digitalvisionary2@gmail.com adresinden destek ekibimize ulasabilirsiniz.",
+    credits_how_title:"Kredi Sistemi Nasil Calisir?",credits_how_desc:"Bu uygulamada ruj renklerini denemek icin kredi kullanilir.",
+    credits_h1:"Her ruj denemesi 1 kredi kullanir",credits_h2:"Bir fotograf uzerinde farkli renkleri deneyebilirsiniz",credits_h3:"Kredi paketleri aylik kullanim icindir",credits_h4:"Kullanilmayan krediler bir sonraki aya devretmez",credits_h5:"Her fatura doneminde krediler yenilenir",
+    credits_balance:"Kredi bakiyenizi profil sayfasindan takip edebilirsiniz.",credits_packages:"Kredi Paketleri",
+    pkg_name:"Paket",pkg_tries:"Deneme",pkg_price:"Fiyat",pkg_starter_tries:"20 Deneme",pkg_basic_tries:"42 Deneme",pkg_pro_tries:"66 Deneme",pkg_ultra_tries:"157 Deneme",
+    credits_bulk:"Buyuk paketlerde deneme basina maliyet daha dusuktur.",credits_important:"Onemli Bilgiler",
+    credits_i1:"Her ruj uygulamasi 1 kredi tuketir",credits_i2:"Basarisiz islemlerde kredi otomatik iade edilir",credits_i3:"Krediler her ay yenilenir ve kullanilmayan krediler sifirlanir",
     support_title:"Iletisim / Destek",support_desc:"Sorulariniz, sorunlariniz veya geri bildirimleriniz icin bize ulasin.",support_hours:"24-48 saat icinde yanit vermeyi hedefliyoruz."
   }
 };
@@ -2599,22 +2633,10 @@ function updateAuthUI() {
 // MODULE: POLICY MODAL
 // ==========================================
 function openPolicyModal() {
-  updatePolicyProfile();
   $('policyModal').classList.add('open');
 }
 function closePolicyModal() {
   $('policyModal').classList.remove('open');
-}
-function updatePolicyProfile() {
-  if (state.user) {
-    $('profileLoggedIn').classList.remove('hidden');
-    $('profileLoggedOut').classList.add('hidden');
-    $('profileName').textContent = state.user.user_metadata?.full_name || state.user.email?.split('@')[0] || '-';
-    $('profileEmail').textContent = state.user.email || '-';
-  } else {
-    $('profileLoggedIn').classList.add('hidden');
-    $('profileLoggedOut').classList.remove('hidden');
-  }
 }
 
 function init() {
@@ -2706,21 +2728,10 @@ function init() {
       document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
       tab.classList.add('active');
       const target = tab.dataset.tab;
-      const sectionMap = {profile:'tabProfile',faq:'tabFaq',credits:'tabCredits',support:'tabSupport'};
+      const sectionMap = {terms:'tabTerms',faq:'tabFaq',credits:'tabCredits',support:'tabSupport'};
       $(sectionMap[target]).classList.add('active');
     });
   });
-  $('profileLogoutBtn').addEventListener('click', () => {
-    sbAuth.signOut().catch(()=>{});
-    sbAuth.clearSession();
-    state.user = null;
-    updateAuthUI();
-    updatePolicyProfile();
-    showToast(t('logout'));
-  });
-  $('profileLoginBtn').addEventListener('click', () => { closePolicyModal(); openAuth('login'); });
-  $('profileRegisterBtn').addEventListener('click', () => { closePolicyModal(); openAuth('register'); });
-
   // Initial nav state
   updateNav();
 }
