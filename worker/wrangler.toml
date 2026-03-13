@@ -1,0 +1,16 @@
+name = "lipsync-worker"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[vars]
+SUPABASE_URL = "https://uwnrlolzkncvjgrjpfci.supabase.co"
+ALLOWED_ORIGINS = "https://bozo28.github.io,http://localhost,file://"
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "beb4c95196394441808b3b9d47968231"
+
+# Secrets (set via `npx wrangler secret put`):
+# KIE_AI_API_KEY
+# SUPABASE_SERVICE_KEY
+# SUPABASE_JWT_SECRET
