@@ -12,9 +12,7 @@ export async function verifyAuth(request: Request, env: Env): Promise<AuthUser> 
 
   try {
     const secret = new TextEncoder().encode(env.SUPABASE_JWT_SECRET);
-    const { payload } = await jwtVerify(token, secret, {
-      issuer: `${env.SUPABASE_URL}/auth/v1`,
-    });
+    const { payload } = await jwtVerify(token, secret);
 
     if (!payload.sub) {
       throw new AppError('Invalid token: missing subject', 401, 'INVALID_TOKEN');
