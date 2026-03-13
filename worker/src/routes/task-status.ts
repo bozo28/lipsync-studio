@@ -14,19 +14,31 @@ export async function handleTaskStatus(
     throw new AppError('Missing taskId parameter', 400, 'MISSING_TASK_ID');
   }
 
-  const status = await getTaskStatus(taskId, env);
+  const kieResult = await getTaskStatus(taskId, env);
+
+  // Map Kie AI states to our frontend states
+  let frontendStatus: TaskResult['status'];
+  if (kieResult.status === 'success') {
+    frontendStatus = 'completed';
+  } else if (kieResult.status === 'fail') {
+    frontendStatus = 'failed';
+  } else if (kieResult.status === 'generating') {
+    frontendStatus = 'processing';
+  } else {
+    frontendStatus = 'pending'; // waiting, queuing
+  }
 
   const result: TaskResult = {
-    status: status.status,
+    status: frontendStatus,
     taskId: taskId,
   };
 
-  if (status.status === 'completed' && status.output?.image_url) {
-    result.resultUrl = status.output.image_url;
+  if (frontendStatus === 'completed' && kieResult.resultUrl) {
+    result.resultUrl = kieResult.resultUrl;
   }
 
-  if (status.status === 'failed') {
-    result.error = status.error || 'AI processing failed';
+  if (frontendStatus === 'failed') {
+    result.error = kieResult.error || 'AI processing failed';
   }
 
   return Response.json(result);
