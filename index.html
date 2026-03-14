@@ -2644,13 +2644,24 @@ function handleShare(platform) {
 // ==========================================
 // MODULE 15: SAVE
 // ==========================================
-function saveImage() {
-  const a = document.createElement('a');
-  a.href = state.resultPhoto || state.photo;
-  a.download = `lipsync-studio-${state.color?.code || 'photo'}.jpg`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+async function saveImage() {
+  const url = state.resultPhoto || state.photo;
+  const fileName = `lipsync-studio-${state.color?.code || 'photo'}.jpg`;
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+  } catch(e) {
+    // Fallback: open in new tab
+    window.open(url, '_blank');
+  }
 }
 
 // ==========================================
