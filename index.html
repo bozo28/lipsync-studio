@@ -2606,8 +2606,36 @@ function initBASlider() {
 // ==========================================
 // MODULE 14: SHARE
 // ==========================================
-function openShare() {
-  // Always show our custom share panel
+async function getShareFile() {
+  try {
+    const url = state.resultPhoto || state.photo;
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return new File([blob], `lipsync-${state.color?.code || 'photo'}.jpg`, { type: 'image/jpeg' });
+  } catch(e) {
+    return null;
+  }
+}
+
+async function openShare() {
+  const shareText = `I found my perfect shade: ${state.color?.code} (${state.color?.hex}) at LipSync Studio!`;
+
+  // Try native share with image (mobile)
+  if (navigator.share) {
+    try {
+      const file = await getShareFile();
+      const shareData = { text: shareText };
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        shareData.files = [file];
+      }
+      await navigator.share(shareData);
+      return;
+    } catch(e) {
+      if (e.name === 'AbortError') return;
+    }
+  }
+
+  // Fallback: show custom share panel
   $('shareOverlay').classList.add('open');
 }
 
@@ -2615,7 +2643,7 @@ function closeShare() {
   $('shareOverlay').classList.remove('open');
 }
 
-function handleShare(platform) {
+async function handleShare(platform) {
   const shareText = `I found my perfect shade: ${state.color?.code} (${state.color?.hex}) at LipSync Studio!`;
   const text = encodeURIComponent(shareText);
 
@@ -2625,6 +2653,22 @@ function handleShare(platform) {
     }).catch(() => {});
     closeShare();
     return;
+  }
+
+  // Try native share with image for WhatsApp/Instagram
+  if ((platform === 'whatsapp' || platform === 'instagram') && navigator.share) {
+    try {
+      const file = await getShareFile();
+      const shareData = { text: shareText };
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        shareData.files = [file];
+      }
+      await navigator.share(shareData);
+      closeShare();
+      return;
+    } catch(e) {
+      if (e.name === 'AbortError') { closeShare(); return; }
+    }
   }
 
   const urls = {
