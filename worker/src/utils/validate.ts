@@ -1,6 +1,6 @@
 import { AppError } from './errors';
 
-const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB base64 (~7.5MB actual)
+const MAX_IMAGE_SIZE = 40 * 1024 * 1024; // 40MB base64 (~30MB actual, Kie AI limit)
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export function validateApplyRequest(body: unknown): void {
@@ -31,7 +31,7 @@ export function validateApplyRequest(body: unknown): void {
 
   // Check size (base64 string length)
   if ((image as string).length > MAX_IMAGE_SIZE) {
-    throw new AppError('Image too large (max ~7.5MB)', 400, 'IMAGE_TOO_LARGE');
+    throw new AppError('Image too large (max 30MB)', 400, 'IMAGE_TOO_LARGE');
   }
 
   if (!lipColor || typeof lipColor !== 'string' || !/^#[0-9A-Fa-f]{6}$/.test(lipColor)) {

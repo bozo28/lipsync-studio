@@ -1,7 +1,7 @@
 import { Env, AuthUser, ApplyRequest, TaskResult } from '../types';
 import { validateApplyRequest } from '../utils/validate';
 import { checkRateLimit } from '../middleware/rate-limit';
-import { deductCredit } from '../services/supabase';
+import { deductCredit, refundCredit } from '../services/supabase';
 import { logUsage } from '../services/supabase';
 import { createTask } from '../services/kie-ai';
 import { AppError } from '../utils/errors';
@@ -26,9 +26,9 @@ export async function handleApplyLipstick(
   try {
     taskId = await createTask(body.image, body.lipColor, env);
   } catch (error) {
-    // TODO: Refund credit on AI failure
-    // For now, log the failure
+    // Refund credit on AI failure
     console.error('AI task creation failed:', error);
+    await refundCredit(user.userId, env);
     throw new AppError('Failed to start AI processing', 502, 'AI_TASK_FAILED');
   }
 

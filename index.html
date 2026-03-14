@@ -476,21 +476,6 @@ input{font-family:inherit}
   animation:fadeUp 0.6s var(--ease) both;
 }
 .result-photo{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
-.result-overlay{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(42,32,37,0.3);
-  backdrop-filter:blur(2px);
-}
-.result-overlay span{
-  padding:12px 28px;
-  background:rgba(255,255,255,0.92);
-  border-radius:var(--radius);
-  font-size:0.8rem;font-weight:500;
-  letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--rose-dark);
-  box-shadow:var(--shadow-md);
-}
 
 /* Before/After Slider */
 .ba-slider{
@@ -508,7 +493,6 @@ input{font-family:inherit}
   overflow:hidden;
 }
 .ba-after img{width:100%;height:100%;object-fit:cover}
-.ba-after .result-overlay{inset:0}
 .ba-line{
   position:absolute;top:0;bottom:0;left:50%;
   width:3px;background:white;
@@ -1161,7 +1145,6 @@ input{font-family:inherit}
     <p class="processing-text">
       <span data-i18n="applying">Applying your lipstick</span><span class="processing-dots"></span>
     </p>
-    <span class="processing-badge" data-i18n="ai_coming_soon">AI Coming Soon</span>
   </section>
 
   <!-- STEP 5: Result -->
@@ -1171,7 +1154,6 @@ input{font-family:inherit}
       <img id="baBeforeImg" src="" alt="Before">
       <div class="ba-after" id="baAfter">
         <img id="baAfterImg" src="" alt="After">
-        <div class="result-overlay"><span data-i18n="ai_coming_soon">AI Coming Soon</span></div>
       </div>
       <div class="ba-line" id="baLine"></div>
       <div class="ba-handle" id="baHandle">

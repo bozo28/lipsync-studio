@@ -1,7 +1,21 @@
 import { Env } from '../types';
 import { AppError } from '../utils/errors';
 
-const KIE_API_BASE = 'https://api.kie.ai/api/v1';
+const KIE_API_BASE = 'https://api.kie.ai/api';
+const KIE_UPLOAD_BASE = 'https://kieai.redpandaai.co/api';
+
+interface KieUploadResponse {
+  success: boolean;
+  code: number;
+  msg: string;
+  data?: {
+    fileName: string;
+    filePath: string;
+    downloadUrl: string;
+    fileSize: number;
+    mimeType: string;
+  };
+}
 
 interface KieCreateResponse {
   code: number;
@@ -18,7 +32,7 @@ interface KieRecordResponse {
     taskId: string;
     model: string;
     state: 'waiting' | 'queuing' | 'generating' | 'success' | 'fail';
-    resultJson?: string; // JSON string: {"resultUrls": [...]}
+    resultJson?: string;
     failCode?: string;
     failMsg?: string;
     costTime?: number;
@@ -31,18 +45,49 @@ export interface TaskStatusResult {
   error?: string;
 }
 
+/** Upload base64 image to Kie AI and get a URL */
+async function uploadImage(base64Data: string, env: Env): Promise<string> {
+  const res = await fetch(`${KIE_UPLOAD_BASE}/file-base64-upload`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${env.KIE_AI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      base64Data: base64Data,
+      uploadPath: 'lipsync',
+      fileName: `photo-${Date.now()}.jpg`,
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('Kie AI upload error:', res.status, text);
+    throw new AppError('Image upload failed', 502, 'AI_UPLOAD_ERROR');
+  }
+
+  const data = await res.json() as KieUploadResponse;
+  if (!data.success || !data.data?.downloadUrl) {
+    console.error('Kie AI upload response:', JSON.stringify(data));
+    throw new AppError(data.msg || 'Image upload failed', 502, 'AI_UPLOAD_ERROR');
+  }
+
+  return data.data.downloadUrl;
+}
+
 /** Create an AI lipstick application task */
 export async function createTask(
   imageBase64: string,
   lipColor: string,
   env: Env
 ): Promise<string> {
-  // Strip data URL prefix to get raw base64
-  const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+  // Step 1: Upload image to get a URL
+  const imageUrl = await uploadImage(imageBase64, env);
 
-  const prompt = `Apply lipstick color ${lipColor} to the lips in this photo. Keep the rest of the face and image exactly the same. Only change the lip color to ${lipColor}. Make it look natural and realistic.`;
+  const prompt = `Professional virtual lipstick try-on. Apply ONLY lipstick color ${lipColor} to the lips. CRITICAL RULES: 1) Keep the EXACT same face, skin, eyes, hair, lighting, background, clothing - change NOTHING except lip color. 2) Follow the natural lip contour precisely - do NOT extend color beyond the lip edges. 3) Preserve the original lip shape and texture - do NOT alter lip fullness, size or structure. 4) Apply color evenly with a natural matte/satin finish. 5) The result must look like a real professional lipstick application, not digitally painted. 6) Maintain 100% character consistency - same person, same expression, same pose. Output the full image at original quality.`;
 
-  const res = await fetch(`${KIE_API_BASE}/jobs/createTask`, {
+  // Step 2: Create task with image URL
+  const res = await fetch(`${KIE_API_BASE}/v1/jobs/createTask`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,7 +97,7 @@ export async function createTask(
       model: 'nano-banana-2',
       input: {
         prompt: prompt,
-        image_input: [`data:image/jpeg;base64,${base64Data}`],
+        image_input: [imageUrl],
         resolution: '1K',
         output_format: 'jpg',
       },
@@ -70,6 +115,7 @@ export async function createTask(
 
   const data = await res.json() as KieCreateResponse;
   if (data.code !== 200 || !data.data?.taskId) {
+    console.error('Kie AI create response:', JSON.stringify(data));
     throw new AppError(data.msg || 'AI service returned no task ID', 502, 'AI_NO_TASK_ID');
   }
 
@@ -81,7 +127,7 @@ export async function getTaskStatus(
   taskId: string,
   env: Env
 ): Promise<TaskStatusResult> {
-  const res = await fetch(`${KIE_API_BASE}/jobs/recordInfo?taskId=${taskId}`, {
+  const res = await fetch(`${KIE_API_BASE}/v1/jobs/recordInfo?taskId=${taskId}`, {
     headers: {
       'Authorization': `Bearer ${env.KIE_AI_API_KEY}`,
     },

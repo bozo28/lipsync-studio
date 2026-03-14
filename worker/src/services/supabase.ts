@@ -46,6 +46,21 @@ export async function deductCredit(userId: string, env: Env): Promise<number> {
   return remaining;
 }
 
+/** Refund 1 credit (on failed AI processing) */
+export async function refundCredit(userId: string, env: Env): Promise<void> {
+  // Get current credits
+  const current = await getCredits(userId, env);
+  // Set credits + 1
+  await fetch(
+    `${env.SUPABASE_URL}/rest/v1/user_credits?user_id=eq.${userId}`,
+    {
+      method: 'PATCH',
+      headers: headers(env),
+      body: JSON.stringify({ credits: current + 1 }),
+    }
+  );
+}
+
 /** Log a usage record */
 export async function logUsage(
   userId: string,

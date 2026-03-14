@@ -1,6 +1,9 @@
-import { jwtVerify } from 'jose';
+import { jwtVerify, createRemoteJWKSet } from 'jose';
 import { Env, AuthUser } from './types';
 import { AppError } from './utils/errors';
+
+// Cache the JWKS keyset
+let jwks: ReturnType<typeof createRemoteJWKSet> | null = null;
 
 export async function verifyAuth(request: Request, env: Env): Promise<AuthUser> {
   const authHeader = request.headers.get('Authorization');
@@ -11,8 +14,14 @@ export async function verifyAuth(request: Request, env: Env): Promise<AuthUser> 
   const token = authHeader.slice(7);
 
   try {
-    const secret = new TextEncoder().encode(env.SUPABASE_JWT_SECRET);
-    const { payload } = await jwtVerify(token, secret);
+    // Use Supabase JWKS endpoint for ES256 tokens
+    if (!jwks) {
+      jwks = createRemoteJWKSet(
+        new URL(`${env.SUPABASE_URL}/auth/v1/.well-known/jwks.json`)
+      );
+    }
+
+    const { payload } = await jwtVerify(token, jwks);
 
     if (!payload.sub) {
       throw new AppError('Invalid token: missing subject', 401, 'INVALID_TOKEN');
@@ -24,6 +33,7 @@ export async function verifyAuth(request: Request, env: Env): Promise<AuthUser> 
     };
   } catch (error) {
     if (error instanceof AppError) throw error;
+    console.error('JWT verify error:', (error as Error).message);
     throw new AppError('Invalid or expired token', 401, 'INVALID_TOKEN');
   }
 }
