@@ -2440,6 +2440,8 @@ function renderColors() {
 // MODULE 11: PROCESSING
 // ==========================================
 async function startProcessing() {
+  cachedResultBlob = null;
+  state.resultPhoto = null;
   if (state.color) {
     $('processingColor').style.backgroundColor = state.color.hex;
   }
@@ -2518,6 +2520,8 @@ async function pollTaskResult(taskId, token) {
 
       if (data.status === 'completed' && data.resultUrl) {
         state.resultPhoto = data.resultUrl;
+        // Pre-cache image blob for sharing/saving
+        cacheResultImage(data.resultUrl, token);
         goToStep(5);
       } else if (data.status === 'failed') {
         showToast(data.error || 'AI processing failed');
@@ -2606,18 +2610,38 @@ function initBASlider() {
 // ==========================================
 // MODULE 14: SHARE
 // ==========================================
+// Cache for result image blob
+let cachedResultBlob = null;
+
+async function cacheResultImage(url, token) {
+  try {
+    const proxyUrl = WORKER_URL + '/api/image?url=' + encodeURIComponent(url);
+    const res = await fetch(proxyUrl, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (res.ok) {
+      cachedResultBlob = await res.blob();
+    }
+  } catch(e) {
+    console.error('Cache image failed:', e);
+  }
+}
+
 async function getResultBlob() {
+  // Return cached blob if available
+  if (cachedResultBlob) return cachedResultBlob;
   try {
     const url = state.resultPhoto || state.photo;
-    // If it's a remote URL, proxy through Worker to avoid CORS
     if (url.startsWith('http')) {
       const proxyUrl = WORKER_URL + '/api/image?url=' + encodeURIComponent(url);
       const res = await fetch(proxyUrl, {
         headers: { 'Authorization': 'Bearer ' + sbAuth._token }
       });
-      return await res.blob();
+      if (res.ok) {
+        cachedResultBlob = await res.blob();
+        return cachedResultBlob;
+      }
     }
-    // Data URL - convert directly
     const res = await fetch(url);
     return await res.blob();
   } catch(e) {
@@ -2627,7 +2651,7 @@ async function getResultBlob() {
 
 async function getShareFile() {
   const blob = await getResultBlob();
-  if (!blob) return null;
+  if (!blob || blob.size < 100) return null;
   return new File([blob], `lipsync-${state.color?.code || 'photo'}.jpg`, { type: 'image/jpeg' });
 }
 
