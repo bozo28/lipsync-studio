@@ -2655,8 +2655,8 @@ async function handleShare(platform) {
     return;
   }
 
-  // Try native share with image for WhatsApp/Instagram
-  if ((platform === 'whatsapp' || platform === 'instagram') && navigator.share) {
+  // Try native share with image for WhatsApp/Instagram/TikTok
+  if ((platform === 'whatsapp' || platform === 'instagram' || platform === 'tiktok') && navigator.share) {
     try {
       const file = await getShareFile();
       const shareData = { text: shareText };
