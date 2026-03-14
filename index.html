@@ -2606,15 +2606,29 @@ function initBASlider() {
 // ==========================================
 // MODULE 14: SHARE
 // ==========================================
-async function getShareFile() {
+async function getResultBlob() {
   try {
     const url = state.resultPhoto || state.photo;
+    // If it's a remote URL, proxy through Worker to avoid CORS
+    if (url.startsWith('http')) {
+      const proxyUrl = WORKER_URL + '/api/image?url=' + encodeURIComponent(url);
+      const res = await fetch(proxyUrl, {
+        headers: { 'Authorization': 'Bearer ' + sbAuth._token }
+      });
+      return await res.blob();
+    }
+    // Data URL - convert directly
     const res = await fetch(url);
-    const blob = await res.blob();
-    return new File([blob], `lipsync-${state.color?.code || 'photo'}.jpg`, { type: 'image/jpeg' });
+    return await res.blob();
   } catch(e) {
     return null;
   }
+}
+
+async function getShareFile() {
+  const blob = await getResultBlob();
+  if (!blob) return null;
+  return new File([blob], `lipsync-${state.color?.code || 'photo'}.jpg`, { type: 'image/jpeg' });
 }
 
 async function openShare() {
@@ -2689,11 +2703,10 @@ async function handleShare(platform) {
 // MODULE 15: SAVE
 // ==========================================
 async function saveImage() {
-  const url = state.resultPhoto || state.photo;
   const fileName = `lipsync-studio-${state.color?.code || 'photo'}.jpg`;
   try {
-    const res = await fetch(url);
-    const blob = await res.blob();
+    const blob = await getResultBlob();
+    if (!blob) throw new Error('No image');
     const blobUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = blobUrl;
@@ -2703,8 +2716,7 @@ async function saveImage() {
     document.body.removeChild(a);
     URL.revokeObjectURL(blobUrl);
   } catch(e) {
-    // Fallback: open in new tab
-    window.open(url, '_blank');
+    window.open(state.resultPhoto || state.photo, '_blank');
   }
 }
 
