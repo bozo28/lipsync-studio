@@ -17,7 +17,7 @@
   --rose-pale:#FFF5F6;
   --rose-dark:#8E4A52;
   --rose-glow:rgba(183,110,121,0.15);
-  --bg:#FEFCFC;
+  --bg:#FFF0F3;
   --bg-card:#FFFFFF;
   --bg-warm:#FFF9F7;
   --text:#1E1519;
@@ -49,8 +49,10 @@ body{
 body::before{
   content:'';position:fixed;top:0;left:0;right:0;bottom:0;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(183,110,121,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 90%, rgba(183,110,121,0.04) 0%, transparent 60%);
+    radial-gradient(ellipse 120% 50% at -10% 20%, rgba(232,180,200,0.35) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 110% 80%, rgba(220,160,190,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse 90% 40% at 50% 0%, rgba(240,200,215,0.3) 0%, transparent 40%),
+    linear-gradient(180deg, #FFF0F3 0%, #FEFCFC 40%, #FFF5F7 100%);
   pointer-events:none;z-index:0;
 }
 button{font-family:inherit;border:none;cursor:pointer;background:none;color:inherit}
@@ -120,15 +122,24 @@ input{font-family:inherit}
 }
 .lang-btn:hover{background:var(--rose-pale);color:var(--rose)}
 .credit-badge{
-  display:none;align-items:center;gap:4px;
-  padding:4px 10px;border-radius:var(--radius-full);
-  background:var(--rose-pale);
-  font-size:0.7rem;font-weight:600;
-  color:var(--rose-dark);letter-spacing:0.02em;
+  display:none;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:20px;
+  background:transparent;
+  font-size:0.85rem;font-weight:600;
+  color:var(--rose-dark);letter-spacing:0.01em;
   transition:all 0.3s var(--ease);
+  cursor:default;
 }
 .credit-badge.visible{display:flex}
-.credit-badge svg{width:14px;height:14px;stroke:var(--rose);stroke-width:2;fill:none}
+.credit-badge svg{width:16px;height:16px;fill:none;stroke:var(--rose-dark);stroke-width:2}
+.credit-buy-link{
+  margin-left:2px;padding:2px 8px;border-radius:10px;
+  background:var(--rose);color:#fff;
+  font-size:0.65rem;font-weight:600;
+  border:none;cursor:pointer;
+  transition:background 0.2s;
+}
+.credit-buy-link:hover{background:var(--rose-dark)}
 
 /* Steps */
 .step{
@@ -164,7 +175,7 @@ input{font-family:inherit}
   margin-bottom:8px;
   animation:logoIn 1s var(--ease) 0.2s both;
 }
-.welcome-logo img{width:88px;height:88px;margin:0 auto 16px;object-fit:contain;border-radius:20px}
+.welcome-logo img,.welcome-logo svg{width:120px;height:120px;margin:0 auto 16px;object-fit:contain}
 .welcome-brand{
   font-family:var(--font-display);
   font-size:2.8rem;font-weight:300;
@@ -726,6 +737,9 @@ input{font-family:inherit}
 }
 
 /* ====== Nav Right ====== */
+.nav-left{
+  display:flex;align-items:center;gap:4px;
+}
 .nav-right{
   display:flex;align-items:center;gap:4px;
 }
@@ -849,10 +863,21 @@ input{font-family:inherit}
   border:1px solid var(--rose-lighter);border-radius:12px;overflow:hidden;margin-top:10px;
 }
 .pricing-row{
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  padding:12px 16px;font-size:0.84rem;color:var(--text);
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  padding:10px 12px;font-size:0.84rem;color:var(--text);
   border-bottom:1px solid var(--rose-lighter);
+  align-items:center;text-align:center;
 }
+.pricing-row span:first-child{text-align:left}
+.pricing-row .buy-btn{
+  padding:5px 12px;border-radius:20px;
+  background:var(--rose);color:#fff;
+  font-size:0.72rem;font-weight:600;
+  border:none;cursor:pointer;
+  transition:all 0.3s var(--ease);
+  white-space:nowrap;justify-self:center;
+}
+.pricing-row .buy-btn:hover{background:var(--rose-dark)}
 .pricing-row:last-child{border-bottom:none}
 .pricing-header-row{
   background:var(--rose-pale);font-weight:600;font-size:0.78rem;
@@ -1060,6 +1085,14 @@ input{font-family:inherit}
 </head>
 <body>
 
+<!-- Decorative background waves -->
+<svg class="bg-decor" viewBox="0 0 500 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5;">
+  <path d="M-50 80 C50 20, 150 60, 250 40 C350 20, 450 80, 550 50 L550 0 L-50 0 Z" fill="rgba(232,160,190,0.3)"/>
+  <path d="M-50 150 C80 100, 180 180, 300 130 C420 80, 480 160, 550 120 L550 0 L-50 0 Z" fill="rgba(240,180,210,0.15)"/>
+  <path d="M-50 900 C50 820, 200 860, 300 830 C400 800, 500 850, 550 800 L550 900 L-50 900 Z" fill="rgba(232,160,190,0.2)"/>
+  <path d="M-50 750 C100 780, 200 720, 350 760 C450 790, 500 740, 550 770 L550 900 L-50 900 Z" fill="rgba(240,180,210,0.12)"/>
+</svg>
+
 <!-- Progress -->
 <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
 
@@ -1067,15 +1100,18 @@ input{font-family:inherit}
 <div class="app">
   <!-- Top Nav -->
   <nav class="top-nav">
-    <button class="back-btn" id="backBtn" aria-label="Go back">
-      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
+    <div class="nav-left">
+      <button class="back-btn" id="backBtn" aria-label="Go back">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="credit-badge" id="creditBadge">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="var(--rose-dark)"/></svg>
+        <span id="creditCount">0</span>
+        <button class="credit-buy-link" id="creditBuyLink" onclick="openCreditsTab()" data-i18n="pkg_buy_now">Buy</button>
+      </div>
+    </div>
     <span class="nav-title" id="navTitle"></span>
     <div class="nav-right">
-      <div class="credit-badge" id="creditBadge">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M6 12h12"/></svg>
-        <span id="creditCount">0</span>
-      </div>
       <button class="lang-btn" id="langBtn">EN</button>
       <button class="nav-menu-btn" id="navMenuBtn" aria-label="Menu">
         <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -1089,7 +1125,7 @@ input{font-family:inherit}
   <!-- STEP 1: Welcome -->
   <section class="step welcome active" id="step1">
     <div class="welcome-logo">
-      <img src="logo.png" alt="LipSync Studio" style="width:88px;height:88px;object-fit:contain;border-radius:20px;">
+      <img src="Gemini.png" alt="LipSync Studio" style="width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 4px 20px rgba(180,100,140,0.25));">
       <div class="welcome-brand">
         LipSync<span>Studio</span>
       </div>
@@ -1479,18 +1515,23 @@ input{font-family:inherit}
             <span data-i18n="pkg_name">Package</span>
             <span data-i18n="pkg_tries">Tries</span>
             <span data-i18n="pkg_price">Price</span>
+            <span></span>
           </div>
           <div class="pricing-row">
             <span>Starter</span><span data-i18n="pkg_starter_tries">20 Tries</span><span>$9.9</span>
+            <button class="buy-btn" data-i18n="pkg_buy" onclick="buyPackage('starter')">Buy</button>
           </div>
           <div class="pricing-row">
             <span>Basic</span><span data-i18n="pkg_basic_tries">42 Tries</span><span>$19.9</span>
+            <button class="buy-btn" data-i18n="pkg_buy" onclick="buyPackage('basic')">Buy</button>
           </div>
           <div class="pricing-row popular">
             <span>Pro</span><span data-i18n="pkg_pro_tries">66 Tries</span><span>$29.9</span>
+            <button class="buy-btn" data-i18n="pkg_buy" onclick="buyPackage('pro')">Buy</button>
           </div>
           <div class="pricing-row">
             <span>Ultra</span><span data-i18n="pkg_ultra_tries">157 Tries</span><span>$59.9</span>
+            <button class="buy-btn" data-i18n="pkg_buy" onclick="buyPackage('ultra')">Buy</button>
           </div>
         </div>
         <p style="margin-top:10px;font-size:0.82rem;color:var(--text-secondary)" data-i18n="credits_bulk">Larger packages have a lower cost per try.</p>
@@ -1591,7 +1632,7 @@ const T = {
     credits_h1:"Each lipstick try-on uses 1 credit",credits_h2:"You can try different colors on a single photo",credits_h3:"Credit packages are for monthly use",credits_h4:"Unused credits do not carry over to the next month",credits_h5:"Credits are renewed each billing cycle",
     credits_balance:"You can track your credit balance from your profile page.",credits_packages:"Credit Packages",
     pkg_name:"Package",pkg_tries:"Tries",pkg_price:"Price",pkg_starter_tries:"20 Tries",pkg_basic_tries:"42 Tries",pkg_pro_tries:"66 Tries",pkg_ultra_tries:"157 Tries",
-    credits_bulk:"Larger packages have a lower cost per try.",credits_important:"Important Information",
+    credits_bulk:"Larger packages have a lower cost per try.",pkg_buy:"Buy",pkg_buy_now:"Buy Credits",credits_important:"Important Information",
     credits_i1:"Each lipstick application consumes 1 credit",credits_i2:"Credits are automatically refunded for failed operations",credits_i3:"Credits are renewed monthly and unused credits are reset",
     support_title:"Contact / Support",support_desc:"If you have any questions, issues or feedback, please reach out to us.",support_hours:"We aim to respond within 24-48 hours."
   },
@@ -1657,7 +1698,7 @@ const T = {
     credits_h1:"Chaque essai de rouge \u00e0 l\u00e8vres utilise 1 cr\u00e9dit",credits_h2:"Vous pouvez essayer diff\u00e9rentes couleurs sur une m\u00eame photo",credits_h3:"Les paquets de cr\u00e9dits sont pour un usage mensuel",credits_h4:"Les cr\u00e9dits non utilis\u00e9s ne sont pas report\u00e9s au mois suivant",credits_h5:"Les cr\u00e9dits sont renouvel\u00e9s \u00e0 chaque cycle de facturation",
     credits_balance:"Vous pouvez suivre votre solde de cr\u00e9dits depuis votre profil.",credits_packages:"Paquets de cr\u00e9dits",
     pkg_name:"Paquet",pkg_tries:"Essais",pkg_price:"Prix",pkg_starter_tries:"20 Essais",pkg_basic_tries:"42 Essais",pkg_pro_tries:"66 Essais",pkg_ultra_tries:"157 Essais",
-    credits_bulk:"Les grands paquets ont un co\u00fbt par essai plus bas.",credits_important:"Informations importantes",
+    credits_bulk:"Les grands paquets ont un co\u00fbt par essai plus bas.",pkg_buy:"Acheter",pkg_buy_now:"Acheter Cr\u00e9dits",credits_important:"Informations importantes",
     credits_i1:"Chaque application de rouge \u00e0 l\u00e8vres consomme 1 cr\u00e9dit",credits_i2:"Les cr\u00e9dits sont automatiquement rembours\u00e9s en cas d'\u00e9chec",credits_i3:"Les cr\u00e9dits sont renouvel\u00e9s mensuellement et les cr\u00e9dits non utilis\u00e9s sont r\u00e9initialis\u00e9s",
     support_title:"Contact / Support",support_desc:"Pour toute question, probl\u00e8me ou commentaire, n'h\u00e9sitez pas \u00e0 nous contacter.",support_hours:"Nous visons \u00e0 r\u00e9pondre sous 24-48 heures."
   },
@@ -1723,7 +1764,7 @@ const T = {
     credits_h1:"Jede Lippenstift-Anprobe verbraucht 1 Kredit",credits_h2:"Sie k\u00f6nnen verschiedene Farben auf einem Foto ausprobieren",credits_h3:"Kreditpakete gelten f\u00fcr die monatliche Nutzung",credits_h4:"Nicht verwendete Kredite werden nicht auf den n\u00e4chsten Monat \u00fcbertragen",credits_h5:"Kredite werden in jedem Abrechnungszeitraum erneuert",
     credits_balance:"Sie k\u00f6nnen Ihr Kreditguthaben auf Ihrer Profilseite verfolgen.",credits_packages:"Kreditpakete",
     pkg_name:"Paket",pkg_tries:"Versuche",pkg_price:"Preis",pkg_starter_tries:"20 Versuche",pkg_basic_tries:"42 Versuche",pkg_pro_tries:"66 Versuche",pkg_ultra_tries:"157 Versuche",
-    credits_bulk:"Gr\u00f6\u00dfere Pakete haben niedrigere Kosten pro Versuch.",credits_important:"Wichtige Informationen",
+    credits_bulk:"Gr\u00f6\u00dfere Pakete haben niedrigere Kosten pro Versuch.",pkg_buy:"Kaufen",pkg_buy_now:"Kredite Kaufen",credits_important:"Wichtige Informationen",
     credits_i1:"Jede Lippenstift-Anwendung verbraucht 1 Kredit",credits_i2:"Kredite werden bei fehlgeschlagenen Vorg\u00e4ngen automatisch erstattet",credits_i3:"Kredite werden monatlich erneuert und nicht verwendete Kredite werden zur\u00fcckgesetzt",
     support_title:"Kontakt / Support",support_desc:"Bei Fragen, Problemen oder Feedback kontaktieren Sie uns bitte.",support_hours:"Wir antworten in der Regel innerhalb von 24-48 Stunden."
   },
@@ -1789,7 +1830,7 @@ const T = {
     credits_h1:"Cada prueba de labial usa 1 cr\u00e9dito",credits_h2:"Puedes probar diferentes colores en una misma foto",credits_h3:"Los paquetes de cr\u00e9ditos son de uso mensual",credits_h4:"Los cr\u00e9ditos no utilizados no se transfieren al mes siguiente",credits_h5:"Los cr\u00e9ditos se renuevan en cada ciclo de facturaci\u00f3n",
     credits_balance:"Puedes consultar tu saldo de cr\u00e9ditos desde tu perfil.",credits_packages:"Paquetes de cr\u00e9ditos",
     pkg_name:"Paquete",pkg_tries:"Pruebas",pkg_price:"Precio",pkg_starter_tries:"20 Pruebas",pkg_basic_tries:"42 Pruebas",pkg_pro_tries:"66 Pruebas",pkg_ultra_tries:"157 Pruebas",
-    credits_bulk:"Los paquetes grandes tienen un menor costo por prueba.",credits_important:"Informaci\u00f3n importante",
+    credits_bulk:"Los paquetes grandes tienen un menor costo por prueba.",pkg_buy:"Comprar",pkg_buy_now:"Comprar Cr\u00e9ditos",credits_important:"Informaci\u00f3n importante",
     credits_i1:"Cada aplicaci\u00f3n de labial consume 1 cr\u00e9dito",credits_i2:"Los cr\u00e9ditos se reembolsan autom\u00e1ticamente en operaciones fallidas",credits_i3:"Los cr\u00e9ditos se renuevan mensualmente y los no utilizados se reinician",
     support_title:"Contacto / Soporte",support_desc:"Si tienes preguntas, problemas o comentarios, no dudes en contactarnos.",support_hours:"Intentamos responder en un plazo de 24-48 horas."
   },
@@ -1857,7 +1898,7 @@ const T = {
     credits_h1:"Ogni prova di rossetto utilizza 1 credito",credits_h2:"Puoi provare diversi colori su una singola foto",credits_h3:"I pacchetti di crediti sono per uso mensile",credits_h4:"I crediti non utilizzati non vengono trasferiti al mese successivo",credits_h5:"I crediti vengono rinnovati ad ogni ciclo di fatturazione",
     credits_balance:"Puoi monitorare il tuo saldo crediti dalla pagina del profilo.",credits_packages:"Pacchetti di crediti",
     pkg_name:"Pacchetto",pkg_tries:"Prove",pkg_price:"Prezzo",pkg_starter_tries:"20 Prove",pkg_basic_tries:"42 Prove",pkg_pro_tries:"66 Prove",pkg_ultra_tries:"157 Prove",
-    credits_bulk:"I pacchetti pi\u00f9 grandi hanno un costo per prova inferiore.",credits_important:"Informazioni importanti",
+    credits_bulk:"I pacchetti pi\u00f9 grandi hanno un costo per prova inferiore.",pkg_buy:"Acquista",pkg_buy_now:"Acquista Crediti",credits_important:"Informazioni importanti",
     credits_i1:"Ogni applicazione di rossetto consuma 1 credito",credits_i2:"I crediti vengono rimborsati automaticamente per operazioni fallite",credits_i3:"I crediti vengono rinnovati mensilmente e quelli non utilizzati vengono azzerati",
     support_title:"Contatto / Supporto",support_desc:"Per domande, problemi o feedback, non esitare a contattarci.",support_hours:"Cerchiamo di rispondere entro 24-48 ore."
   },
@@ -1925,7 +1966,7 @@ const T = {
     credits_h1:"Her ruj denemesi 1 kredi kullanir",credits_h2:"Bir fotograf uzerinde farkli renkleri deneyebilirsiniz",credits_h3:"Kredi paketleri aylik kullanim icindir",credits_h4:"Kullanilmayan krediler bir sonraki aya devretmez",credits_h5:"Her fatura doneminde krediler yenilenir",
     credits_balance:"Kredi bakiyenizi profil sayfasindan takip edebilirsiniz.",credits_packages:"Kredi Paketleri",
     pkg_name:"Paket",pkg_tries:"Deneme",pkg_price:"Fiyat",pkg_starter_tries:"20 Deneme",pkg_basic_tries:"42 Deneme",pkg_pro_tries:"66 Deneme",pkg_ultra_tries:"157 Deneme",
-    credits_bulk:"Buyuk paketlerde deneme basina maliyet daha dusuktur.",credits_important:"Onemli Bilgiler",
+    credits_bulk:"Buyuk paketlerde deneme basina maliyet daha dusuktur.",pkg_buy:"Satin Al",pkg_buy_now:"Kredi Satin Al",credits_important:"Onemli Bilgiler",
     credits_i1:"Her ruj uygulamasi 1 kredi tuketir",credits_i2:"Basarisiz islemlerde kredi otomatik iade edilir",credits_i3:"Krediler her ay yenilenir ve kullanilmayan krediler sifirlanir",
     support_title:"Iletisim / Destek",support_desc:"Sorulariniz, sorunlariniz veya geri bildirimleriniz icin bize ulasin.",support_hours:"24-48 saat icinde yanit vermeyi hedefliyoruz."
   }
@@ -2726,6 +2767,19 @@ async function handleShare(platform) {
 // ==========================================
 // MODULE 15: SAVE
 // ==========================================
+function openCreditsTab() {
+  $('policyModal').classList.add('open');
+  document.querySelectorAll('.policy-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
+  var creditsTab = document.querySelector('.policy-tab[data-tab="credits"]');
+  if (creditsTab) creditsTab.classList.add('active');
+  $('tabCredits').classList.add('active');
+}
+
+function buyPackage(pkg) {
+  showToast(t('pkg_buy_soon') || 'Payment system coming soon!');
+}
+
 async function saveImage() {
   const fileName = `lipsync-studio-${state.color?.code || 'photo'}.jpg`;
   try {
@@ -3049,6 +3103,8 @@ function init() {
   });
   // Initial nav state
   updateNav();
+  // Buy credits button
+  $('creditBuyLink').addEventListener('click', function() { openCreditsTab(); });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
