@@ -140,6 +140,13 @@ input{font-family:inherit}
   transition:background 0.2s;
 }
 .credit-buy-link:hover{background:var(--rose-dark)}
+.delete-account-btn{
+  margin-top:12px;width:100%;padding:12px;border-radius:12px;
+  background:#dc3545;color:#fff;font-size:0.85rem;font-weight:600;
+  border:none;cursor:pointer;transition:background 0.2s;
+  font-family:var(--font-body);
+}
+.delete-account-btn:hover{background:#c82333}
 
 /* Steps */
 .step{
@@ -1401,38 +1408,209 @@ input{font-family:inherit}
       <button class="policy-tab" data-tab="faq" data-i18n="tab_faq">FAQ</button>
       <button class="policy-tab" data-tab="credits" data-i18n="tab_credits">Credits & Payment</button>
       <button class="policy-tab" data-tab="support" data-i18n="tab_support">Contact</button>
+      <button class="policy-tab" data-tab="deleteaccount" data-i18n="tab_delete_account">Delete Account</button>
     </div>
     <div class="policy-content">
 
       <!-- Tab 1: Terms of Use -->
       <div class="policy-section active" id="tabTerms">
-        <h3 data-i18n="terms_title">Terms of Use</h3>
-        <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
-        <p data-i18n="terms_desc">By using this application, you agree to the following terms.</p>
-        <h3 data-i18n="terms_service">Service Description</h3>
-        <p data-i18n="terms_service_desc">Our application provides an image processing service that allows users to apply virtual makeup effects (e.g. lipstick colors) to their photos using artificial intelligence technology.</p>
-        <h3 data-i18n="terms_responsibilities">User Responsibilities</h3>
+        <h3>LipSync Studio - Kullanim Sartlari</h3>
+        <p class="policy-date">Son Guncelleme: Mart 2026</p>
+        <p>Bu Kullanim Sartlari ("Sartlar"), LipSync Studio mobil uygulamasi ve ilgili tum hizmetlerin kullanimini duzenler.</p>
+        <p>Uygulamayi kullanarak bu sartlari okudugunuzu, anladiginizi ve kabul ettiginizi beyan etmis olursunuz.</p>
+
+        <h3>1. Taraflar</h3>
+        <p>Bu sozlesme:</p>
         <ul>
-          <li data-i18n="terms_r1">Only upload photos you have the right to use</li>
-          <li data-i18n="terms_r2">Do not upload illegal, harmful or inappropriate content</li>
-          <li data-i18n="terms_r3">Do not misuse the service</li>
-          <li data-i18n="terms_r4">Do not attempt to manipulate the system or bypass technical limitations</li>
+          <li>Hizmet saglayici: Elif Durhan ("Hizmet Saglayici", "Sirket")</li>
+          <li>Kullanici: Uygulamayi kullanan kisi ("Kullanici", "Siz")</li>
         </ul>
-        <h3 data-i18n="terms_account">Account Usage</h3>
-        <p data-i18n="terms_account_desc">Users are responsible for the confidentiality of their account information.</p>
-        <h3 data-i18n="terms_credits">Credit System</h3>
-        <p data-i18n="terms_credits_desc">Some features of the application may operate with a credit system. Each operation may consume a certain amount of credits.</p>
-        <h3 data-i18n="terms_guarantee">Service Guarantee</h3>
-        <p data-i18n="terms_guarantee_desc">The service is provided "as is". No guarantee of uninterrupted or error-free operation is given.</p>
-        <h3 data-i18n="terms_suspension">Account Suspension</h3>
-        <p data-i18n="terms_suspension_desc">Accounts of users who violate the terms of use may be suspended or closed.</p>
-        <h3 data-i18n="terms_liability">Limitation of Liability</h3>
-        <p data-i18n="terms_liability_desc">The user is responsible for the content they upload. The application owner is not responsible for any consequences arising from this content.</p>
-        <h3 data-i18n="terms_contact">Contact</h3>
+        <p>arasinda kurulmustur.</p>
+
+        <h3>2. Hizmet Tanimi</h3>
+        <p>LipSync Studio:</p>
+        <ul>
+          <li>Yapay zeka destekli gorsel duzenleme</li>
+          <li>Sanal makyaj (ruj vb.)</li>
+          <li>Renk ve stil denemeleri</li>
+        </ul>
+        <p>sunmaktadir.</p>
+        <p><em>Hizmet yalnizca dijital onizleme ve deneyim amaclidir.</em></p>
+
+        <h3>3. Yas Sarti</h3>
+        <ul>
+          <li>Uygulama 18 yas ve uzeri kullanicilar icindir</li>
+          <li>18 yas alti kullanicilar yalnizca ebeveyn izni ile kullanabilir</li>
+          <li>Kullanici bu sarti sagladigini kabul eder</li>
+        </ul>
+
+        <h3>4. Kullanici Yukumlulukleri</h3>
+        <p>Kullanici:</p>
+        <ul>
+          <li>Yukledigi icerik uzerinde hak sahibi oldugunu beyan eder</li>
+          <li>Ucuncu kisilerin haklarini ihlal etmez</li>
+          <li>Hukuka uygun davranir</li>
+        </ul>
+        <p><strong>Yasakli Kullanimlar:</strong></p>
+        <ul>
+          <li>Izinsiz yuz kullanimi</li>
+          <li>Deepfake / aldatici icerik uretimi</li>
+          <li>Sistem hackleme girisimleri</li>
+          <li>Bot / otomasyon kotuye kullanimi</li>
+          <li>Hizmetin teknik sinirlarini asmaya calisma</li>
+        </ul>
+
+        <h3>5. Fotograf ve Veri Kullanimi</h3>
+        <ul>
+          <li>Yuklenen fotograflar yalnizca islem amaciyla kullanilir</li>
+          <li>Gorseller kalici olarak saklanmaz</li>
+          <li>Islem tamamlandiktan sonra sistemde tutulmaz</li>
+        </ul>
+        <p><em>Ancak asagidaki durumlarda sinirli veri tutulabilir:</em></p>
+        <ul>
+          <li>Guvenlik ve kotuye kullanim tespiti</li>
+          <li>Teknik hata analizi</li>
+          <li>Hukuki yukumlulukler</li>
+        </ul>
+        <p>Hizmet saglayici, kullanici gorsellerini ticari veya farkli amaclarla kullanmaz.</p>
+
+        <h3>6. Yapay Zeka Sonuclari</h3>
+        <ul>
+          <li>Sonuclar yapay zeka tarafindan olusturulur</li>
+          <li>Gercek hayattaki sonuclarla birebir ortusmeyebilir</li>
+          <li>Estetik veya memnuniyet garantisi verilmez</li>
+        </ul>
+        <p>Bu hizmet tibbi hizmet degildir ve profesyonel makyaj hizmeti degildir.</p>
+
+        <h3>7. Kredi Sistemi</h3>
+        <ul>
+          <li>Uygulama icindeki islemler kredi tuketir</li>
+        </ul>
+        <p>Krediler:</p>
+        <ul>
+          <li>Yalnizca satin alindiklari donem icinde gecerlidir</li>
+          <li>Bir sonraki doneme devretmez</li>
+          <li>Transfer edilemez</li>
+          <li>Nakit karsiligi yoktur</li>
+          <li>Hicbir kosulda geri odenmez</li>
+        </ul>
+
+        <h3>8. Odeme ve Platformlar</h3>
+        <p>Odemeler:</p>
+        <ul>
+          <li>Google Play</li>
+          <li>App Store</li>
+        </ul>
+        <p>uzerinden gerceklestirilebilir. Bu platformlarin komisyonlari, vergi politikalari ve iade surecleri gecerlidir.</p>
+
+        <h3>9. Iade Politikasi</h3>
+        <p>LipSync Studio kapsaminda sunulan krediler ve dijital hizmetler aninda kullanilan dijital icerik niteligindedir.</p>
+        <ul>
+          <li>Krediler geri odenmez</li>
+          <li>Kullanilmamis olsa bile iade edilmez</li>
+          <li>Degistirilemez</li>
+        </ul>
+        <p>Kullanici, satin alma islemi ile bu sartlari kabul eder.</p>
+        <p><strong>Avrupa Birligi Kullanicilari:</strong> Kullanici, hizmetin satin alma sonrasi derhal baslatilmasina onay vererek 14 gunluk cayma hakkindan feragat ettigini kabul eder.</p>
+
+        <h3>10. Hesap Guvenligi</h3>
+        <ul>
+          <li>Hesap guvenligi kullaniciya aittir</li>
+          <li>Yetkisiz kullanim durumunda sorumluluk kullaniciya aittir</li>
+        </ul>
+
+        <h3>11. Hizmet Seviyesi</h3>
+        <p>Hizmet "oldugu gibi" (as is) ve "mevcut oldugu sekilde" (as available) sunulur.</p>
+        <ul>
+          <li>Kesintisiz calisma garantisi yoktur</li>
+          <li>Hatasiz calisma garantisi yoktur</li>
+        </ul>
+
+        <h3>12. Sorumluluk Siniri</h3>
+        <p>Yururlukteki yasalarin izin verdigi olcude:</p>
+        <ul>
+          <li>Dolayli zararlar</li>
+          <li>Gelir kaybi</li>
+          <li>Veri kaybi</li>
+        </ul>
+        <p>icin hizmet saglayici sorumlu degildir.</p>
+
+        <h3>13. Tazminat</h3>
+        <p>Kullanici, asagidaki durumlarda hizmet saglayiciyi korumayi kabul eder:</p>
+        <ul>
+          <li>Hukuka aykiri kullanim</li>
+          <li>Ucuncu taraf hak ihlali</li>
+          <li>Kotuye kullanim</li>
+        </ul>
+
+        <h3>14. Hesap Askiya Alma</h3>
+        <p>Asagidaki durumlarda hesap kapatilabilir:</p>
+        <ul>
+          <li>Kural ihlali</li>
+          <li>Sahtecilik</li>
+          <li>Kotuye kullanim</li>
+          <li>Odeme suistimali</li>
+        </ul>
+
+        <h3>15. Fikri Mulkiyet</h3>
+        <p>Uygulamaya ait tum haklar Elif Durhan'a aittir. Izinsiz kullanim yasaktir.</p>
+
+        <h3>16. Ucuncu Taraf Hizmetler</h3>
+        <p>Uygulama asagidaki servisleri kullanabilir:</p>
+        <ul>
+          <li>Yapay zeka servisleri</li>
+          <li>Bulut altyapi</li>
+          <li>Odeme sistemleri</li>
+        </ul>
+        <p>Bu servislerin kesintilerinden hizmet saglayici sorumlu degildir.</p>
+
+        <h3>17. Hizmette Degisiklik</h3>
+        <p>Hizmet saglayici:</p>
+        <ul>
+          <li>Ozellikleri degistirme</li>
+          <li>Fiyatlari guncelleme</li>
+          <li>Hizmeti durdurma</li>
+        </ul>
+        <p>hakkini sakli tutar.</p>
+
+        <h3>18. Veri Haklari</h3>
+        <p>Kullanici:</p>
+        <ul>
+          <li>Verilerine erisebilir</li>
+          <li>Silinmesini talep edebilir</li>
+          <li>Duzeltme isteyebilir</li>
+        </ul>
+
+        <h3>19. Uygulanacak Hukuk (GLOBAL)</h3>
+        <p>Bu sozlesme Turkiye Cumhuriyeti hukukuna tabidir.</p>
+        <p>Ancak, kullanicinin bulundugu ulkedeki zorunlu tuketici haklari saklidir.</p>
+        <p>Bu sozlesme, kullanicilarin yerel yasalar kapsamindaki haklarini kisitlamaz.</p>
+
+        <h3>20. Uyusmazlik Cozumu</h3>
+        <ul>
+          <li>Oncelik dostane cozum</li>
+          <li>Turkiye icin yetkili mahkemeler</li>
+          <li>Uluslararasi kullanici haklari saklidir</li>
+        </ul>
+
+        <h3>21. Iletisim</h3>
         <div class="policy-email">
           <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--rose);stroke-width:2;fill:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           digitalvisionary2@gmail.com
         </div>
+
+        <h3>22. Siber Guvenlik ve Veri Ihlalleri (EK MADDE)</h3>
+        <p>Hizmet saglayici, uygulamanin guvenligini saglamak icin makul teknik ve idari onlemleri almaya calisir. Ancak internet altyapisinin dogasi geregi hicbir sistemin tamamen guvenli oldugu garanti edilemez.</p>
+        <p>Bu kapsamda:</p>
+        <ul>
+          <li>Yetkisiz erisim</li>
+          <li>Siber saldiri (hackleme, veri ihlali vb.)</li>
+          <li>Sistem kesintisi</li>
+          <li>Veri kaybi veya bozulmasi</li>
+        </ul>
+        <p>gibi durumlarin tamamen onlenmesi garanti edilmez.</p>
+        <p>Bu tur durumlarda: Hizmet saglayici, yururlukteki zorunlu hukuk kurallari disinda, siber saldiri veya ucuncu taraf mudahaleleri sonucu olusabilecek veri kaybi, maddi zarar veya dolayli zararlardan sorumlu tutulamaz.</p>
+        <p>Kullanici, dijital hizmetlerin dogasi geregi bu tur risklerin mevcut oldugunu kabul eder.</p>
 
         <h3 style="margin-top:28px" data-i18n="privacy_title">Privacy Policy</h3>
         <p class="policy-date" data-i18n="policy_date">Last updated: March 2026</p>
@@ -1555,6 +1733,16 @@ input{font-family:inherit}
         <p style="margin-top:20px" data-i18n="support_hours">We aim to respond within 24-48 hours.</p>
       </div>
 
+      <div class="policy-section" id="tabDeleteAccount">
+        <h3 data-i18n="delete_title">Delete Account</h3>
+        <p data-i18n="delete_warning">This action is permanent and cannot be undone. All your data, credits, and usage history will be permanently deleted.</p>
+        <div style="margin-top:20px;padding:16px;background:rgba(220,53,69,0.08);border-radius:12px;border:1px solid rgba(220,53,69,0.2);">
+          <p style="font-size:0.82rem;color:#8E4A52;margin-bottom:12px;" data-i18n="delete_confirm_text">To confirm, type DELETE below:</p>
+          <input type="text" id="deleteConfirmInput" placeholder="DELETE" style="width:100%;padding:10px 14px;border:1px solid var(--rose-lighter);border-radius:10px;font-size:0.85rem;font-family:var(--font-body);outline:none;">
+          <button class="delete-account-btn" id="deleteAccountBtn" onclick="deleteMyAccount()" data-i18n="delete_button">Delete My Account</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1634,7 +1822,8 @@ const T = {
     pkg_name:"Package",pkg_tries:"Tries",pkg_price:"Price",pkg_starter_tries:"20 Tries",pkg_basic_tries:"42 Tries",pkg_pro_tries:"66 Tries",pkg_ultra_tries:"157 Tries",
     credits_bulk:"Larger packages have a lower cost per try.",pkg_buy:"Buy",pkg_buy_now:"Buy Credits",credits_important:"Important Information",
     credits_i1:"Each lipstick application consumes 1 credit",credits_i2:"Credits are automatically refunded for failed operations",credits_i3:"Credits are renewed monthly and unused credits are reset",
-    support_title:"Contact / Support",support_desc:"If you have any questions, issues or feedback, please reach out to us.",support_hours:"We aim to respond within 24-48 hours."
+    support_title:"Contact / Support",support_desc:"If you have any questions, issues or feedback, please reach out to us.",support_hours:"We aim to respond within 24-48 hours.",
+    tab_delete_account:"Delete Account",delete_title:"Delete Account",delete_warning:"This action is permanent and cannot be undone. All your data, credits, and usage history will be permanently deleted.",delete_confirm_text:"To confirm, type DELETE below:",delete_button:"Delete My Account",delete_type_confirm:"Please type DELETE to confirm",delete_success:"Account deleted successfully",delete_error:"Failed to delete account. Please try again."
   },
   fr: {
     tagline:"Trouvez Votre Teinte Parfaite",
@@ -1700,7 +1889,8 @@ const T = {
     pkg_name:"Paquet",pkg_tries:"Essais",pkg_price:"Prix",pkg_starter_tries:"20 Essais",pkg_basic_tries:"42 Essais",pkg_pro_tries:"66 Essais",pkg_ultra_tries:"157 Essais",
     credits_bulk:"Les grands paquets ont un co\u00fbt par essai plus bas.",pkg_buy:"Acheter",pkg_buy_now:"Acheter Cr\u00e9dits",credits_important:"Informations importantes",
     credits_i1:"Chaque application de rouge \u00e0 l\u00e8vres consomme 1 cr\u00e9dit",credits_i2:"Les cr\u00e9dits sont automatiquement rembours\u00e9s en cas d'\u00e9chec",credits_i3:"Les cr\u00e9dits sont renouvel\u00e9s mensuellement et les cr\u00e9dits non utilis\u00e9s sont r\u00e9initialis\u00e9s",
-    support_title:"Contact / Support",support_desc:"Pour toute question, probl\u00e8me ou commentaire, n'h\u00e9sitez pas \u00e0 nous contacter.",support_hours:"Nous visons \u00e0 r\u00e9pondre sous 24-48 heures."
+    support_title:"Contact / Support",support_desc:"Pour toute question, probl\u00e8me ou commentaire, n'h\u00e9sitez pas \u00e0 nous contacter.",support_hours:"Nous visons \u00e0 r\u00e9pondre sous 24-48 heures.",
+    tab_delete_account:"Supprimer le compte",delete_title:"Supprimer le compte",delete_warning:"Cette action est d\u00e9finitive et irr\u00e9versible. Toutes vos donn\u00e9es, cr\u00e9dits et historique seront supprim\u00e9s.",delete_confirm_text:"Pour confirmer, tapez DELETE ci-dessous :",delete_button:"Supprimer mon compte",delete_type_confirm:"Veuillez taper DELETE pour confirmer",delete_success:"Compte supprim\u00e9 avec succ\u00e8s",delete_error:"\u00c9chec de la suppression. Veuillez r\u00e9essayer."
   },
   de: {
     tagline:"Finden Sie Ihren Perfekten Farbton",
@@ -1766,7 +1956,8 @@ const T = {
     pkg_name:"Paket",pkg_tries:"Versuche",pkg_price:"Preis",pkg_starter_tries:"20 Versuche",pkg_basic_tries:"42 Versuche",pkg_pro_tries:"66 Versuche",pkg_ultra_tries:"157 Versuche",
     credits_bulk:"Gr\u00f6\u00dfere Pakete haben niedrigere Kosten pro Versuch.",pkg_buy:"Kaufen",pkg_buy_now:"Kredite Kaufen",credits_important:"Wichtige Informationen",
     credits_i1:"Jede Lippenstift-Anwendung verbraucht 1 Kredit",credits_i2:"Kredite werden bei fehlgeschlagenen Vorg\u00e4ngen automatisch erstattet",credits_i3:"Kredite werden monatlich erneuert und nicht verwendete Kredite werden zur\u00fcckgesetzt",
-    support_title:"Kontakt / Support",support_desc:"Bei Fragen, Problemen oder Feedback kontaktieren Sie uns bitte.",support_hours:"Wir antworten in der Regel innerhalb von 24-48 Stunden."
+    support_title:"Kontakt / Support",support_desc:"Bei Fragen, Problemen oder Feedback kontaktieren Sie uns bitte.",support_hours:"Wir antworten in der Regel innerhalb von 24-48 Stunden.",
+    tab_delete_account:"Konto l\u00f6schen",delete_title:"Konto l\u00f6schen",delete_warning:"Diese Aktion ist dauerhaft und kann nicht r\u00fcckg\u00e4ngig gemacht werden. Alle Ihre Daten, Kredite und Nutzungshistorie werden unwiderruflich gel\u00f6scht.",delete_confirm_text:"Zur Best\u00e4tigung geben Sie DELETE ein:",delete_button:"Mein Konto l\u00f6schen",delete_type_confirm:"Bitte geben Sie DELETE zur Best\u00e4tigung ein",delete_success:"Konto erfolgreich gel\u00f6scht",delete_error:"Konto konnte nicht gel\u00f6scht werden. Bitte versuchen Sie es erneut."
   },
   es: {
     tagline:"Encuentra Tu Tono Perfecto",
@@ -1832,7 +2023,8 @@ const T = {
     pkg_name:"Paquete",pkg_tries:"Pruebas",pkg_price:"Precio",pkg_starter_tries:"20 Pruebas",pkg_basic_tries:"42 Pruebas",pkg_pro_tries:"66 Pruebas",pkg_ultra_tries:"157 Pruebas",
     credits_bulk:"Los paquetes grandes tienen un menor costo por prueba.",pkg_buy:"Comprar",pkg_buy_now:"Comprar Cr\u00e9ditos",credits_important:"Informaci\u00f3n importante",
     credits_i1:"Cada aplicaci\u00f3n de labial consume 1 cr\u00e9dito",credits_i2:"Los cr\u00e9ditos se reembolsan autom\u00e1ticamente en operaciones fallidas",credits_i3:"Los cr\u00e9ditos se renuevan mensualmente y los no utilizados se reinician",
-    support_title:"Contacto / Soporte",support_desc:"Si tienes preguntas, problemas o comentarios, no dudes en contactarnos.",support_hours:"Intentamos responder en un plazo de 24-48 horas."
+    support_title:"Contacto / Soporte",support_desc:"Si tienes preguntas, problemas o comentarios, no dudes en contactarnos.",support_hours:"Intentamos responder en un plazo de 24-48 horas.",
+    tab_delete_account:"Eliminar cuenta",delete_title:"Eliminar cuenta",delete_warning:"Esta acci\u00f3n es permanente e irreversible. Todos tus datos, cr\u00e9ditos e historial ser\u00e1n eliminados.",delete_confirm_text:"Para confirmar, escribe DELETE abajo:",delete_button:"Eliminar mi cuenta",delete_type_confirm:"Escribe DELETE para confirmar",delete_success:"Cuenta eliminada correctamente",delete_error:"Error al eliminar la cuenta. Int\u00e9ntalo de nuevo."
   },
   it: {
     tagline:"Trova la Tua Tonalit\u00e0 Perfetta",
@@ -1900,7 +2092,8 @@ const T = {
     pkg_name:"Pacchetto",pkg_tries:"Prove",pkg_price:"Prezzo",pkg_starter_tries:"20 Prove",pkg_basic_tries:"42 Prove",pkg_pro_tries:"66 Prove",pkg_ultra_tries:"157 Prove",
     credits_bulk:"I pacchetti pi\u00f9 grandi hanno un costo per prova inferiore.",pkg_buy:"Acquista",pkg_buy_now:"Acquista Crediti",credits_important:"Informazioni importanti",
     credits_i1:"Ogni applicazione di rossetto consuma 1 credito",credits_i2:"I crediti vengono rimborsati automaticamente per operazioni fallite",credits_i3:"I crediti vengono rinnovati mensilmente e quelli non utilizzati vengono azzerati",
-    support_title:"Contatto / Supporto",support_desc:"Per domande, problemi o feedback, non esitare a contattarci.",support_hours:"Cerchiamo di rispondere entro 24-48 ore."
+    support_title:"Contatto / Supporto",support_desc:"Per domande, problemi o feedback, non esitare a contattarci.",support_hours:"Cerchiamo di rispondere entro 24-48 ore.",
+    tab_delete_account:"Elimina account",delete_title:"Elimina account",delete_warning:"Questa azione \u00e8 permanente e irreversibile. Tutti i tuoi dati, crediti e cronologia verranno eliminati.",delete_confirm_text:"Per confermare, digita DELETE qui sotto:",delete_button:"Elimina il mio account",delete_type_confirm:"Digita DELETE per confermare",delete_success:"Account eliminato con successo",delete_error:"Impossibile eliminare l'account. Riprova."
   },
   tr: {
     tagline:"Mukemmel Tonunuzu Bulun",
@@ -1968,7 +2161,8 @@ const T = {
     pkg_name:"Paket",pkg_tries:"Deneme",pkg_price:"Fiyat",pkg_starter_tries:"20 Deneme",pkg_basic_tries:"42 Deneme",pkg_pro_tries:"66 Deneme",pkg_ultra_tries:"157 Deneme",
     credits_bulk:"Buyuk paketlerde deneme basina maliyet daha dusuktur.",pkg_buy:"Satin Al",pkg_buy_now:"Kredi Satin Al",credits_important:"Onemli Bilgiler",
     credits_i1:"Her ruj uygulamasi 1 kredi tuketir",credits_i2:"Basarisiz islemlerde kredi otomatik iade edilir",credits_i3:"Krediler her ay yenilenir ve kullanilmayan krediler sifirlanir",
-    support_title:"Iletisim / Destek",support_desc:"Sorulariniz, sorunlariniz veya geri bildirimleriniz icin bize ulasin.",support_hours:"24-48 saat icinde yanit vermeyi hedefliyoruz."
+    support_title:"Iletisim / Destek",support_desc:"Sorulariniz, sorunlariniz veya geri bildirimleriniz icin bize ulasin.",support_hours:"24-48 saat icinde yanit vermeyi hedefliyoruz.",
+    tab_delete_account:"Hesabimi Sil",delete_title:"Hesabimi Sil",delete_warning:"Bu islem kalici ve geri alinamaz. Tum verileriniz, kredileriniz ve kullanim gecmisiniz kalici olarak silinecektir.",delete_confirm_text:"Onaylamak icin asagiya DELETE yazin:",delete_button:"Hesabimi Sil",delete_type_confirm:"Onaylamak icin DELETE yazin",delete_success:"Hesabiniz basariyla silindi",delete_error:"Hesap silinemedi. Lutfen tekrar deneyin."
   }
 };
 
@@ -2767,6 +2961,39 @@ async function handleShare(platform) {
 // ==========================================
 // MODULE 15: SAVE
 // ==========================================
+async function deleteMyAccount() {
+  const input = $('deleteConfirmInput');
+  if (!input || input.value.trim().toUpperCase() !== 'DELETE') {
+    showToast(t('delete_type_confirm') || 'Please type DELETE to confirm');
+    return;
+  }
+  if (!state.user || !sbAuth._token) {
+    showToast(t('login_required') || 'Please log in first');
+    return;
+  }
+  try {
+    const res = await fetch(WORKER_URL + '/api/delete-account', {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + sbAuth._token }
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || 'Failed');
+    }
+    showToast(t('delete_success') || 'Account deleted successfully');
+    sbAuth._token = null;
+    localStorage.removeItem('sb-token');
+    state.user = null;
+    state.credits = 0;
+    updateAuthUI();
+    updateCreditBadge();
+    closePolicyModal();
+    goToStep(1);
+  } catch (e) {
+    showToast(t('delete_error') || 'Failed to delete account. Please try again.');
+  }
+}
+
 function openCreditsTab() {
   $('policyModal').classList.add('open');
   document.querySelectorAll('.policy-tab').forEach(t => t.classList.remove('active'));
@@ -3097,7 +3324,7 @@ function init() {
       document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
       tab.classList.add('active');
       const target = tab.dataset.tab;
-      const sectionMap = {terms:'tabTerms',faq:'tabFaq',credits:'tabCredits',support:'tabSupport'};
+      const sectionMap = {terms:'tabTerms',faq:'tabFaq',credits:'tabCredits',support:'tabSupport',deleteaccount:'tabDeleteAccount'};
       $(sectionMap[target]).classList.add('active');
     });
   });

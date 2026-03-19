@@ -4,6 +4,7 @@ import { handleOptions, corsify } from './middleware/cors';
 import { handleApplyLipstick } from './routes/apply-lipstick';
 import { handleTaskStatus } from './routes/task-status';
 import { handleProxyImage } from './routes/proxy-image';
+import { handleDeleteAccount } from './routes/delete-account';
 import { errorResponse } from './utils/errors';
 
 export default {
@@ -32,6 +33,8 @@ export default {
         response = await handleTaskStatus(request, user, env);
       } else if (url.pathname === '/api/image' && request.method === 'GET') {
         response = await handleProxyImage(request, user, env);
+      } else if (url.pathname === '/api/delete-account' && request.method === 'DELETE') {
+        response = await handleDeleteAccount(request, user, env);
       } else {
         response = Response.json(
           { error: 'Not found', code: 'NOT_FOUND' },
