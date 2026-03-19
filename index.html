@@ -314,39 +314,6 @@ input{font-family:inherit}
   from{opacity:0;transform:translateX(-12px)}
   to{opacity:1;transform:translateX(0)}
 }
-.custom-color-zone{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:10px;
-  padding:24px 20px;
-  background:var(--bg-card);
-  border-radius:var(--radius);
-  border:2px dashed var(--rose-light);
-  box-shadow:var(--shadow-sm);
-  transition:all 0.4s var(--ease);
-  cursor:pointer;
-  animation:cardIn 0.5s var(--ease) 0.35s both;
-  text-align:center;
-}
-.custom-color-zone:hover,.custom-color-zone.drag-over{
-  border-color:var(--rose);
-  background:var(--rose-pale);
-  box-shadow:var(--shadow-md);
-}
-.custom-color-zone.drag-over{
-  transform:scale(1.02);
-}
-.custom-color-zone .custom-color-icon{
-  width:48px;height:48px;border-radius:var(--radius-full);
-  background:linear-gradient(135deg,var(--rose-light),var(--rose));
-  display:flex;align-items:center;justify-content:center;
-}
-.custom-color-zone .custom-color-icon svg{width:24px;height:24px;stroke:#fff;stroke-width:2;fill:none}
-.custom-color-zone .cc-title{
-  font-size:0.95rem;font-weight:500;color:var(--text);
-}
-.custom-color-zone .cc-desc{
-  font-size:0.75rem;color:var(--text-secondary);line-height:1.5;max-width:260px;
-}
 .category-swatches{
   display:flex;gap:4px;flex-shrink:0;
 }
@@ -2564,81 +2531,7 @@ function renderCategories() {
     list.appendChild(card);
   });
 
-  // Custom color drop zone
-  const customZone = document.createElement('div');
-  customZone.className = 'custom-color-zone';
-  customZone.id = 'customColorZone';
-  customZone.innerHTML = `
-    <div class="custom-color-icon">
-      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-    </div>
-    <div class="cc-title" data-i18n="custom_color">${t('custom_color')}</div>
-    <div class="cc-desc" data-i18n="custom_color_desc">${t('custom_color_desc')}</div>
-    <input type="file" id="customLipInput" accept="image/*" class="hidden">
-  `;
 
-  // Click to upload
-  customZone.addEventListener('click', (e) => {
-    if (e.target.id !== 'customLipInput') $('customLipInput').click();
-  });
-
-  // File selected
-  customZone.querySelector('#customLipInput').addEventListener('change', (e) => {
-    if (e.target.files[0]) handleCustomLipImage(e.target.files[0]);
-  });
-
-  // Drag and drop
-  customZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    customZone.classList.add('drag-over');
-  });
-  customZone.addEventListener('dragleave', () => {
-    customZone.classList.remove('drag-over');
-  });
-  customZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    customZone.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      handleCustomLipImage(file);
-    }
-  });
-
-  list.appendChild(customZone);
-}
-
-function handleCustomLipImage(file) {
-  // TODO: AI_INTEGRATION - Replace this with actual AI lip color detection via Cloudflare API
-  // For now, store the image and show a placeholder message
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    state.customLipImage = e.target.result;
-    state.category = 'custom';
-    // Placeholder: extract average color from center of image
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      // Sample center area
-      const cx = Math.floor(img.width / 2);
-      const cy = Math.floor(img.height / 2);
-      const size = Math.floor(Math.min(img.width, img.height) * 0.3);
-      const data = ctx.getImageData(cx - size/2, cy - size/2, size, size).data;
-      let r=0, g=0, b=0, count=0;
-      for (let i=0; i<data.length; i+=4) {
-        r += data[i]; g += data[i+1]; b += data[i+2]; count++;
-      }
-      r = Math.round(r/count); g = Math.round(g/count); b = Math.round(b/count);
-      const hex = '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('').toUpperCase();
-      state.color = { code: 'CUSTOM', hex: hex };
-      goToStep(4);
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
 }
 
 // ==========================================
