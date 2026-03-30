@@ -50,7 +50,7 @@ git push origin master
 - **API keys must NEVER be in frontend code, git history, or any public file.** All secrets are stored as Cloudflare Worker secrets. The Supabase anon key in `index.html` is intentionally public (read-only, RLS-protected).
 - The image proxy in `proxy-image.ts` has a domain whitelist — if Kie AI starts serving results from a new domain, it must be added there.
 - Credit deduction uses an atomic Supabase RPC (`deduct_credit`). On AI failure, credits are refunded via REST PATCH.
-- Frontend supports 6 languages: EN, FR, DE, ES, IT, TR. New user-facing strings need i18n entries in all languages.
+- Frontend supports 9 languages: EN, FR, DE, ES, IT, TR, PT-BR, JA. New user-facing strings need i18n entries in all languages.
 - The `supabase-setup.sql` file documents the database schema but is run manually in Supabase SQL Editor, not via migrations.
 
 ## Worker Source Layout
