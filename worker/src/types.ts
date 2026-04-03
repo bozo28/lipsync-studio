@@ -4,6 +4,7 @@ export interface Env {
   SUPABASE_JWT_SECRET: string;
   SUPABASE_URL: string;
   ALLOWED_ORIGINS: string;
+  PADDLE_API_KEY: string;
   RATE_LIMIT: KVNamespace;
 }
 

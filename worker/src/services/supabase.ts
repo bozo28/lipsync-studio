@@ -61,6 +61,23 @@ export async function refundCredit(userId: string, env: Env): Promise<void> {
   );
 }
 
+/** Add credits to a user (after successful payment). Uses upsert. */
+export async function addCredits(userId: string, amount: number, env: Env): Promise<void> {
+  // First try to get current credits
+  const current = await getCredits(userId, env);
+  const res = await fetch(
+    `${env.SUPABASE_URL}/rest/v1/user_credits`,
+    {
+      method: 'POST',
+      headers: { ...headers(env), 'Prefer': 'resolution=merge-duplicates,return=representation' },
+      body: JSON.stringify({ user_id: userId, credits: current + amount }),
+    }
+  );
+  if (!res.ok) {
+    throw new AppError('Failed to add credits', 500, 'CREDITS_ERROR');
+  }
+}
+
 /** Log a usage record */
 export async function logUsage(
   userId: string,

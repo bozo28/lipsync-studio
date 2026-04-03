@@ -5,6 +5,7 @@ import { handleApplyLipstick } from './routes/apply-lipstick';
 import { handleTaskStatus } from './routes/task-status';
 import { handleProxyImage } from './routes/proxy-image';
 import { handleDeleteAccount } from './routes/delete-account';
+import { handlePaddleWebhook } from './routes/paddle-webhook';
 import { errorResponse } from './utils/errors';
 
 export default {
@@ -21,6 +22,12 @@ export default {
       // Health check (no auth needed)
       if (url.pathname === '/health' && request.method === 'GET') {
         response = Response.json({ status: 'ok' });
+        return corsify(response, request, env);
+      }
+
+      // Paddle webhook (no JWT auth — verified by Paddle signature)
+      if (url.pathname === '/api/paddle-webhook' && request.method === 'POST') {
+        response = await handlePaddleWebhook(request, env);
         return corsify(response, request, env);
       }
 

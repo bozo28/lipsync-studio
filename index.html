@@ -1057,6 +1057,7 @@ input{font-family:inherit}
 .hidden{display:none!important}
 .mt-auto{margin-top:auto}
 </style>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 </head>
 <body>
 
@@ -2837,8 +2838,34 @@ function openCreditsTab() {
   $('tabCredits').classList.add('active');
 }
 
+// Paddle initialization
+if (typeof Paddle !== 'undefined') {
+  Paddle.Initialize({ token: 'live_ab8748a4f2c6cd0deae88ea8ead' });
+}
+
+const PADDLE_PRICES = {
+  starter: 'pri_01knakqj0jmbdgh6wcp0d435kk',
+  basic: 'pri_01knaksxqtwtcg430b90ekk7a0',
+  pro: 'pri_01knakvpe28py0eqargfktrpk1',
+  ultra: 'pri_01knakz3mm640gkpbt5y8a1c2j'
+};
+
+const PACKAGE_CREDITS = { starter: 20, basic: 42, pro: 66, ultra: 157 };
+
 function buyPackage(pkg) {
-  showToast(t('pkg_buy_soon') || 'Payment system coming soon!');
+  if (!state.user) { showAuthModal(); return; }
+  const priceId = PADDLE_PRICES[pkg];
+  if (!priceId) return;
+  Paddle.Checkout.open({
+    items: [{ priceId: priceId, quantity: 1 }],
+    customer: { email: state.user.email },
+    customData: { userId: state.user.id, package: pkg, credits: String(PACKAGE_CREDITS[pkg]) },
+    settings: {
+      displayMode: 'overlay',
+      theme: 'dark',
+      locale: state.lang || 'en'
+    }
+  });
 }
 
 async function saveImage() {
