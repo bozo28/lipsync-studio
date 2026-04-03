@@ -30,11 +30,11 @@ async function verifyPaddleSignature(
   // Build signed payload: timestamp + ":" + raw body
   const signedPayload = `${ts}:${rawBody}`;
 
-  // HMAC-SHA256 with the Paddle API key
+  // HMAC-SHA256 with the Paddle webhook secret
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
     'raw',
-    encoder.encode(env.PADDLE_API_KEY),
+    encoder.encode(env.PADDLE_WEBHOOK_SECRET),
     { name: 'HMAC', hash: 'SHA-256' },
     false,
     ['sign']

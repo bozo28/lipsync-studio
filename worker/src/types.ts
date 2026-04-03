@@ -5,6 +5,7 @@ export interface Env {
   SUPABASE_URL: string;
   ALLOWED_ORIGINS: string;
   PADDLE_API_KEY: string;
+  PADDLE_WEBHOOK_SECRET: string;
   RATE_LIMIT: KVNamespace;
 }
 
