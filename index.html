@@ -3012,7 +3012,7 @@ const PADDLE_PRICES = {
 const PACKAGE_CREDITS = { starter: 20, basic: 42, pro: 66, ultra: 157 };
 
 function buyPackage(pkg) {
-  if (!state.user) { showAuthModal(); return; }
+  if (!state.user) { showToast(t('login_required')); openAuth('login'); return; }
   const priceId = PADDLE_PRICES[pkg];
   if (!priceId) return;
   Paddle.Checkout.open({
