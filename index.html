@@ -2352,12 +2352,34 @@ const sbAuth = {
     if (data.refresh_token) localStorage.setItem('lipsync-refresh', data.refresh_token);
     return data;
   },
+  async refreshSession() {
+    const refresh = localStorage.getItem('lipsync-refresh');
+    if (!refresh) return false;
+    try {
+      const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=refresh_token', {
+        method: 'POST', headers: { 'Content-Type':'application/json', 'apikey': SUPABASE_ANON_KEY },
+        body: JSON.stringify({ refresh_token: refresh })
+      });
+      if (!res.ok) return false;
+      const data = await res.json();
+      this._token = data.access_token;
+      localStorage.setItem('lipsync-token', data.access_token);
+      if (data.refresh_token) localStorage.setItem('lipsync-refresh', data.refresh_token);
+      return true;
+    } catch(e) { return false; }
+  },
   async getUser() {
     const token = localStorage.getItem('lipsync-token');
     if (!token) return null;
     this._token = token;
-    const res = await fetch(SUPABASE_URL + '/auth/v1/user', { headers: this._headers() });
-    if (!res.ok) { this.clearSession(); return null; }
+    let res = await fetch(SUPABASE_URL + '/auth/v1/user', { headers: this._headers() });
+    if (!res.ok) {
+      // Token expired — try refresh
+      const refreshed = await this.refreshSession();
+      if (!refreshed) { this.clearSession(); return null; }
+      res = await fetch(SUPABASE_URL + '/auth/v1/user', { headers: this._headers() });
+      if (!res.ok) { this.clearSession(); return null; }
+    }
     return await res.json();
   },
   async signOut() {
@@ -2680,7 +2702,7 @@ async function startProcessing() {
     $('processingColor').style.backgroundColor = state.color.hex;
   }
 
-  const token = sbAuth._token;
+  let token = sbAuth._token;
   if (!token) {
     showToast(t('login_required') || 'Please log in first');
     goToStep(1);
@@ -2689,7 +2711,7 @@ async function startProcessing() {
 
   try {
     // Step 1: Send image to Worker API
-    const res = await fetch(WORKER_URL + '/api/apply', {
+    let res = await fetch(WORKER_URL + '/api/apply', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -2702,6 +2724,19 @@ async function startProcessing() {
         category: state.category || 'custom'
       })
     });
+
+    // Token expired — refresh and retry once
+    if (res.status === 401) {
+      const refreshed = await sbAuth.refreshSession();
+      if (refreshed) {
+        token = sbAuth._token;
+        res = await fetch(WORKER_URL + '/api/apply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ image: state.photo, lipColor: state.color.hex, colorCode: state.color.code, category: state.category || 'custom' })
+        });
+      }
+    }
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
@@ -3000,7 +3035,17 @@ function openCreditsTab() {
 
 // Paddle initialization
 if (typeof Paddle !== 'undefined') {
-  Paddle.Initialize({ token: 'live_ab8748a4f2c6cd0deae88ea8ead' });
+  Paddle.Initialize({
+    token: 'live_ab8748a4f2c6cd0deae88ea8ead',
+    eventCallback: function(ev) {
+      if (ev.name === 'checkout.completed') {
+        showToast(t('purchase_success') || 'Purchase successful!');
+        // Refresh credits after a short delay (webhook needs time to process)
+        setTimeout(() => fetchCredits(), 3000);
+        setTimeout(() => fetchCredits(), 8000);
+      }
+    }
+  });
 }
 
 const PADDLE_PRICES = {
@@ -3187,12 +3232,27 @@ async function logout() {
 async function fetchCredits() {
   if (!sbAuth._token) return;
   try {
-    const res = await fetch(SUPABASE_URL + '/rest/v1/user_credits?user_id=eq.' + state.user.id + '&select=credits', {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/user_credits?user_id=eq.' + state.user.id + '&select=credits,credits_expires_at', {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + sbAuth._token }
     });
     if (res.ok) {
       const rows = await res.json();
-      state.credits = rows.length > 0 ? rows[0].credits : 0;
+      if (rows.length > 0) {
+        const row = rows[0];
+        // Check if credits have expired
+        if (row.credits_expires_at && new Date(row.credits_expires_at) < new Date()) {
+          state.credits = 0;
+        } else {
+          state.credits = row.credits;
+        }
+      } else {
+        state.credits = 0;
+      }
+    } else if (res.status === 401) {
+      // Token expired — try refresh and retry
+      const refreshed = await sbAuth.refreshSession();
+      if (refreshed) return fetchCredits();
+      state.credits = 0;
     } else {
       state.credits = 0;
     }
