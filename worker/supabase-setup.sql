@@ -6,7 +6,8 @@
 -- 1. User Credits Table
 CREATE TABLE IF NOT EXISTS user_credits (
   user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  credits INTEGER NOT NULL DEFAULT 3,
+  credits INTEGER NOT NULL DEFAULT 1,
+  credits_expires_at TIMESTAMPTZ DEFAULT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -27,7 +28,7 @@ CREATE OR REPLACE FUNCTION handle_new_user_credits()
 RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO user_credits (user_id, credits)
-  VALUES (NEW.id, 3)
+  VALUES (NEW.id, 1)
   ON CONFLICT (user_id) DO NOTHING;
   RETURN NEW;
 END;
@@ -38,12 +39,21 @@ CREATE TRIGGER on_auth_user_created_credits
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION handle_new_user_credits();
 
--- 4. Atomic credit deduction RPC
+-- 4. Atomic credit deduction RPC (checks expiry)
 CREATE OR REPLACE FUNCTION deduct_credit(p_user_id UUID)
 RETURNS INTEGER AS $$
 DECLARE
   remaining INTEGER;
 BEGIN
+  -- First reset expired credits to 0
+  UPDATE user_credits
+  SET credits = 0, updated_at = now()
+  WHERE user_id = p_user_id
+    AND credits_expires_at IS NOT NULL
+    AND credits_expires_at < now()
+    AND credits > 0;
+
+  -- Then deduct
   UPDATE user_credits
   SET credits = credits - 1, updated_at = now()
   WHERE user_id = p_user_id AND credits > 0

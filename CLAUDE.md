@@ -15,6 +15,7 @@ LipSync Studio — a virtual lipstick try-on web app. Users take/upload a selfie
 **External services**:
 - **Supabase**: Auth (ES256 JWT via JWKS), PostgreSQL for credits/usage tracking
 - **Kie AI**: AI image processing (two-step: upload to `kieai.redpandaai.co`, then create task via `api.kie.ai`, results served from `tempfile.aiquickdraw.com`)
+- **Paddle**: Payment processing for generation packages (Starter/Basic/Pro/Ultra). Webhook notifies Worker on successful payment.
 - **Cloudflare KV**: Rate limiting (10 req/min per user)
 
 **Data flow**: Frontend gets Supabase JWT → sends base64 image + color to Worker → Worker verifies JWT, deducts credit, uploads to Kie AI, returns taskId → Frontend polls Worker for status → Worker proxies result image back to frontend.
@@ -31,6 +32,8 @@ npm run deploy     # Deploy to Cloudflare
 npx wrangler secret put KIE_AI_API_KEY
 npx wrangler secret put SUPABASE_SERVICE_KEY
 npx wrangler secret put SUPABASE_JWT_SECRET
+npx wrangler secret put PADDLE_API_KEY
+npx wrangler secret put PADDLE_WEBHOOK_SECRET
 
 # Frontend — no build step, just push to GitHub for Pages deployment
 git push origin master
@@ -43,14 +46,16 @@ git push origin master
 | `/api/apply` | POST | JWT | `routes/apply-lipstick.ts` — submit photo + color |
 | `/api/task` | GET | JWT | `routes/task-status.ts` — poll task status |
 | `/api/image` | GET | JWT | `routes/proxy-image.ts` — proxy images from Kie AI domains |
+| `/api/paddle-webhook` | POST | Paddle signature | `routes/paddle-webhook.ts` — handle payment events, add credits |
 | `/health` | GET | No | Health check |
 
 ## Key Constraints
 
-- **API keys must NEVER be in frontend code, git history, or any public file.** All secrets are stored as Cloudflare Worker secrets. The Supabase anon key in `index.html` is intentionally public (read-only, RLS-protected).
+- **API keys must NEVER be in frontend code, git history, or any public file.** All secrets are stored as Cloudflare Worker secrets. The Supabase anon key and Paddle client-side token in `index.html` are intentionally public (designed for frontend use).
 - The image proxy in `proxy-image.ts` has a domain whitelist — if Kie AI starts serving results from a new domain, it must be added there.
 - Credit deduction uses an atomic Supabase RPC (`deduct_credit`). On AI failure, credits are refunded via REST PATCH.
-- Frontend supports 9 languages: EN, FR, DE, ES, IT, TR, PT-BR, JA. New user-facing strings need i18n entries in all languages.
+- Frontend supports 8 languages: EN, FR, DE, ES, IT, TR, PT-BR, JA. New user-facing strings need i18n entries in all languages.
+- Frontend uses hash routing (`#/terms`, `#/faq`, `#/credits`, `#/support`, `#/deleteaccount`) for policy pages.
 - The `supabase-setup.sql` file documents the database schema but is run manually in Supabase SQL Editor, not via migrations.
 
 ## Worker Source Layout

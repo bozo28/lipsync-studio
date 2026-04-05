@@ -61,16 +61,16 @@ export async function refundCredit(userId: string, env: Env): Promise<void> {
   );
 }
 
-/** Add credits to a user (after successful payment). Uses upsert. */
+/** Add credits to a user (after successful payment). Sets 30-day expiry. */
 export async function addCredits(userId: string, amount: number, env: Env): Promise<void> {
-  // First try to get current credits
   const current = await getCredits(userId, env);
+  const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
   const res = await fetch(
     `${env.SUPABASE_URL}/rest/v1/user_credits`,
     {
       method: 'POST',
       headers: { ...headers(env), 'Prefer': 'resolution=merge-duplicates,return=representation' },
-      body: JSON.stringify({ user_id: userId, credits: current + amount }),
+      body: JSON.stringify({ user_id: userId, credits: current + amount, credits_expires_at: expiresAt }),
     }
   );
   if (!res.ok) {
