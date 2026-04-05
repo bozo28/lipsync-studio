@@ -50,7 +50,17 @@ async function verifyPaddleSignature(
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
 
-  return computed === h1;
+  // Timing-safe comparison
+  const a = encoder.encode(computed);
+  const b = encoder.encode(h1);
+  if (a.byteLength !== b.byteLength) return false;
+  const keyBuf = crypto.getRandomValues(new Uint8Array(32));
+  const macKey = await crypto.subtle.importKey('raw', keyBuf, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const [macA, macB] = await Promise.all([
+    crypto.subtle.sign('HMAC', macKey, a),
+    crypto.subtle.sign('HMAC', macKey, b),
+  ]);
+  return new Uint8Array(macA).every((v, i) => v === new Uint8Array(macB)[i]);
 }
 
 interface PaddleEvent {
@@ -95,6 +105,7 @@ export async function handlePaddleWebhook(
     return Response.json({ error: 'Missing custom data' }, { status: 400 });
   }
 
+  const transactionId = event.data.id;
   const userId = custom_data.userId;
   const pkg = custom_data.package || 'unknown';
 
@@ -102,10 +113,21 @@ export async function handlePaddleWebhook(
   if (!(pkg in PACKAGE_CREDITS)) {
     return Response.json({ error: 'Unknown package' }, { status: 400 });
   }
+
+  // Idempotency: check if this transaction was already processed
+  const idempotencyKey = `paddle:${transactionId}`;
+  const already = await env.RATE_LIMIT.get(idempotencyKey);
+  if (already) {
+    return Response.json({ success: true, duplicate: true });
+  }
+
   const serverCredits = PACKAGE_CREDITS[pkg];
 
   // Add credits to user using server-side amount (not client-provided)
   await addCredits(userId, serverCredits, env);
+
+  // Mark transaction as processed (keep for 7 days)
+  await env.RATE_LIMIT.put(idempotencyKey, '1', { expirationTtl: 604800 });
 
   return Response.json({ success: true });
 }

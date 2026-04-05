@@ -7,7 +7,7 @@ export async function handleDeleteAccount(
   env: Env
 ): Promise<Response> {
   // Delete user credits
-  await fetch(`${env.SUPABASE_URL}/rest/v1/user_credits?user_id=eq.${user.userId}`, {
+  const creditsRes = await fetch(`${env.SUPABASE_URL}/rest/v1/user_credits?user_id=eq.${user.userId}`, {
     method: 'DELETE',
     headers: {
       'apikey': env.SUPABASE_SERVICE_KEY,
@@ -15,9 +15,12 @@ export async function handleDeleteAccount(
       'Content-Type': 'application/json',
     },
   });
+  if (!creditsRes.ok) {
+    throw new AppError('Failed to delete user data', 500, 'DELETE_FAILED');
+  }
 
   // Delete user usage logs
-  await fetch(`${env.SUPABASE_URL}/rest/v1/usage_logs?user_id=eq.${user.userId}`, {
+  const logsRes = await fetch(`${env.SUPABASE_URL}/rest/v1/usage_logs?user_id=eq.${user.userId}`, {
     method: 'DELETE',
     headers: {
       'apikey': env.SUPABASE_SERVICE_KEY,
@@ -25,6 +28,9 @@ export async function handleDeleteAccount(
       'Content-Type': 'application/json',
     },
   });
+  if (!logsRes.ok) {
+    throw new AppError('Failed to delete usage data', 500, 'DELETE_FAILED');
+  }
 
   // Delete user from Supabase Auth (admin API)
   const authRes = await fetch(`${env.SUPABASE_URL}/auth/v1/admin/users/${user.userId}`, {

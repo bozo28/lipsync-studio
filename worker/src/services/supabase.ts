@@ -46,31 +46,29 @@ export async function deductCredit(userId: string, env: Env): Promise<number> {
   return remaining;
 }
 
-/** Refund 1 credit (on failed AI processing) */
+/** Refund 1 credit (on failed AI processing) — atomic via RPC */
 export async function refundCredit(userId: string, env: Env): Promise<void> {
-  // Get current credits
-  const current = await getCredits(userId, env);
-  // Set credits + 1
-  await fetch(
-    `${env.SUPABASE_URL}/rest/v1/user_credits?user_id=eq.${userId}`,
-    {
-      method: 'PATCH',
-      headers: headers(env),
-      body: JSON.stringify({ credits: current + 1 }),
-    }
-  );
-}
-
-/** Add credits to a user (after successful payment). Sets 30-day expiry. */
-export async function addCredits(userId: string, amount: number, env: Env): Promise<void> {
-  const current = await getCredits(userId, env);
-  const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
   const res = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/user_credits`,
+    `${env.SUPABASE_URL}/rest/v1/rpc/add_credits`,
     {
       method: 'POST',
-      headers: { ...headers(env), 'Prefer': 'resolution=merge-duplicates,return=representation' },
-      body: JSON.stringify({ user_id: userId, credits: current + amount, credits_expires_at: expiresAt }),
+      headers: headers(env),
+      body: JSON.stringify({ p_user_id: userId, p_amount: 1, p_set_expiry: false }),
+    }
+  );
+  if (!res.ok) {
+    throw new AppError('Failed to refund credit', 500, 'CREDITS_ERROR');
+  }
+}
+
+/** Add credits to a user (after successful payment). Sets 30-day expiry. Atomic via RPC. */
+export async function addCredits(userId: string, amount: number, env: Env): Promise<void> {
+  const res = await fetch(
+    `${env.SUPABASE_URL}/rest/v1/rpc/add_credits`,
+    {
+      method: 'POST',
+      headers: headers(env),
+      body: JSON.stringify({ p_user_id: userId, p_amount: amount, p_set_expiry: true }),
     }
   );
   if (!res.ok) {

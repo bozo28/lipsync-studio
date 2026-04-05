@@ -2789,7 +2789,8 @@ function renderResult() {
   if (state.color) {
     $('resultShade').textContent = state.color.code;
     $('resultDot').style.backgroundColor = state.color.hex;
-    $('resultHex').innerHTML = `<span class="result-color-dot" style="background:${state.color.hex}"></span> ${state.color.hex}`;
+    const safeHex = state.color.hex.replace(/[^#0-9A-Fa-f]/g, '');
+    $('resultHex').innerHTML = `<span class="result-color-dot" style="background:${safeHex}"></span> ${safeHex}`;
   }
   if (state.category) {
     $('resultCategory').textContent = t(state.category);
@@ -3076,10 +3077,9 @@ function loadRememberedCredentials() {
   const saved = localStorage.getItem('ls_remember');
   if (saved) {
     try {
-      const {email, password} = JSON.parse(saved);
+      const {email} = JSON.parse(saved);
       const form = $('loginFormEl');
       form.email.value = email || '';
-      form.password.value = password || '';
       $('rememberMe').checked = true;
     } catch(e) {}
   }
@@ -3095,7 +3095,7 @@ async function handleLogin(e) {
   submitBtn.style.opacity = '0.6';
 
   if ($('rememberMe').checked) {
-    localStorage.setItem('ls_remember', JSON.stringify({email, password}));
+    localStorage.setItem('ls_remember', JSON.stringify({email}));
   } else {
     localStorage.removeItem('ls_remember');
   }
@@ -3216,11 +3216,12 @@ function updateCreditBadge() {
 function updateAuthUI() {
   const authRow = document.querySelector('.welcome-auth');
   if (state.user) {
-    const initial = state.user.name.charAt(0).toUpperCase();
+    const safeName = (state.user.name || '').replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+    const initial = safeName.charAt(0).toUpperCase();
     authRow.innerHTML = `
       <div class="user-menu" id="userMenu" style="flex:1;justify-content:center">
         <div class="user-avatar">${initial}</div>
-        <span class="user-name">${state.user.name}</span>
+        <span class="user-name">${safeName}</span>
       </div>
       <button class="btn-auth btn-auth-login" id="logoutBtn" style="flex:0 0 auto">
         <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>

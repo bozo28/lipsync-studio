@@ -4,7 +4,7 @@ compatibility_date = "2024-12-01"
 
 [vars]
 SUPABASE_URL = "https://uwnrlolzkncvjgrjpfci.supabase.co"
-ALLOWED_ORIGINS = "https://lipsyncstudio.app,https://bozo28.github.io,http://localhost,file://"
+ALLOWED_ORIGINS = "https://lipsyncstudio.app,https://bozo28.github.io"
 
 [[kv_namespaces]]
 binding = "RATE_LIMIT"

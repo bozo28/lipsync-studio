@@ -4,14 +4,11 @@ export function getCorsHeaders(request: Request, env: Env): Record<string, strin
   const origin = request.headers.get('Origin') || '';
   const allowed = env.ALLOWED_ORIGINS.split(',').map(o => o.trim());
 
-  // file:// origins come as "null"
-  const isAllowed =
-    allowed.includes(origin) ||
-    (allowed.includes('file://') && origin === 'null');
+  const isAllowed = allowed.includes(origin);
 
   return {
     'Access-Control-Allow-Origin': isAllowed ? origin || '*' : '',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Max-Age': '86400',
   };

@@ -32,7 +32,7 @@ BEGIN
   ON CONFLICT (user_id) DO NOTHING;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 DROP TRIGGER IF EXISTS on_auth_user_created_credits ON auth.users;
 CREATE TRIGGER on_auth_user_created_credits
@@ -65,7 +65,27 @@ BEGIN
 
   RETURN remaining;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
+-- 4b. Atomic credit addition RPC (for payments and refunds)
+CREATE OR REPLACE FUNCTION add_credits(p_user_id UUID, p_amount INTEGER, p_set_expiry BOOLEAN DEFAULT TRUE)
+RETURNS VOID AS $$
+BEGIN
+  UPDATE user_credits
+  SET credits = credits + p_amount,
+      credits_expires_at = CASE
+        WHEN p_set_expiry THEN now() + interval '30 days'
+        ELSE credits_expires_at
+      END,
+      updated_at = now()
+  WHERE user_id = p_user_id;
+
+  IF NOT FOUND THEN
+    INSERT INTO user_credits (user_id, credits, credits_expires_at)
+    VALUES (p_user_id, p_amount, CASE WHEN p_set_expiry THEN now() + interval '30 days' ELSE NULL END);
+  END IF;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- 5. Row Level Security
 ALTER TABLE user_credits ENABLE ROW LEVEL SECURITY;

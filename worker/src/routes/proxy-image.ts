@@ -16,7 +16,7 @@ export async function handleProxyImage(
   // Only allow proxying from known Kie AI domains
   const allowed = ['tempfile.redpandaai.co', 'tempfile.aiquickdraw.com', 'aiquickdraw.com', 'cdn.kie.ai', 'api.kie.ai'];
   const parsed = new URL(imageUrl);
-  if (!allowed.some(d => parsed.hostname.endsWith(d))) {
+  if (!allowed.some(d => parsed.hostname === d || parsed.hostname.endsWith('.' + d))) {
     throw new AppError('URL not allowed', 403, 'URL_NOT_ALLOWED');
   }
 
