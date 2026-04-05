@@ -27,6 +27,11 @@ async function verifyPaddleSignature(
   const h1 = parts['h1'];
   if (!ts || !h1) return false;
 
+  // Reject requests older than 5 minutes (replay attack protection)
+  const timestamp = parseInt(ts, 10);
+  const now = Math.floor(Date.now() / 1000);
+  if (Math.abs(now - timestamp) > 300) return false;
+
   // Build signed payload: timestamp + ":" + raw body
   const signedPayload = `${ts}:${rawBody}`;
 
@@ -91,20 +96,16 @@ export async function handlePaddleWebhook(
   }
 
   const userId = custom_data.userId;
-  const credits = parseInt(custom_data.credits, 10);
   const pkg = custom_data.package || 'unknown';
 
-  if (isNaN(credits) || credits <= 0) {
-    return Response.json({ error: 'Invalid credits' }, { status: 400 });
+  // Only allow known packages — ignore custom_data credits, use server-side values
+  if (!(pkg in PACKAGE_CREDITS)) {
+    return Response.json({ error: 'Unknown package' }, { status: 400 });
   }
+  const serverCredits = PACKAGE_CREDITS[pkg];
 
-  // Verify credits match expected package
-  if (pkg in PACKAGE_CREDITS && PACKAGE_CREDITS[pkg] !== credits) {
-    return Response.json({ error: 'Credits mismatch' }, { status: 400 });
-  }
+  // Add credits to user using server-side amount (not client-provided)
+  await addCredits(userId, serverCredits, env);
 
-  // Add credits to user
-  await addCredits(userId, credits, env);
-
-  return Response.json({ success: true, userId, credits });
+  return Response.json({ success: true });
 }
