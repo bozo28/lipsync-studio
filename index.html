@@ -110,12 +110,16 @@ input{font-family:inherit}
   opacity:0;transition:opacity 0.3s;
 }
 .nav-title.visible{opacity:1}
+.find-lipstick-row{
+  display:flex;justify-content:center;
+  padding:0 0 12px 0;
+}
 .find-lipstick-btn{
   position:relative;
-  display:inline-flex;align-items:center;gap:6px;
-  padding:8px 16px;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 24px;
   font-family:var(--font-body);
-  font-size:0.75rem;font-weight:600;
+  font-size:0.85rem;font-weight:600;
   color:#fff;
   background:linear-gradient(135deg, var(--rose) 0%, var(--rose-dark) 100%);
   border:none;border-radius:28px;
@@ -1209,10 +1213,6 @@ input{font-family:inherit}
       </div>
     </div>
     <span class="nav-title" id="navTitle"></span>
-    <button class="find-lipstick-btn" id="findLipstickBtn" onclick="$('infoModal').classList.add('open')">
-      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-      <span data-i18n="find_lipstick">Rujunu Bul</span>
-    </button>
     <div class="nav-right">
       <button class="lang-btn" id="langBtn">EN</button>
       <button class="nav-menu-btn" id="navMenuBtn" aria-label="Menu">
@@ -1243,6 +1243,14 @@ input{font-family:inherit}
       </div>
     </div>
   </nav>
+
+  <!-- Find Lipstick Button (own row to avoid nav collision) -->
+  <div class="find-lipstick-row">
+    <button class="find-lipstick-btn" id="findLipstickBtn" onclick="$('infoModal').classList.add('open')">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      <span data-i18n="find_lipstick">Rujunu Bul</span>
+    </button>
+  </div>
 
   <!-- Hidden file input -->
   <input type="file" id="photoInput" accept="image/*" class="hidden">
