@@ -1474,7 +1474,7 @@ input{font-family:inherit}
         <h2 data-i18n="login_title">Welcome Back</h2>
         <p data-i18n="login_sub">Sign in to your account</p>
       </div>
-      <form class="auth-form" id="loginFormEl" autocomplete="on">
+      <form class="auth-form" id="loginFormEl" method="post" action="#" autocomplete="on">
         <input class="auth-input" type="email" name="email" data-i18n-placeholder="email_placeholder" placeholder="Email address" required autocomplete="email">
         <input class="auth-input" type="password" name="password" data-i18n-placeholder="password_placeholder" placeholder="Password" required autocomplete="current-password">
         <label class="remember-me">
@@ -3134,7 +3134,7 @@ function closeAuth() {
   $('authModal').classList.remove('open');
 }
 
-function loadRememberedCredentials() {
+async function loadRememberedCredentials() {
   const saved = localStorage.getItem('ls_remember');
   if (saved) {
     try {
@@ -3142,6 +3142,18 @@ function loadRememberedCredentials() {
       const form = $('loginFormEl');
       form.email.value = email || '';
       $('rememberMe').checked = true;
+    } catch(e) {}
+  }
+  // Try to auto-fill from browser's credential manager
+  if (navigator.credentials && navigator.credentials.get) {
+    try {
+      const cred = await navigator.credentials.get({ password: true, mediation: 'optional' });
+      if (cred && cred.id && cred.password) {
+        const form = $('loginFormEl');
+        form.email.value = cred.id;
+        form.password.value = cred.password;
+        $('rememberMe').checked = true;
+      }
     } catch(e) {}
   }
 }
@@ -3164,6 +3176,13 @@ async function handleLogin(e) {
   try {
     const data = await sbAuth.signIn(email, password);
     const user = data.user || data;
+    // Ask the browser's password manager to save credentials (only if user opted in)
+    if ($('rememberMe').checked && window.PasswordCredential) {
+      try {
+        const cred = new window.PasswordCredential({ id: email, password: password, name: email });
+        await navigator.credentials.store(cred);
+      } catch(e) {}
+    }
     setLoggedIn(user);
     closeAuth();
     form.reset();
