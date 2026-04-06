@@ -93,6 +93,9 @@ input{font-family:inherit}
   padding:16px 0;
   position:relative;z-index:50;
 }
+@media(max-height:740px){
+  .top-nav{padding:10px 0}
+}
 .back-btn{
   width:40px;height:40px;
   display:flex;align-items:center;justify-content:center;
@@ -112,7 +115,11 @@ input{font-family:inherit}
 .nav-title.visible{opacity:1}
 .find-lipstick-row{
   display:flex;justify-content:center;
-  padding:0 0 12px 0;
+  padding:0 0 8px 0;
+}
+@media(max-height:740px){
+  .find-lipstick-row{padding:0 0 4px 0}
+  .find-lipstick-btn{padding:7px 18px !important;font-size:0.78rem !important}
 }
 .find-lipstick-btn{
   position:relative;
@@ -275,13 +282,25 @@ input{font-family:inherit}
 /* ====== STEP 1: Welcome ====== */
 .welcome{
   justify-content:center;align-items:center;text-align:center;
-  padding-top:10vh;
+  padding-top:2vh;padding-bottom:16px;
+  min-height:calc(100dvh - 140px);
 }
 .welcome-logo{
-  margin-bottom:8px;
+  margin-bottom:4px;
   animation:logoIn 1s var(--ease) 0.2s both;
 }
-.welcome-logo img,.welcome-logo svg{width:120px;height:120px;margin:0 auto 16px;object-fit:contain}
+.welcome-logo img,.welcome-logo svg{width:96px;height:96px;margin:0 auto 8px;object-fit:contain}
+@media(max-height:740px){
+  .welcome{padding-top:0;min-height:auto}
+  .welcome-logo img,.welcome-logo svg{width:72px;height:72px;margin:0 auto 4px}
+  .welcome-brand{font-size:2rem !important}
+  .welcome-brand span{font-size:1.4rem !important}
+  .welcome-tagline{margin-top:6px !important;font-size:0.78rem !important}
+  .welcome-divider{margin:12px auto !important}
+  .welcome-actions{gap:10px !important}
+  .welcome-auth{margin-top:10px !important}
+  .btn-primary,.btn-secondary{padding:13px 28px !important;font-size:0.9rem !important}
+}
 .welcome-brand{
   font-family:var(--font-display);
   font-size:2.8rem;font-weight:300;
