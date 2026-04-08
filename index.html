@@ -2861,9 +2861,15 @@ function renderResult() {
   // Info
   if (state.color) {
     $('resultShade').textContent = state.color.code;
-    $('resultDot').style.backgroundColor = state.color.hex;
     const safeHex = state.color.hex.replace(/[^#0-9A-Fa-f]/g, '');
-    $('resultHex').innerHTML = `<span class="result-color-dot" style="background:${safeHex}"></span> ${safeHex}`;
+    const hexEl = $('resultHex');
+    hexEl.textContent = '';
+    const dot = document.createElement('span');
+    dot.className = 'result-color-dot';
+    dot.id = 'resultDot';
+    dot.style.backgroundColor = safeHex;
+    hexEl.appendChild(dot);
+    hexEl.appendChild(document.createTextNode(' ' + safeHex));
   }
   if (state.category) {
     $('resultCategory').textContent = t(state.category);

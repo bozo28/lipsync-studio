@@ -15,7 +15,7 @@ export function errorResponse(error: unknown): Response {
       { status: error.status }
     );
   }
-  console.error('Unexpected error:', error);
+  console.error('Unexpected error:', error, error instanceof Error ? error.stack : '');
   return Response.json(
     { error: 'Internal server error', code: 'INTERNAL_ERROR' },
     { status: 500 }
