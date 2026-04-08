@@ -84,7 +84,7 @@ export async function createTask(
   // Step 1: Upload image to get a URL
   const imageUrl = await uploadImage(imageBase64, env);
 
-  const prompt = `Professional virtual lipstick try-on. Apply ONLY lipstick color ${lipColor} to the lips. CRITICAL RULES: 1) Keep the EXACT same face, skin, eyes, hair, lighting, background, clothing - change NOTHING except lip color. 2) Follow the natural lip contour precisely - do NOT extend color beyond the lip edges. 3) Preserve the original lip shape and texture - do NOT alter lip fullness, size or structure. 4) Apply color evenly with a natural matte/satin finish. 5) The result must look like a real professional lipstick application, not digitally painted. 6) Maintain 100% character consistency - same person, same expression, same pose. Output the full image at original quality.`;
+  const prompt = `Change the lipstick color on the lips to exactly ${lipColor} (HEX). The lips should be fully covered with this opaque ${lipColor} color, with a natural satin finish that follows the lip contours. Keep everything else in the photo identical: same face, same skin, same eyes, same hair, same expression, same lighting, same background. Only the lip color changes to ${lipColor}.`;
 
   // Step 2: Create task with image URL
   const res = await fetch(`${KIE_API_BASE}/v1/jobs/createTask`, {
