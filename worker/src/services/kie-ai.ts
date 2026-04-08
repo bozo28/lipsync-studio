@@ -83,8 +83,9 @@ export async function createTask(
 ): Promise<string> {
   // Step 1: Upload image to get a URL
   const imageUrl = await uploadImage(imageBase64, env);
+  console.log('[KIE AI] uploaded image url:', imageUrl, 'color:', lipColor);
 
-  const prompt = `Change the lipstick color on the lips to exactly ${lipColor} (HEX). The lips should be fully covered with this opaque ${lipColor} color, with a natural satin finish that follows the lip contours. Keep everything else in the photo identical: same face, same skin, same eyes, same hair, same expression, same lighting, same background. Only the lip color changes to ${lipColor}.`;
+  const prompt = `Edit this photo: change the lip color to ${lipColor}. Apply the ${lipColor} lipstick fully and opaquely on both upper and lower lips with a glossy satin finish. STRICT CONSTRAINTS: The lipstick must stay precisely within the natural lip boundaries and must NOT extend beyond the lip edges onto the surrounding skin. Do NOT alter the shape, size, structure, or anatomy of the mouth, lips, or teeth. Preserve the person's exact identity, facial features, skin tone, and character — the same person must be clearly recognizable. The rest of the photo (face, hair, background, lighting, pose) must stay exactly the same.`;
 
   // Step 2: Create task with image URL
   const res = await fetch(`${KIE_API_BASE}/v1/jobs/createTask`, {
@@ -140,6 +141,11 @@ export async function getTaskStatus(
   }
 
   const data = await res.json() as KieRecordResponse;
+
+  // Debug: log full response when state is success or fail
+  if (data.data.state === 'success' || data.data.state === 'fail') {
+    console.log('[KIE AI RESPONSE]', JSON.stringify(data));
+  }
 
   const result: TaskStatusResult = {
     status: data.data.state,
