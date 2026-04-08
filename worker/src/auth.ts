@@ -21,7 +21,8 @@ export async function verifyAuth(request: Request, env: Env): Promise<AuthUser> 
       );
     }
 
-    const { payload } = await jwtVerify(token, jwks);
+    // Pin to ES256 only (Supabase uses ES256) — prevents algorithm confusion attacks
+    const { payload } = await jwtVerify(token, jwks, { algorithms: ['ES256'] });
 
     if (!payload.sub) {
       throw new AppError('Invalid token: missing subject', 401, 'INVALID_TOKEN');

@@ -8,10 +8,10 @@ const headers = (env: Env) => ({
   'Prefer': 'return=representation',
 });
 
-/** Get user's remaining credits. Returns 0 if no row exists. */
+/** Get user's remaining credits. Returns 0 if no row exists or credits expired. */
 export async function getCredits(userId: string, env: Env): Promise<number> {
   const res = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/user_credits?user_id=eq.${userId}&select=credits`,
+    `${env.SUPABASE_URL}/rest/v1/user_credits?user_id=eq.${userId}&select=credits,credits_expires_at`,
     { headers: headers(env) }
   );
 
@@ -19,8 +19,15 @@ export async function getCredits(userId: string, env: Env): Promise<number> {
     throw new AppError('Failed to check credits', 500, 'CREDITS_ERROR');
   }
 
-  const rows = await res.json() as Array<{ credits: number }>;
-  return rows.length > 0 ? rows[0].credits : 0;
+  const rows = await res.json() as Array<{ credits: number; credits_expires_at: string | null }>;
+  if (rows.length === 0) return 0;
+
+  const row = rows[0];
+  // If credits have expired, return 0
+  if (row.credits_expires_at && new Date(row.credits_expires_at) < new Date()) {
+    return 0;
+  }
+  return row.credits;
 }
 
 /** Atomically deduct 1 credit via RPC. Returns remaining credits or throws. */
@@ -58,6 +65,21 @@ export async function refundCredit(userId: string, env: Env): Promise<void> {
   );
   if (!res.ok) {
     throw new AppError('Failed to refund credit', 500, 'CREDITS_ERROR');
+  }
+}
+
+/** Remove credits from a user (on refund/dispute). Floors at 0. Atomic via RPC. */
+export async function removeCredits(userId: string, amount: number, env: Env): Promise<void> {
+  const res = await fetch(
+    `${env.SUPABASE_URL}/rest/v1/rpc/remove_credits`,
+    {
+      method: 'POST',
+      headers: headers(env),
+      body: JSON.stringify({ p_user_id: userId, p_amount: amount }),
+    }
+  );
+  if (!res.ok) {
+    throw new AppError('Failed to remove credits', 500, 'CREDITS_ERROR');
   }
 }
 

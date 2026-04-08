@@ -71,6 +71,14 @@ $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 CREATE OR REPLACE FUNCTION add_credits(p_user_id UUID, p_amount INTEGER, p_set_expiry BOOLEAN DEFAULT TRUE)
 RETURNS VOID AS $$
 BEGIN
+  -- First reset expired credits to 0 (prevents reviving stale credits on top-up)
+  UPDATE user_credits
+  SET credits = 0, updated_at = now()
+  WHERE user_id = p_user_id
+    AND credits_expires_at IS NOT NULL
+    AND credits_expires_at < now()
+    AND credits > 0;
+
   UPDATE user_credits
   SET credits = credits + p_amount,
       credits_expires_at = CASE
@@ -84,6 +92,16 @@ BEGIN
     INSERT INTO user_credits (user_id, credits, credits_expires_at)
     VALUES (p_user_id, p_amount, CASE WHEN p_set_expiry THEN now() + interval '30 days' ELSE NULL END);
   END IF;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
+-- 4c. Atomic credit removal RPC (for payment refunds/disputes)
+CREATE OR REPLACE FUNCTION remove_credits(p_user_id UUID, p_amount INTEGER)
+RETURNS VOID AS $$
+BEGIN
+  UPDATE user_credits
+  SET credits = GREATEST(0, credits - p_amount), updated_at = now()
+  WHERE user_id = p_user_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 

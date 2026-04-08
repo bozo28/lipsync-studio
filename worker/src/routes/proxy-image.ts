@@ -25,10 +25,17 @@ export async function handleProxyImage(
     throw new AppError('Failed to fetch image', 502, 'PROXY_ERROR');
   }
 
+  // Verify upstream returned an actual image (defense against accidental HTML/JSON proxying)
+  const upstreamType = res.headers.get('Content-Type') || '';
+  if (!upstreamType.startsWith('image/')) {
+    throw new AppError('Upstream resource is not an image', 502, 'NOT_AN_IMAGE');
+  }
+
   return new Response(res.body, {
     headers: {
-      'Content-Type': res.headers.get('Content-Type') || 'image/jpeg',
+      'Content-Type': upstreamType,
       'Cache-Control': 'public, max-age=3600',
+      'X-Content-Type-Options': 'nosniff',
     },
   });
 }

@@ -15,7 +15,12 @@ export async function handleApplyLipstick(
   await checkRateLimit(user.userId, env);
 
   // Parse and validate body
-  const body = await request.json() as ApplyRequest;
+  let body: ApplyRequest;
+  try {
+    body = await request.json() as ApplyRequest;
+  } catch {
+    throw new AppError('Invalid JSON body', 400, 'INVALID_JSON');
+  }
   validateApplyRequest(body);
 
   // Deduct credit (atomic - throws if insufficient)

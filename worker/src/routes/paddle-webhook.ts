@@ -1,5 +1,5 @@
 import { Env } from '../types';
-import { addCredits } from '../services/supabase';
+import { addCredits, removeCredits } from '../services/supabase';
 
 const PACKAGE_CREDITS: Record<string, number> = {
   starter: 20,
@@ -94,14 +94,18 @@ export async function handlePaddleWebhook(
   }
 
   const event: PaddleEvent = JSON.parse(rawBody);
+  const eventType = event.event_type;
 
-  // Only process completed transactions
-  if (event.event_type !== 'transaction.completed') {
+  // Handle refunds and disputes — remove the credits we added
+  const isRefund = eventType === 'adjustment.created' || eventType === 'adjustment.updated';
+  const isCompleted = eventType === 'transaction.completed';
+
+  if (!isCompleted && !isRefund) {
     return Response.json({ received: true });
   }
 
   const { custom_data } = event.data;
-  if (!custom_data?.userId || !custom_data?.credits) {
+  if (!custom_data?.userId) {
     return Response.json({ error: 'Missing custom data' }, { status: 400 });
   }
 
@@ -114,8 +118,8 @@ export async function handlePaddleWebhook(
     return Response.json({ error: 'Unknown package' }, { status: 400 });
   }
 
-  // Idempotency: check if this transaction was already processed
-  const idempotencyKey = `paddle:${transactionId}`;
+  // Idempotency: check if this event was already processed
+  const idempotencyKey = `paddle:${eventType}:${transactionId}`;
   const already = await env.RATE_LIMIT.get(idempotencyKey);
   if (already) {
     return Response.json({ success: true, duplicate: true });
@@ -123,10 +127,15 @@ export async function handlePaddleWebhook(
 
   const serverCredits = PACKAGE_CREDITS[pkg];
 
-  // Add credits to user using server-side amount (not client-provided)
-  await addCredits(userId, serverCredits, env);
+  if (isCompleted) {
+    // Add credits to user using server-side amount (not client-provided)
+    await addCredits(userId, serverCredits, env);
+  } else if (isRefund) {
+    // Remove credits on refund/dispute
+    await removeCredits(userId, serverCredits, env);
+  }
 
-  // Mark transaction as processed (keep for 7 days)
+  // Mark event as processed (keep for 7 days)
   await env.RATE_LIMIT.put(idempotencyKey, '1', { expirationTtl: 604800 });
 
   return Response.json({ success: true });

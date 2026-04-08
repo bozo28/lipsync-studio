@@ -9,8 +9,21 @@ export async function checkRateLimit(userId: string, env: Env): Promise<void> {
   const stored = await env.RATE_LIMIT.get(key);
 
   if (stored) {
-    const data = JSON.parse(stored);
-    const count = data.c as number;
+    let data: { c: number; ttl: number };
+    try {
+      const parsed = JSON.parse(stored);
+      // Handle legacy format (plain integer string) by treating it as a fresh window
+      if (typeof parsed === 'number') {
+        data = { c: parsed, ttl: Math.floor(Date.now() / 1000) + WINDOW_SECONDS };
+      } else if (parsed && typeof parsed.c === 'number' && typeof parsed.ttl === 'number') {
+        data = parsed;
+      } else {
+        data = { c: 1, ttl: Math.floor(Date.now() / 1000) + WINDOW_SECONDS };
+      }
+    } catch {
+      data = { c: 1, ttl: Math.floor(Date.now() / 1000) + WINDOW_SECONDS };
+    }
+    const count = data.c;
     const remaining = Math.max(1, data.ttl - Math.floor(Date.now() / 1000));
     if (count >= MAX_REQUESTS) {
       throw new AppError(
