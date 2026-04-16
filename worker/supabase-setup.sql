@@ -24,15 +24,28 @@ CREATE TABLE IF NOT EXISTS usage_logs (
 );
 
 -- 3. Auto-create credits row when a new user signs up
+-- Wrapped in EXCEPTION block so a credit-insert failure never blocks signup
+-- (Supabase shows "Database error saving new user" if any auth.users trigger throws)
 CREATE OR REPLACE FUNCTION handle_new_user_credits()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
-  INSERT INTO user_credits (user_id, credits)
-  VALUES (NEW.id, 1)
-  ON CONFLICT (user_id) DO NOTHING;
+  BEGIN
+    INSERT INTO public.user_credits (user_id, credits)
+    VALUES (NEW.id, 1)
+    ON CONFLICT (user_id) DO NOTHING;
+  EXCEPTION WHEN OTHERS THEN
+    RAISE WARNING 'handle_new_user_credits failed for %: %', NEW.id, SQLERRM;
+  END;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+$$;
+
+-- Make sure the function owner can write to user_credits
+GRANT INSERT, SELECT, UPDATE ON public.user_credits TO postgres, service_role;
 
 DROP TRIGGER IF EXISTS on_auth_user_created_credits ON auth.users;
 CREATE TRIGGER on_auth_user_created_credits
