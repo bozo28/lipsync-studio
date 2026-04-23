@@ -1721,7 +1721,7 @@ const T = {
     start_over:"Start Over",
     share_result:"Share Your Look",
     copy_link:"Copy",
-    copied:"Copied to clipboard!",
+    copied:"Copied to clipboard!",saved:"Image saved!",save_ios_hint:"Long press the image and select 'Save to Photos'.",share_downloaded_hint:"Image downloaded — please attach it to your message.",
     select_language:"Select Language",
     before:"Before",
     after:"After",
@@ -1792,7 +1792,7 @@ const T = {
     start_over:"Recommencer",
     share_result:"Partagez Votre Look",
     copy_link:"Copier",
-    copied:"Copi\u00e9 dans le presse-papiers !",
+    copied:"Copi\u00e9 dans le presse-papiers !",saved:"Image enregistr\u00e9e !",save_ios_hint:"Appuyez longuement sur l'image et s\u00e9lectionnez \u00ab Enregistrer dans Photos \u00bb.",share_downloaded_hint:"Image t\u00e9l\u00e9charg\u00e9e \u2014 veuillez la joindre \u00e0 votre message.",
     select_language:"Choisir la Langue",
     before:"Avant",
     after:"Apr\u00e8s",
@@ -1863,7 +1863,7 @@ const T = {
     start_over:"Neu Beginnen",
     share_result:"Teilen Sie Ihren Look",
     copy_link:"Kopieren",
-    copied:"In die Zwischenablage kopiert!",
+    copied:"In die Zwischenablage kopiert!",saved:"Bild gespeichert!",save_ios_hint:"Dr\u00fccken Sie lange auf das Bild und w\u00e4hlen Sie 'In Fotos sichern'.",share_downloaded_hint:"Bild heruntergeladen \u2014 bitte f\u00fcgen Sie es Ihrer Nachricht bei.",
     select_language:"Sprache W\u00e4hlen",
     before:"Vorher",
     after:"Nachher",
@@ -1934,7 +1934,7 @@ const T = {
     start_over:"Empezar de Nuevo",
     share_result:"Comparte Tu Look",
     copy_link:"Copiar",
-    copied:"\u00a1Copiado al portapapeles!",
+    copied:"\u00a1Copiado al portapapeles!",saved:"\u00a1Imagen guardada!",save_ios_hint:"Mant\u00e9n pulsada la imagen y selecciona 'Guardar en Fotos'.",share_downloaded_hint:"Imagen descargada \u2014 adj\u00fantala a tu mensaje.",
     select_language:"Seleccionar Idioma",
     before:"Antes",
     after:"Despu\u00e9s",
@@ -2005,7 +2005,7 @@ const T = {
     start_over:"Ricomincia",
     share_result:"Condividi il Tuo Look",
     copy_link:"Copia",
-    copied:"Copiato negli appunti!",
+    copied:"Copiato negli appunti!",saved:"Immagine salvata!",save_ios_hint:"Tieni premuta l'immagine e seleziona 'Salva nelle foto'.",share_downloaded_hint:"Immagine scaricata \u2014 allegala al tuo messaggio.",
     select_language:"Seleziona Lingua",
     before:"Prima",
     after:"Dopo",
@@ -2078,7 +2078,7 @@ const T = {
     start_over:"Bastan Basla",
     share_result:"Gorunumunu Paylas",
     copy_link:"Kopyala",
-    copied:"Panoya kopyalandi!",
+    copied:"Panoya kopyalandi!",saved:"Gorsel kaydedildi!",save_ios_hint:"Gorsele uzun basip 'Fotograflara Kaydet' secenegini secin.",share_downloaded_hint:"Gorsel indirildi \u2014 lutfen mesajiniza manuel olarak ekleyin.",
     select_language:"Dil Secin",
     before:"Once",
     after:"Sonra",
@@ -2151,7 +2151,7 @@ const T = {
     start_over:"Recome\u00e7ar",
     share_result:"Compartilhe Seu Visual",
     copy_link:"Copiar",
-    copied:"Copiado para a \u00e1rea de transfer\u00eancia!",
+    copied:"Copiado para a \u00e1rea de transfer\u00eancia!",saved:"Imagem salva!",save_ios_hint:"Pressione e segure a imagem e selecione 'Salvar em Fotos'.",share_downloaded_hint:"Imagem baixada \u2014 anexe-a \u00e0 sua mensagem.",
     select_language:"Selecionar Idioma",
     before:"Antes",
     after:"Depois",
@@ -2222,7 +2222,7 @@ const T = {
     start_over:"\u6700\u521d\u304b\u3089",
     share_result:"\u3042\u306a\u305f\u306e\u30eb\u30c3\u30af\u3092\u30b7\u30a7\u30a2",
     copy_link:"\u30b3\u30d4\u30fc",
-    copied:"\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u306b\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f\uff01",
+    copied:"\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u306b\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f\uff01",saved:"\u753b\u50cf\u3092\u4fdd\u5b58\u3057\u307e\u3057\u305f\uff01",save_ios_hint:"\u753b\u50cf\u3092\u9577\u62bc\u3057\u3057\u3066\u300c\u5199\u771f\u306b\u4fdd\u5b58\u300d\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044\u3002",share_downloaded_hint:"\u753b\u50cf\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u307e\u3057\u305f \u2014 \u30e1\u30c3\u30bb\u30fc\u30b8\u306b\u6dfb\u4ed8\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
     select_language:"\u8a00\u8a9e\u3092\u9078\u629e",
     before:"\u30d3\u30d5\u30a9\u30fc",
     after:"\u30a2\u30d5\u30bf\u30fc",
@@ -2954,9 +2954,14 @@ async function getResultBlob() {
     const url = state.resultPhoto || state.photo;
     if (url.startsWith('http')) {
       const proxyUrl = WORKER_URL + '/api/image?url=' + encodeURIComponent(url);
-      const res = await fetch(proxyUrl, {
+      let res = await fetch(proxyUrl, {
         headers: { 'Authorization': 'Bearer ' + sbAuth._token }
       });
+      if (res.status === 401 && await sbAuth.refreshSession()) {
+        res = await fetch(proxyUrl, {
+          headers: { 'Authorization': 'Bearer ' + sbAuth._token }
+        });
+      }
       if (res.ok) {
         cachedResultBlob = await res.blob();
         return cachedResultBlob;
@@ -2969,6 +2974,21 @@ async function getResultBlob() {
   }
 }
 
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
+
+function downloadBlob(blob, fileName) {
+  const blobUrl = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(blobUrl);
+}
+
 async function getShareFile() {
   const blob = await getResultBlob();
   if (!blob || blob.size < 100) return null;
@@ -2978,18 +2998,18 @@ async function getShareFile() {
 async function openShare() {
   const shareText = `I found my perfect shade: ${state.color?.code} (${state.color?.hex}) at LipSync Studio!`;
 
-  // Try native share with image (mobile)
-  if (navigator.share) {
-    try {
-      const file = await getShareFile();
-      const shareData = { text: shareText };
-      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-        shareData.files = [file];
+  // Only use native share if the browser can actually attach the image file.
+  // Otherwise we'd send text-only (shows as a link card in WhatsApp, etc.) —
+  // fall through to the custom panel instead so the user can pick a platform.
+  if (navigator.share && navigator.canShare) {
+    const file = await getShareFile();
+    if (file && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ text: shareText, files: [file] });
+        return;
+      } catch(e) {
+        if (e.name === 'AbortError') return;
       }
-      await navigator.share(shareData);
-      return;
-    } catch(e) {
-      if (e.name === 'AbortError') return;
     }
   }
 
@@ -3013,19 +3033,20 @@ async function handleShare(platform) {
     return;
   }
 
-  // Try native share with image for WhatsApp/Instagram/TikTok
-  if ((platform === 'whatsapp' || platform === 'instagram' || platform === 'tiktok' || platform === 'facebook') && navigator.share) {
-    try {
-      const file = await getShareFile();
-      const shareData = { text: shareText };
-      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-        shareData.files = [file];
+  // Try native share WITH the image file attached. Only take this path if the
+  // browser actually supports file-sharing — otherwise navigator.share would
+  // post a text-only message (shows up as a link card in WhatsApp, e.g. on
+  // Firefox Android where canShare({files}) returns false).
+  if ((platform === 'whatsapp' || platform === 'instagram' || platform === 'tiktok' || platform === 'facebook') && navigator.share && navigator.canShare) {
+    const file = await getShareFile();
+    if (file && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ text: shareText, files: [file] });
+        closeShare();
+        return;
+      } catch(e) {
+        if (e.name === 'AbortError') { closeShare(); return; }
       }
-      await navigator.share(shareData);
-      closeShare();
-      return;
-    } catch(e) {
-      if (e.name === 'AbortError') { closeShare(); return; }
     }
   }
 
@@ -3038,6 +3059,15 @@ async function handleShare(platform) {
   };
 
   if (urls[platform]) {
+    // Desktop URL-based share doesn't attach images. Auto-download the result so
+    // the user can manually attach it in WhatsApp Web / Facebook / etc.
+    if (platform === 'whatsapp' || platform === 'instagram' || platform === 'facebook' || platform === 'tiktok') {
+      const blob = await getResultBlob();
+      if (blob) {
+        downloadBlob(blob, `lipsync-studio-${state.color?.code || 'photo'}.jpg`);
+        showToast(t('share_downloaded_hint'), 3500);
+      }
+    }
     window.open(urls[platform], '_blank', 'noopener');
   }
   closeShare();
@@ -3128,14 +3158,27 @@ async function saveImage() {
   try {
     const blob = await getResultBlob();
     if (!blob) throw new Error('No image');
-    const blobUrl = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = blobUrl;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(blobUrl);
+
+    // iOS Safari ignores <a download>. Prefer native share sheet so user can "Save to Photos".
+    if (isIOS() && navigator.share) {
+      const file = new File([blob], fileName, { type: 'image/jpeg' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file] });
+          return;
+        } catch(e) {
+          if (e.name === 'AbortError') return;
+        }
+      }
+      // Fallback: open image in new tab + toast hint for long-press save
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      showToast(t('save_ios_hint'), 3500);
+      return;
+    }
+
+    downloadBlob(blob, fileName);
+    showToast(t('saved'), 2000);
   } catch(e) {
     window.open(state.resultPhoto || state.photo, '_blank');
   }
